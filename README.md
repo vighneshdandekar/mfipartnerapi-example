@@ -11,9 +11,9 @@ We recommend using AWS [API Gateway Client] (https://www.npmjs.com/package/aws-a
  
 
 
-### Usage
+## Usage
 
-####Authenticating and getting a client reference
+###Authenticating and getting a client reference
 
 authenticate.js uses the credentials and configuration data saved to config/credentials.json to initialize a client instance.  This is returned through a callback.
 
@@ -36,7 +36,7 @@ authenticatiion.authenticateClient(function (err, client) {
     }
 })
 ```
-####Authenticating and getting a client reference
+###Authenticating and getting a client reference
 
 Using the authenticated client to fetch data from REST API endpoint.  Here the code here is using [/branches] api call to fetch back all existing branches inside your MFI organization.
 
