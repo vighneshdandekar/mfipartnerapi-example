@@ -3,11 +3,11 @@
 > Simple examples to use the MyGold API.
 
 MyGold API is currently hosted as AWS API GAteway Methods.  Since the AWS API GAteway security require extensive signature computations and verifications
-We recommend using AWS [API Gateway Client] (https://www.npmjs.com/package/aws-api-gateway-client) to consume these APIs.  
+We recommend using AWS [API Gateway Client](https://www.npmjs.com/package/aws-api-gateway-client) to consume these APIs.  
 
  * You will get a short JSON snippet with all required IDs and credentials.
  * This snippet need to be used to update config/credentials.json
- * For API Reference please [check this link] (https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.1)
+ * For API Reference please [check this link](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.1)
  
 
 
@@ -36,9 +36,9 @@ authenticatiion.authenticateClient(function (err, client) {
     }
 })
 ```
-### Authenticating and getting a client reference
+### Using client to access API Methods
 
-Using the authenticated client to fetch data from REST API endpoint.  Here the code here is using [/branches] api call to fetch back all existing branches inside your MFI organization.
+Using the authenticated client to fetch data from REST API endpoint.  Here the code here is using [/branches](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.1#/Branch/getBranches) api call to fetch back all existing branches inside your MFI organization.
 
 ```js
     client
