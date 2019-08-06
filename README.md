@@ -59,7 +59,7 @@ Using the authenticated client to fetch data from REST API endpoint.  Here the c
         });
 ```
 
-Here the code here is using [/branches](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.1#/Branch/getBranches) api call to upload (POST) branches to your MFI organization.
+Here the code here is using [/branches](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.1#/Branch/addBranches) api call to upload (POST) branches to your MFI organization.
 
 ```js
     var _id = shortid.generate();
