@@ -1,0 +1,17 @@
+{
+    "name": "partnerapi-example-nodejs",
+    "version": "1.0.0",
+    "description": "Gold SIP APIs example for Partners",
+    "author": "boni@entelligentsia.in",
+    "dependencies": {
+        "amazon-cognito-identity-js": "^3.0.15",
+        "aws-api-gateway-client": "^0.2.17",
+        "aws-sdk": "^2.504.0",
+        "jsonwebtoken": "^8.5.1",
+        "jwk-to-pem": "^2.0.1",
+        "node-fetch": "^2.6.0",
+        "request": "^2.88.0",
+        "shortid": "^2.2.14",
+        "window-mock": "^0.1.0"
+    }
+}
