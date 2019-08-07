@@ -8,6 +8,41 @@ We recommend using AWS [API Gateway Client](https://www.npmjs.com/package/aws-ap
  * You will get a short JSON snippet with all required IDs and credentials.
  * This snippet need to be used to update config/credentials.json
  * For API Reference please [check this link](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.1)
+ * The example project is written in Javascript targetting [nodejs](https://nodejs.org/en/) runtime.  It uses [aws-sdk](https://aws.amazon.com/sdk-for-node-js/) for authentication as well as communication with APIs.
+ * The same techniques can be implemented in any programming language using many other appropriate client libraries capable of authenticated REST API Calls.
+ 
+## Quick Start
+ * [ ] Download and install latest [nodejs](https://nodejs.org/en/) for your target platform.
+ * [ ] Git clone this project to your computer
+   ```
+   git clone https://code.entelligentsia.in/boni/mfipartnerapi-example.git ./
+   ```
+ * [ ] On the command line go to the folder where the project is cloned.
+ * [ ] Execute the following command to download and save all required nodejs dependencies.
+    ```
+    npm install  
+    ```
+ * [ ] Update the **config/credentials.json**.  You would have received a JSON snippet with your specific access credentials.
+   ```js
+    {
+        "dev":{
+
+        },    
+        "test":{
+            "user":"**AAAAAAA**",
+            "password":"**BBBBBB**",
+            "userPool":"**CCCCCCCC**",
+            "appClient":"**DDDDDDD**",
+            "identityPool":"**EEEEEEEE**",
+            "region":"**FFFFFF**",
+            "basePath":"**https://testapi.mygold.co.in/test/partners/XXXX**"
+        },
+        "prod":{
+
+        }
+    }
+   ```  
+
  
 
 

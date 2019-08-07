@@ -1,4 +1,3 @@
 node_modules
-.serverless
-config/*.local.yml
 *.private.json
+config/credentials.json

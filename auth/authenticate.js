@@ -5,8 +5,8 @@ const apigClientFactory = require("aws-api-gateway-client").default;
 const AWS = require('aws-sdk');
 global.fetch = require('node-fetch');
 
-const STAGE = "dev"; // ideally to be read from an environment variable.
-export.STAGE = STAGE;
+const STAGE = "test"; // ideally to be read from an environment variable.
+exports.STAGE = STAGE;
 const config = require("../config/credentials.json")[STAGE];
 
 const poolData = {
