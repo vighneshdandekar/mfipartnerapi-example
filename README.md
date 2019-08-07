@@ -12,17 +12,17 @@ We recommend using AWS [API Gateway Client](https://www.npmjs.com/package/aws-ap
  * The same techniques can be implemented in any programming language using many other appropriate client libraries capable of authenticated REST API Calls.
  
 ## Quick Start
- * [ ] Download and install latest [nodejs](https://nodejs.org/en/) for your target platform.
- * [ ] Git clone this project to your computer
+ 1. Download and install latest [nodejs](https://nodejs.org/en/) for your target platform.
+ 2. Git clone this project to your computer
    ```
    git clone https://code.entelligentsia.in/boni/mfipartnerapi-example.git ./
    ```
- * [ ] On the command line go to the folder where the project is cloned.
- * [ ] Execute the following command to download and save all required nodejs dependencies.
+ 3. On the command line go to the folder where the project is cloned.
+ 4. Execute the following command to download and save all required nodejs dependencies.
     ```
     npm install  
     ```
- * [ ] Update the **config/credentials.json**.  You would have received a JSON snippet with your specific access credentials.
+ 5. Update the **config/credentials.json**.  You would have received a JSON snippet with your specific access credentials.
    ```js
     {
         "dev":{
@@ -42,7 +42,7 @@ We recommend using AWS [API Gateway Client](https://www.npmjs.com/package/aws-ap
         }
     }
    ```  
- * You can now run a basic test case that will check
+ 6. You can now run a basic test case that will check
     1. Your configuration is updated correctly (**config/credentials.json**).
     2. Your credentials are correct and is usable with API server.
     3. You are able to use the APIs that you have access to.
@@ -53,8 +53,8 @@ We recommend using AWS [API Gateway Client](https://www.npmjs.com/package/aws-ap
     OK - Good API Call    
     ``` 
     Expected output is : OK - Good API Call
- * If you face problems contact our technical team to help you.
 
+ **If you face problems contact our technical team to help you**
 
 ## Usage
 
