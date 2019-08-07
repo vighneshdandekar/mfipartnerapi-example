@@ -42,8 +42,18 @@ We recommend using AWS [API Gateway Client](https://www.npmjs.com/package/aws-ap
         }
     }
    ```  
-
- 
+ * You can now run a basic test case that will check
+    1. Your configuration is updated correctly (**config/credentials.json**).
+    2. Your credentials are correct and is usable with API server.
+    3. You are able to use the APIs that you have access to.
+    ```bash
+    ~/src/mfipartnerapi-example$ node tests/testSetup.js 
+    Authenticating with User Pool
+    Getting temporary credentials
+    OK - Good API Call    
+    ``` 
+    Expected output is : OK - Good API Call
+ * If you face problems contact our technical team to help you.
 
 
 ## Usage
