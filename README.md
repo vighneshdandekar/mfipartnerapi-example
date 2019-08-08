@@ -15,7 +15,7 @@ We recommend using AWS [API Gateway Client](https://www.npmjs.com/package/aws-ap
  1. Download and install latest [nodejs](https://nodejs.org/en/) for your target platform.
  2. Git clone this project to your computer
    ```
-   git clone https://code.entelligentsia.in/boni/mfipartnerapi-example.git ./
+   git clone https://github.com/goldsip/mfipartnerapi-example.git ./
    ```
  3. On the command line go to the folder where the project is cloned.
  4. Execute the following command to download and save all required nodejs dependencies.
