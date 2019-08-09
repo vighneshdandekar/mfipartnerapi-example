@@ -19,7 +19,7 @@ var testGetOneBranch = function () {
 var getBranch = function (client, callback) {
     var _id ='caNwGhfus1';
     client
-        .invokeApi(null, '/branches/' + _id, 'GET')
+        .invokeApi(null, `/branches/${_id}`, 'GET')
         .then(function (result) {
             console.log(result.data)
         })

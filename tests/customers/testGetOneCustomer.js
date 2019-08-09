@@ -19,7 +19,7 @@ var testGetOneCustomer = function () {
 var getCustomer = function (client, callback) {
     var _id ='tOEKWuaVk1';
     client
-        .invokeApi(null, '/customers/' + _id, 'GET')
+        .invokeApi(null, `/customers/${_id}`, 'GET')
         .then(function (result) {
             console.log(result.data)
         })
