@@ -1,17 +1,14 @@
-const authenticatiion = require('../auth/authenticate.js');
-const shortid = require('shortid')
+const authenticatiion = require('../../auth/authenticate.js');
 
-var testPostBranches = function () {
+var testGetOneCustomer = function () {
     authenticatiion.authenticateClient(function (err, client) {
         if (client) {
             function callback(error, response, body) {
                 if (!error && response.statusCode == 200) {
-                    var info = JSON.parse(body);
-                    console.log(info);
-
+                    console.log(JSON.stringify(body));
                 }
             }
-            saveBranches(client, callback);
+            getCustomer(client, callback);
         }
         else {
             console.error(err);
@@ -19,15 +16,10 @@ var testPostBranches = function () {
     })
 }
 
-var saveBranches = function (client, callback) {
-    var _id = shortid.generate();
-    const _branches = [
-        {extBranchId: `${_id}1`, name:`Branch - (${_id}1`  },
-        {extBranchId: `${_id}2`, name:`Branch - (${_id}2`  },
-        {extBranchId: `${_id}3`, name:`Branch - (${_id}3`  }
-    ]
+var getCustomer = function (client, callback) {
+    var _id ='tOEKWuaVk1';
     client
-        .invokeApi(null, '/branches', 'POST', {}, _branches)
+        .invokeApi(null, '/customers/' + _id, 'GET')
         .then(function (result) {
             console.log(result.data)
         })
@@ -44,4 +36,4 @@ var saveBranches = function (client, callback) {
         });
 }
 
-testPostBranches();
+testGetOneCustomer();
