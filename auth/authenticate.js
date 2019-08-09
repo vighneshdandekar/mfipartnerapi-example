@@ -6,8 +6,7 @@ const AWS = require('aws-sdk');
 global.fetch = require('node-fetch');
 
 const STAGE = "test"; // ideally to be read from an environment variable.
-exports.STAGE = STAGE;
-const config = require("../config/credentials.json")[STAGE];
+const config = require("../config/credentials.js").config;
 
 const poolData = {
     UserPoolId: config.userPool,
