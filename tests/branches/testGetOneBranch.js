@@ -17,9 +17,9 @@ var testGetOneBranch = function () {
 }
 
 var getBranch = function (client, callback) {
-    var _id ='caNwGhfus1';
+    var extBranchId ='caNwGhfus1';
     client
-        .invokeApi(null, `/branches/${_id}`, 'GET')
+        .invokeApi(null, `/branches/${extBranchId}`, 'GET')
         .then(function (result) {
             console.log(result.data)
         })

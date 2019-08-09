@@ -14,8 +14,9 @@ var testUpdateBranch = function () {
 
         // GET one record
         function (client, callback) {
+            var extBranchId = 'caNwGhfus1';
             client
-                .invokeApi(null, '/branches/caNwGhfus1', 'GET')
+                .invokeApi(null, `/branches/${extBranchId}`, 'GET')
                 .then(function (result) {
                     if (result.data) {
                         callback(null, client, result.data);

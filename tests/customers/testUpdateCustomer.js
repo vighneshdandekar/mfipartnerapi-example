@@ -14,8 +14,9 @@ var testUpdateCustomer = function () {
 
         // GET one record
         function (client, callback) {
+            var extCustomerId = "Naw80M5g31";
             client
-                .invokeApi(null, '/customers/tOEKWuaVk1', 'GET')
+                .invokeApi(null, `/customers/${extCustomerId}`, 'GET')
                 .then(function (result) {
                     if (result.data) {
                         callback(null, client, result.data);

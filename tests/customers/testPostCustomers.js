@@ -24,23 +24,20 @@ var saveCustomers = function (client, callback) {
     const _customers = [
         {
             extCustomerId: `${_id}1`,
-            partnerId: "f9a8fcc0-aea1-11e9-96bd-3ba433522f42",
-            branchId: "4f754550-baa0-11e9-8572-55b7befcb811",
-            agentId: "ee454990-baa1-11e9-add4-4904f0ea4a91",
+            extBranchId: "caNwGhfus1",
+            extAgentId: "hJ47Wd-oX1",
             name: { first: "Ajay", middle: "", last: "Singh" }
         },
         {
             extCustomerId: `${_id}2`,
-            partnerId: "f9a8fcc0-aea1-11e9-96bd-3ba433522f42",
-            branchId: "4f754550-baa0-11e9-8572-55b7befcb811",
-            agentId: "ee454990-baa1-11e9-add4-4904f0ea4a91",
+            extBranchId: "caNwGhfus1",
+            extAgentId: "hJ47Wd-oX1",
             name: { first: "Ajit", middle: "", last: "Singh" }
         },
         {
             extCustomerId: `${_id}3`,
-            partnerId: "f9a8fcc0-aea1-11e9-96bd-3ba433522f42",
-            branchId: "4f754550-baa0-11e9-8572-55b7befcb811",
-            agentId: "ee454990-baa1-11e9-add4-4904f0ea4a91",
+            extBranchId: "caNwGhfus1",
+            extAgentId: "hJ47Wd-oX1",
             name: { first: "Ajay", middle: "", last: "Kumar" }
         }
     ]

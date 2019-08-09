@@ -12,9 +12,9 @@ var testUpdateAgent = function () {
 
         // GET one record
         function (client, callback) {
-            var _id = 'hJ47Wd-oX1';
+            var extAgentId = 'hJ47Wd-oX1';
             client
-                .invokeApi(null, `/agents/${_id}`, 'GET')
+                .invokeApi(null, `/agents/${extAgentId}`, 'GET')
                 .then(function (result) {
                     if (result.data) {
                         callback(null, client, result.data);
@@ -37,7 +37,7 @@ var testUpdateAgent = function () {
         // UPDATE one record
         function (client, getData, callback) {
             var updateData = {
-                phone: { landline: "", alternateMobile: "", mobile: "2332132234", whatsapp: "", boardNumber: "", extension: "" }
+                phone: { landline: "", alternateMobile: "", mobile: "2332132234", whatsapp: "2332132234", boardNumber: "", extension: "" }
             }
             client
                 .invokeApi(null, `/agents/${getData.extAgentId}`, 'PUT', {}, updateData)

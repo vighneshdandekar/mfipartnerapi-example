@@ -22,9 +22,9 @@ var testPostAgents = function () {
 var saveAgents = function (client, callback) {
     var _id = shortid.generate();
     const _agents = [
-        { extAgentId: `${_id}1`, branchId: '4f754550-baa0-11e9-8572-55b7befcb811', name: { first: "Ajay", middle: "", last: "Singh" } },
-        { extAgentId: `${_id}2`, branchId: '4f754550-baa0-11e9-8572-55b7befcb811', name: { first: "ajit", middle: "", last: "Singh" } },
-        { extAgentId: `${_id}3`, branchId: '4f754550-baa0-11e9-8572-55b7befcb811', name: { first: "Ajay", middle: "", last: "kumar" } }
+        { extAgentId: `${_id}1`, extBranchId: 'caNwGhfus1', name: { first: "Ajay", middle: "", last: "Singh" } },
+        { extAgentId: `${_id}2`, extBranchId: 'caNwGhfus1', name: { first: "ajit", middle: "", last: "Singh" } },
+        { extAgentId: `${_id}3`, extBranchId: 'caNwGhfus1', name: { first: "Ajay", middle: "", last: "kumar" } }
     ]
     client
         .invokeApi(null, '/agents', 'POST', {}, _agents)
