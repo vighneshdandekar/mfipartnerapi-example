@@ -1,7 +1,7 @@
-const authenticatiion = require('../auth/authenticate.js');
+const authenticatiion = require('../../auth/authenticate.js');
 const shortid = require('shortid')
 
-var testPostBranches = function () {
+var testPostCustomers = function () {
     authenticatiion.authenticateClient(function (err, client) {
         if (client) {
             function callback(error, response, body) {
@@ -11,7 +11,7 @@ var testPostBranches = function () {
 
                 }
             }
-            saveBranches(client, callback);
+            saveCustomers(client, callback);
         }
         else {
             console.error(err);
@@ -19,15 +19,30 @@ var testPostBranches = function () {
     })
 }
 
-var saveBranches = function (client, callback) {
+var saveCustomers = function (client, callback) {
     var _id = shortid.generate();
-    const _branches = [
-        {extBranchId: `${_id}1`, name:`Branch - (${_id}1`  },
-        {extBranchId: `${_id}2`, name:`Branch - (${_id}2`  },
-        {extBranchId: `${_id}3`, name:`Branch - (${_id}3`  }
+    const _customers = [
+        {
+            extCustomerId: `${_id}1`,
+            extBranchId: "caNwGhfus1",
+            extAgentId: "hJ47Wd-oX1",
+            name: { first: "Ajay", middle: "", last: "Singh" }
+        },
+        {
+            extCustomerId: `${_id}2`,
+            extBranchId: "caNwGhfus1",
+            extAgentId: "hJ47Wd-oX1",
+            name: { first: "Ajit", middle: "", last: "Singh" }
+        },
+        {
+            extCustomerId: `${_id}3`,
+            extBranchId: "caNwGhfus1",
+            extAgentId: "hJ47Wd-oX1",
+            name: { first: "Ajay", middle: "", last: "Kumar" }
+        }
     ]
     client
-        .invokeApi(null, '/branches', 'POST', {}, _branches)
+        .invokeApi(null, '/customers', 'POST', {}, _customers)
         .then(function (result) {
             console.log(result.data)
         })
@@ -44,4 +59,4 @@ var saveBranches = function (client, callback) {
         });
 }
 
-testPostBranches();
+testPostCustomers();
