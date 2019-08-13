@@ -42,6 +42,9 @@ We recommend using AWS [API Gateway Client](https://www.npmjs.com/package/aws-ap
         }
     }
    ```  
+> If **config/credentials.json** does not exist in your cloned repository, create one.  This file is excluded from the code repository because of the 
+   > confidential nature of credential information.  DO NOT PUBLISH your credentials.json to a public repository.  Keep it safe and protected.
+      
  6. You can now run a basic test case that will check
     1. Your configuration is updated correctly (**config/credentials.json**).
     2. Your credentials are correct and is usable with API server.
