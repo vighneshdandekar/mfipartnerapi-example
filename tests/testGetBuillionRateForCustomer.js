@@ -18,8 +18,14 @@ var testGetRate = function () {
 
 var getRate = function (client, callback) {
     const extCustomerId = "EXTCUST01";
-    client
-    .invokeApi(null, `/customers/${extCustomerId}/bullionrates`, 'GET')
+    const additionalParametrs = {
+        queryParams:{
+            bullionName:'gold',
+            bullionId:"97389e60-9f24-11e9-af59-6586eb183cd1",
+            rateType:'buy'
+        }
+    }    
+    client.invokeApi(null, `/customers/${extCustomerId}/bullionrates`, 'GET',additionalParametrs)
         .then(function (result) {
             console.log(result.data)
         })

@@ -18,8 +18,15 @@ var testGetSipRate = function () {
 
 var getSipRate = function (client, callback) {
     const extCustomerId = "EXTCUST01";
+    const additionalParametrs = {
+        queryParams:{
+            bullionName:'gold',
+            bullionId:"97389e60-9f24-11e9-af59-6586eb183cd1",
+            rateType:'buy'
+        }
+    }
     client
-        .invokeApi(null, `/customers/${extCustomerId}/bullionsiprates`, 'GET')
+        .invokeApi(null, `/customers/${extCustomerId}/bullionsiprates`, 'GET',additionalParametrs)
         .then(function (result) {
             console.log(result.data)
         })
