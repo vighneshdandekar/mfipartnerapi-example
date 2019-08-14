@@ -23,19 +23,41 @@ We recommend using AWS [API Gateway Client](https://www.npmjs.com/package/aws-ap
     npm install  
     ```
  5. Update the **config/credentials.json**.  You would have received a JSON snippet with your specific access credentials.
-   ```js
+    ***
+
+    > Default "Credential Profile" used is "test" and will work correctly with your default credentials.json.  You can setup multiple profiles if system has provided you more than one "credential".  For example to manage Staging Vs. Production APIs.  Profile switching is managed using an environment variable - **mygold_stage** .  You can add this environment variable with appropriate profile name to use a different credential.
+    [How to setup environment variables](https://www.schrodinger.com/kb/1842)
+    
+    ```bash
+    #UNIX, bash shell
+    #To use dev profile in credentials.json (UNIX, bash shell)
+    mygold_stage=dev
+    export mygold_stage
+
+    ```
+
+    ```bash
+    #UNIX, bash shell
+    #To use test profile in credentials.json (This is default)
+    mygold_stage=test
+    export mygold_stage
+
+    ```
+    ***
+
+   ```json
     {
         "dev":{
 
         },    
         "test":{
-            "user":"**AAAAAAA**",
-            "password":"**BBBBBB**",
-            "userPool":"**CCCCCCCC**",
-            "appClient":"**DDDDDDD**",
-            "identityPool":"**EEEEEEEE**",
-            "region":"**FFFFFF**",
-            "basePath":"**https://testapi.mygold.co.in/test/partners/XXXX**"
+            "user":"AAAAAAA",
+            "password":"BBBBBB",
+            "userPool":"CCCCCCCC",
+            "appClient":"DDDDDDD",
+            "identityPool":"EEEEEEEE",
+            "region":"FFFFFF",
+            "basePath":"https://testapi.mygold.co.in/test/partners/XXXX"
         },
         "prod":{
 
