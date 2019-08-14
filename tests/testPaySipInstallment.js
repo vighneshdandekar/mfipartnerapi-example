@@ -1,6 +1,6 @@
 const authenticatiion = require('../auth/authenticate.js');
 
-var testSetupNewSip = function () {
+var testPaySipInstallment = function () {
     authenticatiion.authenticateClient(function (err, client) {
         if (client) {
             function callback(error, response, body) {
@@ -8,7 +8,7 @@ var testSetupNewSip = function () {
                     console.log(JSON.stringify(body));
                 }
             }
-            setupSip(client, callback);
+            sendPaySipInsyallment(client, callback);
         }
         else {
             console.error(err);
@@ -16,30 +16,29 @@ var testSetupNewSip = function () {
     })
 }
 
-const bullion = {
-    id: "97389e60-9f24-11e9-af59-6586eb183cd1",
-    "bullionName": "gold",
-    "bullionShortName": "24KGLD",
-    "purity": "24kt",
-    "status": "available"
-}
-const sip = {
-    "sipName": "Save4Me",
-    "bullion": bullion,
-    "sipInstallmentAmtInr": 1000,
-    "targetQuantityInGm": 10,
-    "startDate": "2019-08-09",
-    "paymentPeriodInMths": 12,
-    "frequency": "fortnightly"
+const sipOrder = {
+    agentId:'EXTAGT02',
+    bullion:{id:"97389e60-9f24-11e9-af59-6586eb183cd1"}, //need a valid bullion id
+    bullionRateId:'63f61be3d62ec6fbe2209dd9cf2217db08db84075fc4fc524a9fc0077dc1fa32', //bullion rateid got through rate booking.
+    sipId:"95a3b92b-be8a-11e9-9c52-e958d197b95c", //id of a setup customer is part of.
+    weightInGm:1,
+    rateInrPerGm:2751,
+    orderTotalValueInr:0,  //can be 0 to skip an installment.                           
+    taxRates:[
+        {
+            taxName: "sgst",
+            taxCode:"sgst",
+            taxRatePercent: 18
+        }        
+    ]
 }
 
-var setupSip = function (client, callback) {
+var sendPaySipInsyallment = function (client, callback) {
     const extCustomerId = "EXTCUST01";
-    const sipData = {}
     client
-        .invokeApi(null, `/customers/${extCustomerId}/sips`,
+        .invokeApi(null, `/customers/${extCustomerId}/siporders`,
             'POST', {},
-            sip
+            sipOrder
         )
         .then(function (result) {
             console.dir(result.data)
@@ -57,4 +56,4 @@ var setupSip = function (client, callback) {
         });
 }
 
-testSetupNewSip();
+testPaySipInstallment();
