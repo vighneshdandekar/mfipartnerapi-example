@@ -17,7 +17,7 @@ var testSetupNewSip = function () {
 }
 
 const bullion = {
-    id: "065ddc30-b526-11e9-8b04-2d003f7641cd",
+    id: "97389e60-9f24-11e9-af59-6586eb183cd1",
     "bullionName": "gold",
     "bullionShortName": "24KGLD",
     "purity": "24kt",
