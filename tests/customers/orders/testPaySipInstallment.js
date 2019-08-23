@@ -21,7 +21,7 @@ var testPaySipInstallment = function () {
                     const aBookedRate = bullionRate[0];
                     if(aBookedRate){
                         const sipOrder = {
-                            agentId:'EXTAGT02',
+                            agent:{extAgentId:'EXTAGT007',name:{first:"Koshi",middle:"Venkateshwara",last:"Shaikh"}}, //An Agent that is not known to MyGold.
                             bullion:bullion, //need a valid bullion id
                             bullionRateId:aBookedRate.id, //bullion rateid got through rate booking.
                             sipId:"95a3b92b-be8a-11e9-9c52-e958d197b95c", //id of a setup customer is part of.
