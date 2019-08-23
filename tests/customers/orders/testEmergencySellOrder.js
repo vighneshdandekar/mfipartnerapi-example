@@ -21,7 +21,7 @@ var testSellOrder = function () {
                     if(aBookedRate){
                         console.dir(aBookedRate);
                         const _order = {
-                            agentId:'EXTAGT02',
+                            agent:{extAgentId:'EXTAGT007',name:{first:"Koshi",middle:"Venkateshwara",last:"Shaikh"}}, //An Agent that is not known to MyGold.
                             bullion:bullion, //need a valid bullion id
                             bullionRateId:aBookedRate.id, //bullion rateid got through rate booking.
                             weightInGm:1,
