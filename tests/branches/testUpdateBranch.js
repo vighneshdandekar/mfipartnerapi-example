@@ -14,7 +14,7 @@ var testUpdateBranch = function () {
 
         // GET one record
         function (client, callback) {
-            var extBranchId = 'caNwGhfus1';
+            var extBranchId = '27';
             client
                 .invokeApi(null, `/branches/${extBranchId}`, 'GET')
                 .then(function (result) {
@@ -39,10 +39,7 @@ var testUpdateBranch = function () {
         // UPDATE one record
         function (client, getData, callback) {
             var updateData = {
-                branchType: "zonal",
-                comissionType: "direct",
-                gst: "11AAAAA1111A1Z1",
-                name: "BIG Bc"
+                'communicationAddress.cityOrVillage': "Uthukottai",
             }
             client
                 .invokeApi(null, `/branches/${getData.extBranchId}`, 'PUT', {}, updateData)

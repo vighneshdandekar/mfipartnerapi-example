@@ -23,24 +23,32 @@ var saveCustomers = function (client, callback) {
     var _id = shortid.generate();
     const _customers = [
         {
-            extCustomerId: `${_id}1`,
-            extBranchId: "caNwGhfus1",
-            extAgentId: "hJ47Wd-oX1",
-            name: { first: "Ajay", middle: "", last: "Singh" }
-        },
-        {
-            extCustomerId: `${_id}2`,
-            extBranchId: "caNwGhfus1",
-            extAgentId: "hJ47Wd-oX1",
-            name: { first: "Ajit", middle: "", last: "Singh" }
-        },
-        {
-            extCustomerId: `${_id}3`,
-            extBranchId: "caNwGhfus1",
-            extAgentId: "hJ47Wd-oX1",
-            name: { first: "Ajay", middle: "", last: "Kumar" }
+            name:{
+                first:'Henry',
+                middle:'Danger',
+                last:'Dillinger'
+            },
+            extCustomerId:'HG1234',
+            dob:"1957-01-05",
+            phone:{mobile:'1223699356'},
+            idProof:[{
+                documentId:"ABC1234XV",
+                documentType: 'passport'
+            }],
+            address:{
+                houseNumber:"1",streetName:"2",district:"Tvm",pinCode:695101,state:"Kerala",country:"India",stdCode:0470
+            },
+            fatherName:{
+                first:"Galvanized",
+                last:"Vulcan"
+            },
+            centerName:"Center",
+            maritalStatus:"married",
+            localLanguage:"marathi",
+            branchId:'EX0567',
+            gender:'m'
         }
-    ]
+]
     client
         .invokeApi(null, '/customers', 'POST', {}, _customers)
         .then(function (result) {
