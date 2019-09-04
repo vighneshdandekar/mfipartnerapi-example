@@ -23,22 +23,30 @@ var saveCustomers = function (client, callback) {
     var _id = shortid.generate();
     const _customers = [
         {
-            extCustomerId: `${_id}1`,
-            extBranchId: "caNwGhfus1",
-            extAgentId: "hJ47Wd-oX1",
-            name: { first: "Ajay", middle: "", last: "Singh" }
-        },
-        {
-            extCustomerId: `${_id}2`,
-            extBranchId: "caNwGhfus1",
-            extAgentId: "hJ47Wd-oX1",
-            name: { first: "Ajit", middle: "", last: "Singh" }
-        },
-        {
-            extCustomerId: `${_id}3`,
-            extBranchId: "caNwGhfus1",
-            extAgentId: "hJ47Wd-oX1",
-            name: { first: "Ajay", middle: "", last: "Kumar" }
+            name:{
+                first:'Barrack',
+                middle:'Trivia',
+                last:'Somtune'
+            },
+            extCustomerId:'BG1234567',
+            dob:"1957-09-05",
+            phone:{mobile:'9923269935'},
+            idProof:[{
+                documentId:"ABC1234XV",
+                documentType: 'passport'
+            }],
+            address:{
+                houseNumber:"1",streetName:"2",district:"Tvm",pinCode:695101,state:"Kerala",country:"India",stdCode:0470
+            },
+            fatherName:{
+                first:"Gopalan",
+                last:"Velu"
+            },
+            centerName:"Center",
+            maritalStatus:"married",
+            localLanguage:"marathi",
+            branchId:'EX0567',
+            gender:'m'
         }
     ]
     client
@@ -54,7 +62,7 @@ var saveCustomers = function (client, callback) {
                     data: result.response.data
                 });
             } else {
-                console.log(result.message);
+                console.error(result.message);
             }
         });
 }
