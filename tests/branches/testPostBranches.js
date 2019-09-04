@@ -23,7 +23,7 @@ var saveBranches = function (client, callback) {
     var _id = shortid.generate();
     const _branches = [
         {
-            extBranchId:'EXTB12341212',
+            extBranchId:'EXTB123412123',
             branchType:'district',
             name:'District Branch 12345',
             communicationAddress: {

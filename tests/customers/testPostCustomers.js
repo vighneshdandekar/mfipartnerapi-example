@@ -24,13 +24,13 @@ var saveCustomers = function (client, callback) {
     const _customers = [
         {
             name:{
-                first:'Henry',
-                middle:'Danger',
-                last:'Dillinger'
+                first:'Barrack',
+                middle:'Trivia',
+                last:'Somtune'
             },
-            extCustomerId:'HG1234',
-            dob:"1957-01-05",
-            phone:{mobile:'1223699356'},
+            extCustomerId:'BG1234567',
+            dob:"1957-09-05",
+            phone:{mobile:'9923269935'},
             idProof:[{
                 documentId:"ABC1234XV",
                 documentType: 'passport'
@@ -39,8 +39,8 @@ var saveCustomers = function (client, callback) {
                 houseNumber:"1",streetName:"2",district:"Tvm",pinCode:695101,state:"Kerala",country:"India",stdCode:0470
             },
             fatherName:{
-                first:"Galvanized",
-                last:"Vulcan"
+                first:"Gopalan",
+                last:"Velu"
             },
             centerName:"Center",
             maritalStatus:"married",
@@ -48,7 +48,7 @@ var saveCustomers = function (client, callback) {
             branchId:'EX0567',
             gender:'m'
         }
-]
+    ]
     client
         .invokeApi(null, '/customers', 'POST', {}, _customers)
         .then(function (result) {
@@ -62,7 +62,7 @@ var saveCustomers = function (client, callback) {
                     data: result.response.data
                 });
             } else {
-                console.log(result.message);
+                console.error(result.message);
             }
         });
 }

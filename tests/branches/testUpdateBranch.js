@@ -11,10 +11,9 @@ var testUpdateBranch = function () {
                 callback(err, client)
             })
         },
-
         // GET one record
         function (client, callback) {
-            var extBranchId = '27';
+            var extBranchId = 'EXTB123412123';
             client
                 .invokeApi(null, `/branches/${extBranchId}`, 'GET')
                 .then(function (result) {
@@ -38,11 +37,9 @@ var testUpdateBranch = function () {
 
         // UPDATE one record
         function (client, getData, callback) {
-            var updateData = {
-                'communicationAddress.cityOrVillage': "Uthukottai",
-            }
+            getData.communicationAddress.cityOrVillage = "Bavdhan"
             client
-                .invokeApi(null, `/branches/${getData.extBranchId}`, 'PUT', {}, updateData)
+                .invokeApi(null, `/branches/${getData.extBranchId}`, 'PUT', {}, getData)
                 .then(function (result) {
                     if (result.data) {
                         callback(null, result.data);
