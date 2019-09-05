@@ -2,8 +2,17 @@ const authenticatiion = require('../../../auth/authenticate.js');
 const async = require('async');
 const bookbullionrate = require('./bookbullionrate');
 var testPaySipInstallment = function () {
-    const extCustomerId = "EXTCUST01";
-    const bullion = {id:"97389e60-9f24-11e9-af59-6586eb183cd1"}
+    const extCustomerId = "BG1234567-000";
+    const bullion = {
+        id : "85133eb0-cf13-11e9-93fb-afb974e4a37c",
+        bullionShortName : "GD24K - 999",
+        bullionName : "Gold",
+        purity : {
+            displayValue : "24Kt - (99.9%)",
+            value : "999"
+        },
+        status : "available"
+    }
     authenticatiion.authenticateClient(function (err, client) {
         if (client) {
             async.waterfall([
@@ -22,11 +31,13 @@ var testPaySipInstallment = function () {
                     if(aBookedRate){
                         const _order = {
                             agent:{extAgentId:'EXTAGT007',name:{first:"Koshi",middle:"Venkateshwara",last:"Shaikh"}}, //An Agent that is not known to MyGold.
-                            bullion:bullion, //need a valid bullion id
+                            bullion:bullion,
                             bullionRateId:aBookedRate.id, //bullion rateid got through rate booking.
                             weightInGm:1,
                             rateInrPerGm:2751,
-                            orderTotalValueInr:1000,  //can be 0 to skip an installment.                           
+                            orderTotalValueInr:1000,
+                            buyType:'FixedAmount',
+                            test:"1234",
                             taxRates:[
                                 {
                                     taxName: "sgst",

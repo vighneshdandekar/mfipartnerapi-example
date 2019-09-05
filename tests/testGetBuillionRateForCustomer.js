@@ -17,11 +17,11 @@ var testGetRate = function () {
 }
 
 var getRate = function (client, callback) {
-    const extCustomerId = "EXTCUST01";
+    const extCustomerId = "BG1234567-001";
     const additionalParametrs = {
         queryParams:{
             bullionName:'gold',
-            bullionId:"97389e60-9f24-11e9-af59-6586eb183cd1",
+            bullionId:"85133eb0-cf13-11e9-93fb-afb974e4a37c",
             rateType:'buy'
         }
     }    

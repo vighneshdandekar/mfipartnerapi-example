@@ -21,34 +21,39 @@ var testPostCustomers = function () {
 
 var saveCustomers = function (client, callback) {
     var _id = shortid.generate();
-    const _customers = [
-        {
-            name:{
-                first:'Barrack',
-                middle:'Trivia',
-                last:'Somtune'
-            },
-            extCustomerId:'BG1234567',
-            dob:"1957-09-05",
-            phone:{mobile:'9923269935'},
-            idProof:[{
-                documentId:"ABC1234XV",
-                documentType: 'passport'
-            }],
-            address:{
-                houseNumber:"1",streetName:"2",district:"Tvm",pinCode:695101,state:"Kerala",country:"India",stdCode:0470
-            },
-            fatherName:{
-                first:"Gopalan",
-                last:"Velu"
-            },
-            centerName:"Center",
-            maritalStatus:"married",
-            localLanguage:"marathi",
-            branchId:'EX0567',
-            gender:'m'
-        }
-    ]
+    const _customers = []
+    for(var i = 0 ; i < 10; i++){
+        var _id = shortid.generate();
+        _customers.push(
+            {
+                name:{
+                    first:`Barrack ${_id}`,
+                    middle:'Trivia',
+                    last:'Somtune'
+                },
+                extCustomerId:`BG1234567-00${i}`,
+                dob:"1957-09-05",
+                phone:{mobile:`992326993${i}`},
+                idProof:[{
+                    documentId:`ABC1234XV${i}`,
+                    documentType: 'passport'
+                }],
+                address:{
+                    houseNumber:"1",streetName:"2",district:"Tvm",pinCode:695101,state:"Kerala",country:"India",stdCode:0470
+                },
+                fatherName:{
+                    first:"Groverty ",
+                    last:`${_id}`
+                },
+                centerName:"Center",
+                maritalStatus:"married",
+                localLanguage:"Tamil",
+                branchId:'27',
+                gender:'m'
+            }            
+        )
+    }
+
     client
         .invokeApi(null, '/customers', 'POST', {}, _customers)
         .then(function (result) {

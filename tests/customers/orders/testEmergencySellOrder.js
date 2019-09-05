@@ -2,8 +2,18 @@ const authenticatiion = require('../../../auth/authenticate.js');
 const async = require('async');
 const bookbullionrate = require('./bookbullionrate');
 var testSellOrder = function () {
-    const extCustomerId = "EXTCUST01";
-    const bullion = {id:"8a7243a0-b448-11e9-90e1-1d095a97490e"}
+    const extCustomerId = "BG1234567-000";
+    const bullion = {
+        id : "85133eb0-cf13-11e9-93fb-afb974e4a37c",
+        bullionShortName : "GD24K - 999",
+        bullionName : "Gold",
+        purity : {
+            displayValue : "24Kt - (99.9%)",
+            value : "999"
+        },
+        status : "available"
+    }
+    
     authenticatiion.authenticateClient(function (err, client) {
         if (client) {
             async.waterfall([
@@ -27,7 +37,7 @@ var testSellOrder = function () {
                             weightInGm:1,
                             rateInrPerGm:4800,
                             orderTotalValueInr:4800,  //can be 0 to skip an installment.      
-                            sellType:"emergencySell",                     
+                            sellType:"Emergency",                     
                             taxRates:[
                                 {
                                     taxName: "sgst",

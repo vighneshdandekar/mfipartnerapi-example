@@ -14,7 +14,7 @@ var testUpdateCustomer = function () {
 
         // GET one record
         function (client, callback) {
-            var extCustomerId = "BG1234567";
+            var extCustomerId = "BG1234567-000";
             client
                 .invokeApi(null, `/customers/${extCustomerId}`, 'GET')
                 .then(function (result) {
@@ -45,9 +45,11 @@ var testUpdateCustomer = function () {
                     accountName: "Aneel",
                     bankName: "ICIC",
                     branchName: "Nellore"
-                }
+                },
+                branchId:"27"
             }
             getData.bankAccount = updateData.bankAccount;
+            getData.branchId = updateData.branchId;
             client
                 .invokeApi(null, `/customers/${getData.extCustomerId}`, 'PUT', {}, getData)
                 .then(function (result) {

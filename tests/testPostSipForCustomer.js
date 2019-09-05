@@ -17,12 +17,16 @@ var testSetupNewSip = function () {
 }
 
 const bullion = {
-    id: "97389e60-9f24-11e9-af59-6586eb183cd1",
-    "bullionName": "gold",
-    "bullionShortName": "24KGLD",
-    "purity": "24kt",
-    "status": "available"
+    id : "85133eb0-cf13-11e9-93fb-afb974e4a37c",
+    bullionShortName : "GD24K - 999",
+    bullionName : "Gold",
+    purity : {
+        displayValue : "24Kt - (99.9%)",
+        value : "999"
+    },
+    status : "available"
 }
+
 const sip = {
     "sipName": "Save4Me",
     "bullion": bullion,
@@ -34,7 +38,7 @@ const sip = {
 }
 
 var setupSip = function (client, callback) {
-    const extCustomerId = "EXTCUST01";
+    const extCustomerId = "BG1234567-000";
     const sipData = {}
     client
         .invokeApi(null, `/customers/${extCustomerId}/sips`,
