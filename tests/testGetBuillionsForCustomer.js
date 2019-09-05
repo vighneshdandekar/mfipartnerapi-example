@@ -17,7 +17,7 @@ var testGetRate = function () {
 }
 
 var getRate = function (client, callback) {
-    const extCustomerId = "EXTCUST01";
+    const extCustomerId = "BG1234567-000";
     client.invokeApi(null, `/customers/${extCustomerId}/bullions`, 'GET',{})
         .then(function (result) {
             console.log(result.data)
