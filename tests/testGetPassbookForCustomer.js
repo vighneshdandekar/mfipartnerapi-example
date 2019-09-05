@@ -17,7 +17,7 @@ var testGetRate = function () {
 }
 
 var getRate = function (client, callback) {
-    const extCustomerId = "EXTCUST01";
+    const extCustomerId = "BG1234567-000";
     const additionalParametrs = {}    
     client.invokeApi(null, `/customers/${extCustomerId}/passbook`, 'GET',additionalParametrs)
         .then(function (result) {

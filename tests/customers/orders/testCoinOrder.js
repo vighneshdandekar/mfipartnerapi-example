@@ -2,8 +2,17 @@ const authenticatiion = require('../../../auth/authenticate.js');
 const async = require('async');
 const bookbullionrate = require('./bookbullionrate');
 var testPaySipInstallment = function () {
-    const extCustomerId = "EXTCUST01";
-    const bullion = {id:"97389e60-9f24-11e9-af59-6586eb183cd1"}
+    const extCustomerId = "BG1234567-000";
+    const bullion = {
+        id : "85133eb0-cf13-11e9-93fb-afb974e4a37c",
+        bullionShortName : "GD24K - 999",
+        bullionName : "Gold",
+        purity : {
+            displayValue : "24Kt - (99.9%)",
+            value : "999"
+        },
+        status : "available"
+    }
     authenticatiion.authenticateClient(function (err, client) {
         if (client) {
             async.waterfall([
@@ -37,12 +46,7 @@ var testPaySipInstallment = function () {
                             coinInventoryIds: [
                                 {
                                   "coinSpecification": {
-                                    "bullionDetails": {
-                                      "bullionName": "string",
-                                      "bullionShortName": "string",
-                                      "purity": "24kt",
-                                      "status": "available"
-                                    },
+                                    "bullionDetails": bullion,
                                     "design": "religious",
                                     "name": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                                     "weightInGm": 0,
