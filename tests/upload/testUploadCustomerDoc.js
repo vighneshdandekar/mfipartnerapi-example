@@ -1,6 +1,6 @@
 
 const authenticatiion = require('../../auth/authenticate.js');
-const extCustomerId = 'BG1234567-000';
+const extCustomerId = 'BMFIBR001CST002';
 const uploadfilePath = 'tests/res/customer.png';
 const uploadclient = require('./uploadclient');
 (
@@ -17,6 +17,6 @@ const uploadclient = require('./uploadclient');
     process.exit(0)
 })
 .catch(e=>{
-    console.error(e.message);
+    console.error(e.response.data);
 })
 

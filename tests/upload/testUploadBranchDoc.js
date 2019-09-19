@@ -1,6 +1,6 @@
 
 const authenticatiion = require('../../auth/authenticate.js');
-const extBranchId = 'BR001';
+const extBranchId = 'BMFIBR001';
 const uploadfilePath = 'tests/res/branch.png';
 const uploadclient = require('./uploadclient');
 (
@@ -17,6 +17,6 @@ const uploadclient = require('./uploadclient');
     process.exit(0)
 })
 .catch(e=>{
-    console.error(e.message);
+    console.error(e.response.data);
 })
 

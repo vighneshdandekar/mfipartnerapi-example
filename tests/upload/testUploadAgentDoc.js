@@ -1,6 +1,6 @@
 
 const authenticatiion = require('../../auth/authenticate.js');
-const extAgentId = 'AG001';
+const extAgentId = 'BMFIBR001AG044';
 const uploadclient = require('./uploadclient');
 const uploadfilePath = 'tests/res/agent.png';
 (
@@ -17,6 +17,6 @@ const uploadfilePath = 'tests/res/agent.png';
     process.exit(0)
 })
 .catch(e=>{
-    console.error(e.message);
+    console.error(e.response.data);
 })
 
