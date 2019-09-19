@@ -100,3 +100,21 @@ exports.authenticateClient = function (callback) {
         })
     })
 }
+
+exports.authenticateClientAsync = async function(){
+    return new Promise((resolve,reject)=>{
+        try{
+            exports.authenticateClient(function(err,client){
+                if(err || !client){
+                    reject(err ? err : "Unable to authenticate");
+                }
+                else{
+                    resolve(client);
+                }
+            })
+        }
+        catch(e){
+            reject(e);
+        }
+    })
+}
