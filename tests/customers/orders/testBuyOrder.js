@@ -2,16 +2,13 @@ const authenticatiion = require('../../../auth/authenticate.js');
 const async = require('async');
 const bookbullionrate = require('./bookbullionrate');
 var testPaySipInstallment = function () {
-    const extCustomerId = "BG1234567-000";
+    const extCustomerId = "BG1234567-007";
     const bullion = {
-        id : "85133eb0-cf13-11e9-93fb-afb974e4a37c",
-        bullionShortName : "GD24K - 999",
-        bullionName : "Gold",
-        purity : {
-            displayValue : "24Kt - (99.9%)",
-            value : "999"
-        },
-        status : "available"
+        id: '85133eb0-cf13-11e9-93fb-afb974e4a37c',
+        bullionShortName: 'GD24K - 999',
+        bullionName: 'Gold',
+        purity: { displayValue: '24Kt - (99.9%)', value: '999' },
+        status: 'available'
     }
     authenticatiion.authenticateClient(function (err, client) {
         if (client) {
@@ -20,7 +17,7 @@ var testPaySipInstallment = function () {
                     bookbullionrate.bookBullionRate(
                                                 client,
                                                 extCustomerId,
-                                                bullion.name,
+                                                bullion.bullionName,
                                                 bullion.id,
                                                 "buy",
                                                 next);
@@ -33,9 +30,9 @@ var testPaySipInstallment = function () {
                             agent:{extAgentId:'EXTAGT007',name:{first:"Koshi",middle:"Venkateshwara",last:"Shaikh"}}, //An Agent that is not known to MyGold.
                             bullion:bullion,
                             bullionRateId:aBookedRate.id, //bullion rateid got through rate booking.
-                            weightInGm:1,
+                            weightInGm:10000,
                             rateInrPerGm:2751,
-                            orderTotalValueInr:1000,
+                            orderTotalValueInr:10000000,
                             buyType:'FixedAmount',
                             test:"1234",
                             taxRates:[
