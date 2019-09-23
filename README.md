@@ -7,7 +7,7 @@ We recommend using AWS [API Gateway Client](https://www.npmjs.com/package/aws-ap
 
  * You will get a short JSON snippet with all required IDs and credentials.
  * This snippet need to be used to update config/credentials.json
- * For API Reference please [check this link](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.1)
+ * For API Reference please [check this link](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.0)
  * The example project is written in Javascript targetting [nodejs](https://nodejs.org/en/) runtime.  It uses [aws-sdk](https://aws.amazon.com/sdk-for-node-js/) for authentication as well as communication with APIs.
  * The same techniques can be implemented in any programming language using many other appropriate client libraries capable of authenticated REST API Calls.
  
@@ -112,7 +112,7 @@ authenticatiion.authenticateClient(function (err, client) {
 ```
 ### Using client to access API Methods
 
-Using the authenticated client to fetch data from REST API endpoint.  Here the code here is using [/branches](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.1#/Branch/getBranches) api call to fetch back all existing branches inside your MFI organization.
+Using the authenticated client to fetch data from REST API endpoint.  Here the code here is using [/branches](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.0#/Branch/getBranches) api call to fetch back all existing branches inside your MFI organization.
 
 ```js
     client
@@ -133,7 +133,7 @@ Using the authenticated client to fetch data from REST API endpoint.  Here the c
         });
 ```
 
-Here the code here is using [/branches](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.1#/Branch/addBranches) api call to upload (POST) branches to your MFI organization.
+Here the code here is using [/branches](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.0#/Branch/addBranches) api call to upload (POST) branches to your MFI organization.
 
 ```js
     var _id = shortid.generate();
