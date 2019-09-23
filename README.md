@@ -7,7 +7,7 @@ We recommend using AWS [API Gateway Client](https://www.npmjs.com/package/aws-ap
 
  * You will get a short JSON snippet with all required IDs and credentials.
  * This snippet need to be used to update config/credentials.json
- * For API Reference please [check this link](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.1)
+ * For API Reference please [check this link](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.0)
  * The example project is written in Javascript targetting [nodejs](https://nodejs.org/en/) runtime.  It uses [aws-sdk](https://aws.amazon.com/sdk-for-node-js/) for authentication as well as communication with APIs.
  * The same techniques can be implemented in any programming language using many other appropriate client libraries capable of authenticated REST API Calls.
  
@@ -112,7 +112,7 @@ authenticatiion.authenticateClient(function (err, client) {
 ```
 ### Using client to access API Methods
 
-Using the authenticated client to fetch data from REST API endpoint.  Here the code here is using [/branches](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.1#/Branch/getBranches) api call to fetch back all existing branches inside your MFI organization.
+Using the authenticated client to fetch data from REST API endpoint.  Here the code here is using [/branches](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.0#/Branch/getBranches) api call to fetch back all existing branches inside your MFI organization.
 
 ```js
     client
@@ -133,7 +133,7 @@ Using the authenticated client to fetch data from REST API endpoint.  Here the c
         });
 ```
 
-Here the code here is using [/branches](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.1#/Branch/addBranches) api call to upload (POST) branches to your MFI organization.
+Here the code here is using [/branches](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.0#/Branch/addBranches) api call to upload (POST) branches to your MFI organization.
 
 ```js
     var _id = shortid.generate();
@@ -162,6 +162,75 @@ Here the code here is using [/branches](https://app.swaggerhub.com/apis-docs/gol
             }
         });
 ```
+### Using client to Upload a document.
+
+For certain entities there could be one or many binary attachments.  For example a customer can have photo or scanned identity
+documents attached.  You can use corresponding API calls to upload/retrive such documents.
+
+#### [Customer](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.0#/Customer/uploadCustomerDoc)
+
+Authorize secure upload of a customer's binary document such a photograpgh, or identification proof scan        
+to the storage.  These uploads are a two step process.  In the first step an authorization is completed.
+On successful authorization caller will receive an upload endpoint (URL).  A 'PUT' operation is expected to
+this URL with the file binary data.  
+
+We highly recommend using the client library [uploadclient.js](https://github.com/goldsip/mfipartnerapi-example/blob/master/tests/upload/uploadclient.js) for uploads.  If you are rolling your own upload 
+routine using this API the following parameter is important.
+
+UploadDocRequest.type should be 'CUSTOMER_DOC'
+
+
+[Example](https://github.com/goldsip/mfipartnerapi-example/blob/master/tests/upload/testUploadCustomerDoc.js)
+
+```js
+        let apiClient = await authenticatiion.authenticateClientAsync();                
+        let result = await uploadclient.uploadClientDocument(apiClient,extCustomerId,uploadfilePath);
+        console.log(result);
+```
+
+
+#### [Branch](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.0#/Upload/uploadBranchDoc)
+
+Authorize secure upload of a branch's binary document such an identification proof scan        
+to the storage.  These uploads are a two step process.  In the first step an authorization is completed.
+On successful authorization caller will receive an upload endpoint (URL).  A 'PUT' operation is expected to
+this URL with the file binary data.  
+
+We highly recommend using the client library [uploadclient.js](https://github.com/goldsip/mfipartnerapi-example/blob/master/tests/upload/uploadclient.js) for uploads.  If you are rolling your own upload 
+routine using this API the following parameter is important.
+
+UploadDocRequest.type should be 'BRANCH_DOC'
+
+
+[Example](https://github.com/goldsip/mfipartnerapi-example/blob/master/tests/upload/testUploadBranchDoc.js)
+
+```js
+    let apiClient = await authenticatiion.authenticateClientAsync();                
+    let result = await uploadclient.uploadBranchDocument(apiClient,extBranchId,uploadfilePath);
+    console.log(result);    
+```
+
+#### [Agent](https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.0#/Upload/uploadAgentDoc)
+
+Authorize secure upload of a agent's binary document such a photograpgh, or identification proof scan        
+to the storage.  These uploads are a two step process.  In the first step an authorization is completed.
+On successful authorization caller will receive an upload endpoint (URL).  A 'PUT' operation is expected to
+this URL with the file binary data.  
+
+We highly recommend using the client library [uploadclient.js](https://github.com/goldsip/mfipartnerapi-example/blob/master/tests/upload/uploadclient.js) for uploads.  If you are rolling your own upload 
+routine using this API the following parameter is important.
+
+UploadDocRequest.type should be 'AGENT_DOC'
+
+
+[Example](https://github.com/goldsip/mfipartnerapi-example/blob/master/tests/upload/testUploadAgentDoc.js)
+
+```js
+    let apiClient = await authenticatiion.authenticateClientAsync();                
+    let result = await uploadclient.uploadAgentDocument(apiClient,extAgentId,uploadfilePath);
+    console.log(result);
+```
+
 
 
 
