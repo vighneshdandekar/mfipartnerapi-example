@@ -1,4 +1,4 @@
-const authenticatiion = require('../auth/authenticate.js');
+const authenticatiion = require('../../auth/authenticate.js');
 
 const async = require('async');
 

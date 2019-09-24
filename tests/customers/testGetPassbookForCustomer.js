@@ -1,4 +1,4 @@
-const authenticatiion = require('../auth/authenticate.js');
+const authenticatiion = require('../../auth/authenticate.js');
 
 var testGetRate = function () {
     authenticatiion.authenticateClient(function (err, client) {
@@ -17,15 +17,9 @@ var testGetRate = function () {
 }
 
 var getRate = function (client, callback) {
-    const extCustomerId = "BG1234567-001";
-    const additionalParametrs = {
-        queryParams:{
-            bullionName:'gold',
-            bullionId:"85133eb0-cf13-11e9-93fb-afb974e4a37c",
-            rateType:'buy'
-        }
-    }    
-    client.invokeApi(null, `/customers/${extCustomerId}/bullionrates`, 'GET',additionalParametrs)
+    const extCustomerId = "47054";
+    const additionalParametrs = {}    
+    client.invokeApi(null, `/customers/${extCustomerId}/passbook`, 'GET',additionalParametrs)
         .then(function (result) {
             console.log(result.data)
         })
