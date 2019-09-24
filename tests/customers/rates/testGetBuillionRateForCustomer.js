@@ -1,6 +1,6 @@
-const authenticatiion = require('../auth/authenticate.js');
+const authenticatiion = require('../../../auth/authenticate.js');
 
-var testGetSipRate = function () {
+var testGetRate = function () {
     authenticatiion.authenticateClient(function (err, client) {
         if (client) {
             function callback(error, response, body) {
@@ -8,7 +8,7 @@ var testGetSipRate = function () {
                     console.log(JSON.stringify(body));
                 }
             }
-            getSipRate(client, callback);
+            getRate(client, callback);
         }
         else {
             console.error(err);
@@ -16,17 +16,16 @@ var testGetSipRate = function () {
     })
 }
 
-var getSipRate = function (client, callback) {
-    const extCustomerId = "EXTCUST01";
+var getRate = function (client, callback) {
+    const extCustomerId = "DVMFIBR001CST001";
     const additionalParametrs = {
         queryParams:{
-            bullionName:'gold',
-            bullionId:"97389e60-9f24-11e9-af59-6586eb183cd1",
+            bullionName:'Gold',
+            bullionId:"G1",
             rateType:'buy'
         }
-    }
-    client
-        .invokeApi(null, `/customers/${extCustomerId}/bullionsiprates`, 'GET',additionalParametrs)
+    }    
+    client.invokeApi(null, `/customers/${extCustomerId}/bullionrates`, 'GET',additionalParametrs)
         .then(function (result) {
             console.log(result.data)
         })
@@ -43,4 +42,4 @@ var getSipRate = function (client, callback) {
         });
 }
 
-testGetSipRate();
+testGetRate();

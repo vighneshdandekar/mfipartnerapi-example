@@ -23,7 +23,7 @@ var testPaySipInstallment = function () {
                                                 extCustomerId,
                                                 bullion.name,
                                                 bullion.id,
-                                                "buy",
+                                                "sipBuy",
                                                 next);
                 },
                 function(bullionRate,next){
@@ -38,13 +38,7 @@ var testPaySipInstallment = function () {
                             weightInGm:1,
                             rateInrPerGm:2751,
                             orderTotalValueInr:1000,  //can be 0 to skip an installment.                           
-                            taxRates:[
-                                {
-                                    taxName: "sgst",
-                                    taxCode:"sgst",
-                                    taxRatePercent: 18
-                                }        
-                            ]
+                            taxRates:bullionRate.taxRates
                         }
                         next(null,sipOrder);                        
                         
