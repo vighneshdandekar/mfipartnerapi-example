@@ -6,6 +6,6 @@ const extCustomerId = 'BMFIBR001CST001';
     return result;
 })()
 .then(result=>{
-    console.log(result);
+    console.log(result.data);
     process.exit(0);
 })

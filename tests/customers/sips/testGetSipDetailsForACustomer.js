@@ -7,7 +7,7 @@ const sipId = "9c130a00-deae-11e9-8508-fdeb022e59bb";
     return result;
 })()
 .then(result=>{
-    console.log(result);
+    console.log(result.data);
     process.exit(0);
 })
 .catch(e=>{
