@@ -2,10 +2,10 @@ const authenticatiion = require('../../../auth/authenticate.js');
 const async = require('async');
 const bookbullionrate = require('./bookbullionrate');
 var testPaySipInstallment = function () {
-    const extCustomerId = "BG1234567-000";
-    const sipId = "6b084c90-cf9a-11e9-a718-4f318b4fb341";
+    const extCustomerId = "DVMFIBR002CST001";
+    const sipId = "18e1cacb-df4c-11e9-8cf2-bf3bc5ab95d9";
     const bullion = {
-        id : "85133eb0-cf13-11e9-93fb-afb974e4a37c",
+        id : "G1",
         bullionShortName : "GD24K - 999",
         bullionName : "Gold",
         purity : {
@@ -35,8 +35,6 @@ var testPaySipInstallment = function () {
                             bullion:bullion, //need a valid bullion id
                             bullionRateId:aBookedRate.id, //bullion rateid got through rate booking.
                             sipId:sipId, //id of a setup customer is part of.
-                            weightInGm:1,
-                            rateInrPerGm:2751,
                             orderTotalValueInr:1000,  //can be 0 to skip an installment.                           
                             taxRates:bullionRate.taxRates
                         }

@@ -17,7 +17,7 @@ var testSetupNewSip = function () {
 }
 
 const bullion = {
-    id : "85133eb0-cf13-11e9-93fb-afb974e4a37c",
+    id : "G1",
     bullionShortName : "GD24K - 999",
     bullionName : "Gold",
     purity : {
@@ -38,7 +38,7 @@ const sip = {
 }
 
 var setupSip = function (client, callback) {
-    const extCustomerId = "BG1234567-000";
+    const extCustomerId = "BMFIBR001CST001";
     const sipData = {}
     client
         .invokeApi(null, `/customers/${extCustomerId}/sips`,
