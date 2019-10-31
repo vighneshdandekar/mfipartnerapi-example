@@ -22,21 +22,27 @@ var testPostCustomers = function () {
 var saveCustomers = function (client, callback) {
     var _id = shortid.generate();
     const _customers = []
-    for(var i = 0 ; i < 10; i++){
+    for(var i = 0 ; i < 1; i++){
         var _id = shortid.generate();
         _customers.push(
             {
                 name:{
-                    first:`Barrack ${_id}`,
+                    first:`Vighnesh ${_id}`,
                     middle:'Trivia',
                     last:'Somtune'
                 },
-                extCustomerId:`BG1234567-00${i}`,
+                extCustomerId:`VGNEW11234-00${i}`,
                 dob:"1957-09-05",
                 phone:{mobile:`992326993${i}`},
                 idProof:[{
                     documentId:`ABC1234XV${i}`,
-                    documentType: 'passport'
+                    documentType: 'passport',
+                    documentImage:{
+                        id:'1234',
+                        uri:'/customers/uploaded/ce65ad07-a0b1-452b-ba19-7cea4f149360'
+                    },
+                    issueDate: new Date(),
+                    validUntil: new Date()
                 }],
                 address:{
                     houseNumber:"1",streetName:"2",district:"Tvm",pinCode:695101,state:"Kerala",country:"India",stdCode:0470
@@ -48,7 +54,7 @@ var saveCustomers = function (client, callback) {
                 centerName:"Center",
                 maritalStatus:"married",
                 localLanguage:"Tamil",
-                branchId:'27',
+                branchId:'EXTB123412123',
                 gender:'m'
             }            
         )
