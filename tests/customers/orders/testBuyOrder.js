@@ -1,10 +1,12 @@
-const authenticatiion = require('../../../auth/authenticate.js');
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
+const config = require('../../../config/credentials.json')[STAGE];
+const DvaraGold = require('../../../cliient/dvaragold');
 const async = require('async');
 const bookbullionrate = require('./bookbullionrate');
-var testPaySipInstallment = function () {
-    const extCustomerId = "BMFIBR001CST001";
+var testPaySipInstallment = async function () {
+    const extCustomerId = "1602025234183001";
     const bullion = {
-        "id" : "G1",
+        "id" : "G3",
         "bullionShortName" : "G24K",
         "bullionName" : "Gold",
         "purity" : {
@@ -13,7 +15,7 @@ var testPaySipInstallment = function () {
         },
         "status" : "available"
     }
-    
+    let client = DvaraGold.Client(config)
     authenticatiion.authenticateClient(function (err, client) {
         if (client) {
             async.waterfall([
@@ -34,10 +36,10 @@ var testPaySipInstallment = function () {
                             agent:{extAgentId:'EXTAGT007',name:{first:"Koshi",middle:"Venkateshwara",last:"Shaikh"}}, //An Agent that is not known to MyGold.
                             bullion:bullion,
                             bullionRateId:aBookedRate.id, //bullion rateid got through rate booking.
-                            //weightInGm:10,
+                            weightInGm:10,
                             rateInrPerGm:2751,
-                            orderTotalValueInr:10000000,
-                            buyType:'FixedAmount',
+                            //orderTotalValueInr:1000,
+                            buyType:'FixedWeight',
                             test:"1234",
                             taxRates:aBookedRate.taxRates
                         }
