@@ -151,10 +151,10 @@ class Client{
             });
         })
     }
-    createAdvanceBuyOrder(customerId,order){
+    createInstantBuyOrder(customerId,order){
         return new Promise((resolve,reject)=>{
             this._client
-            .invokeApi(null, `/customers/${customerId}/advanceorders/buy`,
+            .invokeApi(null, `/customers/${customerId}/instantorders/buy`,
                 'POST', {},
                 order
             )
@@ -167,10 +167,10 @@ class Client{
     
         })
     }    
-    createAdvanceSellOrder(customerId,order){
+    createInstntSellOrder(customerId,order){
         return new Promise((resolve,reject)=>{
             this._client
-            .invokeApi(null, `/customers/${customerId}/advanceorders/sell`,
+            .invokeApi(null, `/customers/${customerId}/instantorders/sell`,
                 'POST', {},
                 order
             )
@@ -183,10 +183,10 @@ class Client{
     
         })
     }    
-    cancelAdvanceOrder(customerId,orderId, cancellationReason){
+    cancelInstantOrder(customerId,orderId, cancellationReason){
         return new Promise((resolve,reject)=>{
             this._client
-            .invokeApi(null, `/customers/${customerId}/advanceorders/cancel`,
+            .invokeApi(null, `/customers/${customerId}/instantorders/cancel`,
                 'POST', {},
                 {
                     id:orderId,
@@ -202,10 +202,10 @@ class Client{
     
         })
     }    
-    getAdvanceOrder(customerId,orderId){
+    getInstantOrder(customerId,orderId){
         return new Promise((resolve,reject)=>{
             this._client
-            .invokeApi(null, `/customers/${customerId}/advanceorders/${orderId}`, 'GET')
+            .invokeApi(null, `/customers/${customerId}/instantorders/${orderId}`, 'GET')
             .then(function (result) {
                 resolve(result.data)
             })
@@ -214,10 +214,10 @@ class Client{
             });
         })
     }
-    getAdvanceOrderList(customerId,orderId){
+    getInstantOrderList(customerId,orderId){
         return new Promise((resolve,reject)=>{
             this._client
-            .invokeApi(null, `/customers/${customerId}/advanceorders`, 'GET')
+            .invokeApi(null, `/customers/${customerId}/instantorders`, 'GET')
             .then(function (result) {
                 resolve(result.data)
             })

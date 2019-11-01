@@ -17,11 +17,11 @@ var testGetRate = function () {
 }
 
 var getRate = function (client, callback) {
-    const extCustomerId = "DVMFIBR001CST001";
+    const extCustomerId = "1003194509808001";
     const additionalParametrs = {
         queryParams:{
             bullionName:'Gold',
-            bullionId:"G1",
+            bullionId:"G3",
             rateType:'buy'
         }
     }    

@@ -1,6 +1,6 @@
 
 const authenticatiion = require('../../auth/authenticate.js');
-const extCustomerId = 'BMFIBR001CST002';
+const extCustomerId = 'BG1234567-000';
 const uploadfilePath = 'tests/res/customer.png';
 const uploadclient = require('./uploadclient');
 (

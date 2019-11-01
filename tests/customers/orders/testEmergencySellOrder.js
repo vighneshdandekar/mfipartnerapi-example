@@ -2,9 +2,9 @@ const authenticatiion = require('../../../auth/authenticate.js');
 const async = require('async');
 const bookbullionrate = require('./bookbullionrate');
 var testSellOrder = function () {
-    const extCustomerId = "BG1234567-000";
+    const extCustomerId = "DVMFIBR001CST001";
     const bullion = {
-        id : "85133eb0-cf13-11e9-93fb-afb974e4a37c",
+        id : "G1",
         bullionShortName : "GD24K - 999",
         bullionName : "Gold",
         purity : {
@@ -36,16 +36,10 @@ var testSellOrder = function () {
                             bullionRateId:aBookedRate.id, //bullion rateid got through rate booking.
                             weightInGm:1,
                             rateInrPerGm:4800,
-                            orderTotalValueInr:4800,  //can be 0 to skip an installment.      
+                            //orderTotalValueInr:4800,  //can be 0 to skip an installment.      
                             sellType:"Emergency",                     
-                            taxRates:[
-                                {
-                                    taxName: "sgst",
-                                    taxCode:"sgst",
-                                    taxRatePercent: 18
-                                }        
-                            ]
                         }
+                        _order.taxRates = aBookedRate.taxRates;
                         next(null,_order);                        
                         
                     }
