@@ -227,6 +227,40 @@ class Client{
         })
     }
 
+    bookBullionRate(extCustomerId, bullionName,bullionId,rateType){
+        const additionalParametrs = {
+            queryParams:{
+                bullionName:bullionName,
+                bullionId:bullionId,
+                rateType:rateType
+            }
+        }    
+        return new Promise((resolve,reject)=>{
+            this._client
+            .invokeApi(null, `/customers/${extCustomerId}/bullionrates`, 'GET',additionalParametrs)
+            .then(function (result) {
+                resolve(result.data)
+            })
+            .catch(function (result) {
+                reject(getErrorResponse(result));
+            });
+        })
+
+    }
+
+    createBuyOrder(extCustomerId,order){
+        return new Promise((resolve,reject)=>{
+            this._client
+            .invokeApi(null, `/customers/${extCustomerId}/buyorders`,'POST', {},order)
+            .then(function (result) {
+                resolve(result.data)
+            })
+            .catch(function (result) {
+                reject(getErrorResponse(result));
+            });
+        })
+
+    }
 }
 
 exports.Client = async function(config){
