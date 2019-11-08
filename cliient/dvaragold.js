@@ -111,6 +111,36 @@ async function authenticateClientAsync(config){
         }
     })
 }
+async function get(client,api,additionalParametrs){
+    return new Promise((resolve,reject)=>{
+        client
+        .invokeApi(null, api, 'GET',additionalParametrs)
+        .then(function (result) {
+            resolve(result.data)
+        })
+        .catch(function (result) {
+            reject(getErrorResponse(result));
+        });
+    })
+
+}
+async function post(client,api,parameters){
+    return new Promise((resolve,reject)=>{
+        client
+        .invokeApi(null, api,
+            'POST', {},
+            parameters
+        )
+        .then(function (result) {
+            resolve(result.data)
+        })
+        .catch(function (result) {
+            reject(getErrorResponse(result));
+        });
+
+    })
+
+}
 function getErrorResponse(result){
     if(result.response){
         return{
@@ -139,92 +169,26 @@ class Client{
             
         })
     }
-    getCustomerInvoiceUrl(customerId,orderid){        
-        return new Promise((resolve,reject)=>{
-            this._client
-            .invokeApi(null, `/customers/${customerId}/orderinvoice/${orderid}`, 'GET')
-            .then(function (result) {
-                resolve(result.data)
-            })
-            .catch(function (result) {
-                reject(getErrorResponse(result));
-            });
-        })
+    getCustomerInvoiceUrl(customerId,orderid){
+        return get(this._client,`/customers/${customerId}/orderinvoice/${orderid}`)        
     }
     createInstantBuyOrder(customerId,order){
-        return new Promise((resolve,reject)=>{
-            this._client
-            .invokeApi(null, `/customers/${customerId}/instantorders/buy`,
-                'POST', {},
-                order
-            )
-            .then(function (result) {
-                resolve(result.data)
-            })
-            .catch(function (result) {
-                reject(getErrorResponse(result));
-            });
-    
-        })
+        return post(this._client,`/customers/${customerId}/instantorders/buy`,order)
     }    
     createInstntSellOrder(customerId,order){
-        return new Promise((resolve,reject)=>{
-            this._client
-            .invokeApi(null, `/customers/${customerId}/instantorders/sell`,
-                'POST', {},
-                order
-            )
-            .then(function (result) {
-                resolve(result.data)
-            })
-            .catch(function (result) {
-                reject(getErrorResponse(result));
-            });
-    
-        })
+        return post(this._client,`/customers/${customerId}/instantorders/sell`,order)
     }    
     cancelInstantOrder(customerId,orderId, cancellationReason){
-        return new Promise((resolve,reject)=>{
-            this._client
-            .invokeApi(null, `/customers/${customerId}/instantorders/cancel`,
-                'POST', {},
-                {
-                    id:orderId,
-                    cancellationreason:cancellationReason
-                }
-            )
-            .then(function (result) {
-                resolve(result.data)
-            })
-            .catch(function (result) {
-                reject(getErrorResponse(result));
-            });
-    
+        return post(this._client,`/customers/${customerId}/instantorders/cancel`,{
+            id:orderId,
+            cancellationreason:cancellationReason
         })
     }    
     getInstantOrder(customerId,orderId){
-        return new Promise((resolve,reject)=>{
-            this._client
-            .invokeApi(null, `/customers/${customerId}/instantorders/${orderId}`, 'GET')
-            .then(function (result) {
-                resolve(result.data)
-            })
-            .catch(function (result) {
-                reject(getErrorResponse(result));
-            });
-        })
+        return get(this._client,`/customers/${customerId}/instantorders/${orderId}`)
     }
     getInstantOrderList(customerId,orderId){
-        return new Promise((resolve,reject)=>{
-            this._client
-            .invokeApi(null, `/customers/${customerId}/instantorders`, 'GET')
-            .then(function (result) {
-                resolve(result.data)
-            })
-            .catch(function (result) {
-                reject(getErrorResponse(result));
-            });
-        })
+        return get(this._client,`/customers/${customerId}/instantorders`)
     }
 
     bookBullionRate(extCustomerId, bullionName,bullionId,rateType){
@@ -235,31 +199,11 @@ class Client{
                 rateType:rateType
             }
         }    
-        return new Promise((resolve,reject)=>{
-            this._client
-            .invokeApi(null, `/customers/${extCustomerId}/bullionrates`, 'GET',additionalParametrs)
-            .then(function (result) {
-                resolve(result.data)
-            })
-            .catch(function (result) {
-                reject(getErrorResponse(result));
-            });
-        })
-
+        return get(this._client,`/customers/${extCustomerId}/bullionrates`,additionalParametrs)
     }
 
     createBuyOrder(extCustomerId,order){
-        return new Promise((resolve,reject)=>{
-            this._client
-            .invokeApi(null, `/customers/${extCustomerId}/buyorders`,'POST', {},order)
-            .then(function (result) {
-                resolve(result.data)
-            })
-            .catch(function (result) {
-                reject(getErrorResponse(result));
-            });
-        })
-
+        return post(this._client,`/customers/${extCustomerId}/buyorders`,order)
     }
 }
 
