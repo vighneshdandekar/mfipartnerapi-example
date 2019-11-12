@@ -1,38 +1,18 @@
-const authenticatiion = require('../auth/authenticate.js');
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
+const config = require('../config/credentials.json')[STAGE];
+const DvaraGold = require('../cliient/dvaragold');
 
-var testSetup = function () {
-    authenticatiion.authenticateClient(function (err, client) {
-        if (client) {
-            function callback(error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log(JSON.stringify(body));
-                }
-            }
-            makeTestApiCall(client, callback);
-        }
-        else {
-            console.error(err);
-        }
-    })
+async function test(){
+    let client = await DvaraGold.Client(config);
+    return await client.testSetup()
 }
-
-var makeTestApiCall = function (client, callback) {
-    client
-        .invokeApi(null, '/test', 'GET')
-        .then(function (result) {
-            console.log(result.data)
-        })
-        .catch(function (result) {
-            if (result.response) {
-                console.dir({
-                    status: result.response.status,
-                    statusText: result.response.statusText,
-                    data: result.response.data
-                });
-            } else {
-                console.log(result.message);
-            }
-        });
-}
-
-testSetup();
+test()
+.then(result=>{
+    console.dir(result)
+})
+.catch(err=>{
+    console.error(err)
+})
+.finally(()=>{
+    process.exit(0);
+})

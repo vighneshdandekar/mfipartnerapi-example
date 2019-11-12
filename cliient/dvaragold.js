@@ -169,6 +169,9 @@ class Client{
             
         })
     }
+    testSetup(){
+        return get(this._client,`/test`)        
+    }
     getCustomerInvoiceUrl(customerId,orderid){
         return get(this._client,`/customers/${customerId}/orderinvoice/${orderid}`)        
     }
@@ -205,6 +208,52 @@ class Client{
     createBuyOrder(extCustomerId,order){
         return post(this._client,`/customers/${extCustomerId}/buyorders`,order)
     }
+    createSellOrder(extCustomerId,order){
+        return post(this._client,`/customers/${extCustomerId}/sellorders`,order)
+    }
+    cancelOrder(extCustomerid,orderId, cancellationReason){
+        return post(this._client,`/customers/${extCustomerid}/cancelorder`,{
+            id:orderId,
+            cancellationreason:cancellationReason
+        })
+    }    
+    getAgents(){
+        return get(this._client,'/agents')
+    }
+    getAgent(extAgentId){
+        return get(this._client,`/agents/${extAgentId}`)
+    }
+    saveAgents(agents){
+        return post(this._client,`/agents`,agents)
+    }
+    updateAgent(extAgentId,agent){
+        return post(this._client,`/agents/${extAgentId}`,agent)
+    }
+    getBranches(){
+        return get(this._client,'/branches')
+    }
+    getBranch(extBranchId){
+        return get(this._client,`/branches/${extBranchId}`)
+    }
+    saveBranches(branches){
+        return post(this._client,`/branches`,branches)
+    }
+    updateBranch(extBranchId,branch){
+        return post(this._client,`/branches/${extBranchId}`,branch)
+    }
+    getCustomers(){
+        return get(this._client,'/customers')
+    }
+    getCustomer(extCustomerId){
+        return get(this._client,`/customers/${extCustomerId}`)
+    }
+    saveCustomers(customers){
+        return post(this._client,`/customers`,customers)
+    }
+    updateCustomer(extCustomerId,customer){
+        return post(this._client,`/customers/${extCustomerId}`,customer)
+    }
+
 }
 
 exports.Client = async function(config){
