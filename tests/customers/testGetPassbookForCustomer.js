@@ -1,39 +1,21 @@
-const authenticatiion = require('../../auth/authenticate.js');
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
+const config = require('../../config/credentials.json')[STAGE];
+const DvaraGold = require('../../cliient/dvaragold');
 
-var testGetRate = function () {
-    authenticatiion.authenticateClient(function (err, client) {
-        if (client) {
-            function callback(error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log(JSON.stringify(body));
-                }
-            }
-            getRate(client, callback);
-        }
-        else {
-            console.error(err);
-        }
-    })
-}
-
-var getRate = function (client, callback) {
+var test = async function (client, callback) {
     const extCustomerId = "47054";
     const additionalParametrs = {}    
-    client.invokeApi(null, `/customers/${extCustomerId}/passbook`, 'GET',additionalParametrs)
-        .then(function (result) {
-            console.log(result.data)
-        })
-        .catch(function (result) {
-            if (result.response) {
-                console.dir({
-                    status: result.response.status,
-                    statusText: result.response.statusText,
-                    data: result.response.data
-                });
-            } else {
-                console.log(result.message);
-            }
-        });
+    let client = await DvaraGold.Client(config);
+    return client.getPassbook(extCustomerId)
 }
 
-testGetRate();
+test()
+.then(result=>{
+    console.dir(result)
+})
+.catch(err=>{
+    console.error(err)
+})
+.finally(()=>{
+    process.exit(0);
+})
