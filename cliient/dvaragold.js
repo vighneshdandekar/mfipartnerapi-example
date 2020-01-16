@@ -204,7 +204,12 @@ class Client{
         }    
         return get(this._client,`/customers/${extCustomerId}/bullionrates`,additionalParametrs)
     }
-
+    getBullions(extCustomerId){
+        return get(this._client,`/customers/${extCustomerId}/bullions`,additionalParametrs)
+    }
+    getPassbook(extCustomerId){
+        return get(this._client,`/customers/${extCustomerId}/passbook`)
+    }
     createBuyOrder(extCustomerId,order){
         return post(this._client,`/customers/${extCustomerId}/buyorders`,order)
     }

@@ -5,7 +5,7 @@ const extCustomerId = "BMFIBR001CST022";
 
 async function test(){
     let client = await DvaraGold.Client(config);
-    return await client.getAdvanceOrderList(extCustomerId)
+    return await client.getInstantOrderList(extCustomerId)
 }
 test()
 .then(result=>{
