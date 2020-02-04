@@ -204,6 +204,17 @@ class Client{
         }    
         return get(this._client,`/customers/${extCustomerId}/bullionrates`,additionalParametrs)
     }
+    bookBullionRateBranch(extBranchId, bullionName,bullionId,rateType){
+        const additionalParametrs = {
+            queryParams:{
+                bullionName:bullionName,
+                bullionId:bullionId,
+                rateType:rateType
+            }
+        }    
+        return get(this._client,`/branches/${extBranchId}/bullionrates`,additionalParametrs)
+    }
+
     getBullions(extCustomerId){
         return get(this._client,`/customers/${extCustomerId}/bullions`,additionalParametrs)
     }

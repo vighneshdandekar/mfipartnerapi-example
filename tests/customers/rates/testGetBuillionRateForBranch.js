@@ -2,13 +2,13 @@ let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
 const config = require('../../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../../cliient/dvaragold');
 
-var test = async function (client, callback) {
-    const extCustomerId = "BG1234567-000";
+var testGetRate = async function () {
+    const extBranchId = "BMFIBR002";
     let client = await DvaraGold.Client(config);
-    return client.getBullions(extCustomerId)
+    return client.bookBullionRateBranch(extBranchId,'Gold','G3','buy')
 }
 
-test()
+testGetRate()
 .then(result=>{
     console.dir(result)
 })
