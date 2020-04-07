@@ -269,6 +269,9 @@ class Client{
     updateCustomer(extCustomerId,customer){
         return post(this._client,`/customers/${extCustomerId}`,customer)
     }
+    requestOtp(phoneNumber){
+        return post(this._client,`/customers/requestotp`,{'phoneNumber':phoneNumber})
+    }
 
 }
 
