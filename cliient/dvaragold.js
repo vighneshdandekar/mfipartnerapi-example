@@ -272,7 +272,9 @@ class Client{
     requestOtp(phoneNumber){
         return post(this._client,`/customers/requestotp`,{'phoneNumber':phoneNumber})
     }
-
+    login(session){
+        return post(this._client,`/customers/login`,session)
+    }
 }
 
 exports.Client = async function(config){
