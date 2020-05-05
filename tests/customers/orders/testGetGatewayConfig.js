@@ -2,22 +2,10 @@ let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
 const config = require('../../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../../cliient/dvaragold');
 const extCustomerId = "8169418631";
-const bullion = {
-    "id" : "G3",
-    "bullionShortName" : "G24K",
-    "bullionName" : "Gold",
-    "purity" : {
-        "displayValue" : "24Kt (99.9%)",
-        "value" : "999"
-    },
-    "status" : "available"
-}
-
 async function test(){
     let client = await DvaraGold.Client(config)
-    let rates = await client.bookBullionRate(extCustomerId,bullion.bullionName,bullion.id,'sipBuy')
-    const aBookedRate = rates[0];
-    return aBookedRate;
+    let pg = await client.getGatewayConfig(extCustomerId)
+    return pg;
 }
 
 test()
