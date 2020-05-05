@@ -275,6 +275,9 @@ class Client{
     login(session){
         return post(this._client,`/customers/login`,session)
     }
+    getGatewayConfig(customerId){
+        return post(this._client,`/payments/${customerId}/gatewayconfig`,{test:'dummy'})
+    }
 }
 
 exports.Client = async function(config){

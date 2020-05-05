@@ -1,27 +1,32 @@
-exports.bookBullionRate = function( client,
-                                    extCustomerId,
-                                    bullionName,
-                                    bullionId,
-                                    rateType, 
-                                    callback)
-{
-    const bullionParams = {
-        bullionName:bullionName,
-        bullionId:bullionId,
-        rateType:rateType
-    }
-    getRate(client,extCustomerId,bullionParams,callback)        
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
+const config = require('../../../config/credentials.json')[STAGE];
+const DvaraGold = require('../../../cliient/dvaragold');
+const extCustomerId = "8169418631";
+const bullion = {
+    "id" : "G3",
+    "bullionShortName" : "G24K",
+    "bullionName" : "Gold",
+    "purity" : {
+        "displayValue" : "24Kt (99.9%)",
+        "value" : "999"
+    },
+    "status" : "available"
 }
 
-var getRate = function (client,extCustomerId,bullionParams, callback) {
-    const additionalParametrs = {
-        queryParams:bullionParams
-    }    
-    client.invokeApi(null, `/customers/${extCustomerId}/bullionrates`, 'GET',additionalParametrs)
-        .then(function (result) {
-            callback(null,result.data);
-        })
-        .catch(function (result) {
-            callback(result.message,null);
-        });
+async function test(){
+    let client = await DvaraGold.Client(config)
+    let rates = await client.bookBullionRate(extCustomerId,bullion.bullionName,bullion.id,'sipBuy')
+    const aBookedRate = rates[0];
+    return aBookedRate;
 }
+
+test()
+.then(result=>{
+    console.dir(result)
+})
+.catch(err=>{
+    console.error(err)
+})
+.finally(()=>{
+    process.exit(0);
+})
