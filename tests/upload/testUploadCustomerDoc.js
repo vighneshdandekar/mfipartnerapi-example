@@ -1,22 +1,59 @@
 
-const authenticatiion = require('../../auth/authenticate.js');
-const extCustomerId = 'BG1234567-000';
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
+const config = require('../../config/credentials.json')[STAGE];
+const DvaraGold = require('../../cliient/dvaragold');
+
+
+const path = require('path');
+const request = require('request');
+const fs = require('fs');
+
+const extCustomerId = 'AAA111CST001';
 const uploadfilePath = 'tests/res/customer.png';
-const uploadclient = require('./uploadclient');
-(
-    async ()=>{
-        let apiClient = await authenticatiion.authenticateClientAsync();                
-        let result = await uploadclient.uploadClientDocument(apiClient,extCustomerId,uploadfilePath);
-        console.log(result);
-        let readableUrl = await uploadclient.getReadableUrl(apiClient,result.fetchurl)
-        console.log(readableUrl);
-        return 0;
+const fileMetadata = {
+    type:'CUSTOMER_DOC',
+    filename:path.basename(uploadfilePath)
+}
+
+async function test(){
+    let client = await DvaraGold.Client(config)             
+    let uploadResponse = await client.getCustomerDocumentUploadURL(extCustomerId,fileMetadata);
+    console.log(uploadResponse);
+    let uploadUrl = uploadResponse.uploadurl;
+    let s3uploadResult = await uploadClient(uploadUrl,uploadfilePath,uploadResponse.ContentType)     
+    console.log(s3uploadResult);
+    return 0;
     }
-)()
-.then(()=>{
-    process.exit(0)
+
+    async function uploadClient(url,diskFilePath,contentType){
+        return new Promise((resolve,reject)=>{
+            var stats = fs.statSync(diskFilePath);
+            fs.createReadStream(diskFilePath).pipe(request({
+                method: 'PUT',
+                url: url,
+                headers: {
+                  'Content-Type':contentType,
+                  'Content-Length': stats['size']
+                }
+              }, function (err, res, body) {
+                    if(err || res.statusCode != 200){
+                        reject({body:res})
+                    }
+                    else{
+                        resolve({body:{status:'OK'}})
+                    }
+              }));        
+        })
+    }    
+
+test()
+.then(result=>{
+    console.dir(result)
 })
-.catch(e=>{
-    console.error(e.response.data);
+.catch(err=>{
+    console.error(err)
+})
+.finally(()=>{
+    process.exit(0);
 })
 

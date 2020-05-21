@@ -1,23 +1,23 @@
-const authenticatiion = require('../../../auth/authenticate.js');
-const extCustomerId = 'BMFIBR001CST001';
-const orderId = 'c46f8a20-e433-11e9-9973-9783595f5c2d';
-(async () =>{
-    let apiClient = await authenticatiion.authenticateClientAsync();
-    /**
-     * A NEw ORDER CAN BE CANCELLED FOR SOME TIME AFTER SENDING TO THE CREATE API.
-     * YOU NEED TO POST THE ORDER ID (id) OF THE NEW ORDER TO CANCEL AN ORDER
-     * https://app.swaggerhub.com/apis-docs/goldsip8/GoldSipPartnerAPIs/1.0.0#/Order/cancelCustomerOrder
-     */
-    let result = apiClient.invokeApi(null,`/customers/${extCustomerId}/cancelorder`,'POST',{},{
-        id:orderId,
-        cancellationreason: "a duplicate order.  requests cancellation"
-    });
-    return result;
-})()
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
+const config = require('../../../config/credentials.json')[STAGE];
+const DvaraGold = require('../../../cliient/dvaragold');
+
+//pramitcst001
+const extCustomerId = 'AAA333CST001';
+const orderId = 'c3f68c90-9b2d-11ea-9ec0-6d63bfbef640';
+
+async function test(){
+    let client = await DvaraGold.Client(config)
+    return await client.cancelOrder(extCustomerId,orderId, "a duplicate order.  requests cancellation")
+}
+
+test()
 .then(result=>{
-    console.log(result.data);
-    process.exit(0);
+    console.dir(result)
 })
-.catch(e=>{
-    console.dir(e.response.data);
+.catch(err=>{
+    console.error(err)
+})
+.finally(()=>{
+    process.exit(0);
 })

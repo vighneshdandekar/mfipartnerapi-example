@@ -21,7 +21,7 @@ const order = {
 
 async function test(){
     let client = await DvaraGold.Client(config);
-    return await client.createInstntSellOrder(extCustomerId,order)
+    return await client.createEtfSellOrder(extCustomerId,order)
 }
 test()
 .then(result=>{
