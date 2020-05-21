@@ -1,11 +1,11 @@
 let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
-const config = require('../../../config/credentials.json')[STAGE];
-const DvaraGold = require('../../../cliient/dvaragold');
-const extCustomerId = "ffa9da6a8375dca831fb3be97291763c";
+const config = require('../../config/credentials.json')[STAGE];
+const DvaraGold = require('../../cliient/dvaragold');
 
 async function test(){
     let client = await DvaraGold.Client(config);
-    return await client.getInstantOrderList(extCustomerId)
+    var productId='49e63f00-7967-11ea-a361-6f3a775c8435'
+    return await client.getProduct(productId);
 }
 test()
 .then(result=>{
