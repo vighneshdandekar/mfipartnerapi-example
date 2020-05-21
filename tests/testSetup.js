@@ -14,5 +14,5 @@ test()
     console.error(err)
 })
 .finally(()=>{
-    process.exit(0); //test
+    process.exit(0);
 })
