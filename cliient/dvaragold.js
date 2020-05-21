@@ -141,6 +141,43 @@ async function post(client,api,parameters){
     })
 
 }
+async function put(client,api,parameters){
+    return new Promise((resolve,reject)=>{
+        client
+        .invokeApi(null, api,
+            'PUT', {},
+            parameters
+        )
+        .then(function (result) {
+            resolve(result.data)
+        })
+        .catch(function (result) {
+            reject(getErrorResponse(result));
+        });
+
+    })
+
+}
+
+
+async function deleete(client,api,parameters){
+    return new Promise((resolve,reject)=>{
+        client
+        .invokeApi(null, api,
+            'DELETE', {},
+            parameters
+        )
+        .then(function (result) {
+            resolve(result.data)
+        })
+        .catch(function (result) {
+            reject(getErrorResponse(result));
+        });
+
+    })
+
+}
+
 function getErrorResponse(result){
     if(result.response){
         return{
@@ -175,23 +212,23 @@ class Client{
     getCustomerInvoiceUrl(customerId,orderid){
         return get(this._client,`/customers/${customerId}/orderinvoice/${orderid}`)        
     }
-    createInstantBuyOrder(customerId,order){
-        return post(this._client,`/customers/${customerId}/instantorders/buy`,order)
+    createEtfBuyOrder(customerId,order){
+        return post(this._client,`/customers/${customerId}/etforders/buy`,order)
     }    
-    createInstntSellOrder(customerId,order){
-        return post(this._client,`/customers/${customerId}/instantorders/sell`,order)
+    createEtfSellOrder(customerId,order){
+        return post(this._client,`/customers/${customerId}/etforders/sell`,order)
     }    
-    cancelInstantOrder(customerId,orderId, cancellationReason){
-        return post(this._client,`/customers/${customerId}/instantorders/cancel`,{
+    cancelEtfOrder(customerId,orderId, cancellationReason){
+        return post(this._client,`/customers/${customerId}/etforders/cancel`,{
             id:orderId,
             cancellationreason:cancellationReason
         })
     }    
-    getInstantOrder(customerId,orderId){
-        return get(this._client,`/customers/${customerId}/instantorders/${orderId}`)
+    getEtfOrder(customerId,orderId){
+        return get(this._client,`/customers/${customerId}/etforders/${orderId}`)
     }
-    getInstantOrderList(customerId,orderId){
-        return get(this._client,`/customers/${customerId}/instantorders`)
+    getEtfOrderList(customerId,orderId){
+        return get(this._client,`/customers/${customerId}/etforders`)
     }
 
     bookBullionRate(extCustomerId, bullionName,bullionId,rateType){
@@ -267,7 +304,7 @@ class Client{
         return post(this._client,`/customers`,customers)
     }
     updateCustomer(extCustomerId,customer){
-        return post(this._client,`/customers/${extCustomerId}`,customer)
+        return put(this._client,`/customers/${extCustomerId}`,customer)        
     }
     requestOtp(phoneNumber){
         return post(this._client,`/customers/requestotp`,{'phoneNumber':phoneNumber})
@@ -278,6 +315,27 @@ class Client{
     getGatewayConfig(customerId){
         return post(this._client,`/payments/${customerId}/gatewayconfig`,{test:'dummy'})
     }
+    getCustomerDocumentUploadURL(extCustomerId, fileMetadata){
+        return post(this._client,`/customers/${extCustomerId}/uploaddoc`,fileMetadata)   
+    }    
+    getCustomerSips(extCustomerId){
+        return get(this._client,`/customers/${extCustomerId}/sips`)   
+    }    
+    cancelCustomerSip(extCustomerId, sipId){
+        return deleete(this._client,`/customers/${extCustomerId}/sips/${sipId}`)   
+    } 
+    createCustomerSip(extCustomerId, sip){
+        return post(this._client,`/customers/${extCustomerId}/sips`, sip)   
+    }
+    payCustomerSipInstallment(extCustomerId, sipOrder){
+        return post(this._client,`/customers/${extCustomerId}/siporders`, sipOrder)   
+    }  
+    updateCustomerSip(extCustomerId, sipId, sipOrder){
+        return put(this._client,`/customers/${extCustomerId}/sips/${sipId}`, sipOrder)   
+    }
+    getCustomerSipDetails(extCustomerId, sipId){
+        return get(this._client,`/customers/${extCustomerId}/sips/${sipId}`)   
+    }                
 }
 
 exports.Client = async function(config){

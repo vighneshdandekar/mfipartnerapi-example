@@ -3,11 +3,9 @@ const config = require('../../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../../cliient/dvaragold');
 const extCustomerId = "BMFIBR001CST022";
 
-const orderId = 'f2d105b0-fcac-11e9-adbb-0da0d7fdb537';
-
 async function test(){
     let client = await DvaraGold.Client(config);
-    return await client.getInstantOrder(extCustomerId,orderId)
+    return await client.getEtfOrderList(extCustomerId)
 }
 test()
 .then(result=>{
