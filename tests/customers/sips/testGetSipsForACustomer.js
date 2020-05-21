@@ -1,11 +1,24 @@
-const authenticatiion = require('../../../auth/authenticate.js');
-const extCustomerId = 'BMFIBR001CST001';
-(async () =>{
-    let apiClient = await authenticatiion.authenticateClientAsync();
-    let result = apiClient.invokeApi(null,`/customers/${extCustomerId}/sips`,'GET',{},{});
-    return result;
-})()
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
+const config = require('../../../config/credentials.json')[STAGE];
+const DvaraGold = require('../../../cliient/dvaragold');
+
+//AAA111CST001
+//AAA333CST001
+//pramitcst001
+const extCustomerId = "AAA333CST001";
+
+async function test(){
+    let client = await DvaraGold.Client(config)
+    return await client.getCustomerSips(extCustomerId)
+}
+
+test()
 .then(result=>{
-    console.log(result.data);
+    console.dir(result)
+})
+.catch(err=>{
+    console.error(err)
+})
+.finally(()=>{
     process.exit(0);
 })

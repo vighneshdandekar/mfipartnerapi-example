@@ -2,23 +2,12 @@ let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
 const config = require('../../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../../cliient/dvaragold');
 const extCustomerId = "BMFIBR001CST022";
-const bullion = {
-    bullionShortName: 'G24K',
-    bullionName: 'Gold',
-    purity: { displayValue: '24Kt - (99.9%)', value: '999' },
-    status: 'available',
-    isBaseBullion: false,
-    id: 'G3'
-}
 
-const order = {
-    agent:{extAgentId:'EXTAGT007',name:{first:"Koshi",middle:"Venkateshwara",last:"Shaikh"}},
-    bullion:bullion,
-    orderTotalValueInr:500,
-}
+const orderId = '31e3f560-9b30-11ea-b235-5185d5f36205';
+
 async function test(){
     let client = await DvaraGold.Client(config);
-    return await client.createInstantBuyOrder(extCustomerId,order)
+    return await client.cancelEtfOrder(extCustomerId,orderId,"Duplicate Order")
 }
 test()
 .then(result=>{
