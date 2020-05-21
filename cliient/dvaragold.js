@@ -274,6 +274,21 @@ class Client {
     getGatewayConfig(customerId) {
         return post(this._client, `/payments/${customerId}/gatewayconfig`, { test: 'dummy' })
     }
+    getProduct(id){
+        return get(this._client,`/products/${id}`)
+    }
+    getProductShowcase(queryStringParameters){
+        const additionalParametrs = {
+            queryParams:queryStringParameters
+        }
+        return get(this._client,`/productshowcase`,additionalParametrs) 
+    }
+    getProducts(queryStringParameters){
+        const additionalParametrs = {
+            queryParams:queryStringParameters
+        }
+        return get(this._client,`/products`,additionalParametrs)   
+    }
 }
 
 exports.Client = async function (config) {
