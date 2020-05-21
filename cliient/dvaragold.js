@@ -278,6 +278,9 @@ class Client{
     getGatewayConfig(customerId){
         return post(this._client,`/payments/${customerId}/gatewayconfig`,{test:'dummy'})
     }
+    testWebhook(data){
+        return post(this._client,`/webhooks/dummy`,data)
+    }
 }
 
 exports.Client = async function(config){
