@@ -3,11 +3,11 @@ const config = require('../../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../../cliient/dvaragold');
 const extCustomerId = "ffa9da6a8375dca831fb3be97291763c";
 
-const orderId = 'f2d105b0-fcac-11e9-adbb-0da0d7fdb537';
+const orderId = '31e3f560-9b30-11ea-b235-5185d5f36205';
 
 async function test(){
     let client = await DvaraGold.Client(config);
-    return await client.cancelInstantOrder(extCustomerId,orderId,"Duplicate Order")
+    return await client.cancelEtfOrder(extCustomerId,orderId,"Duplicate Order")
 }
 test()
 .then(result=>{
