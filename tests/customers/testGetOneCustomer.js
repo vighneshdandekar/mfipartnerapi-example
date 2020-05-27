@@ -17,7 +17,7 @@ var testGetOneCustomer = function () {
 }
 
 var getCustomer = function (client, callback) {
-    var extCustomerId ='BG1234567-000';
+    var extCustomerId ='vigh-8208934276';
     client
         .invokeApi(null, `/customers/${extCustomerId}`, 'GET')
         .then(function (result) {
