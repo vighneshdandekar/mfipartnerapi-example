@@ -17,7 +17,7 @@ var testGetOneAgent = function () {
 }
 
 var getAgent = function (client, callback) {
-    var extAgentId ='hJ47Wd-oX1';
+    var extAgentId ='jCBWe8Xyl1';
     client
         .invokeApi(null, `/agents/${extAgentId}`, 'GET')
         .then(function (result) {
