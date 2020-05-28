@@ -45,7 +45,7 @@ var saveCustomers = function (client, callback) {
                     validUntil: new Date()
                 }],
                 address:{
-                    houseNumber:"1",streetName:"2",district:"Tvm",pinCode:695101,state:"Kerala",country:"India",stdCode:0470
+                    houseNumber:"1",streetName:"2",district:"Tvm",pinCode:695101,state:"IN-KL",country:"India",stdCode:0470
                 },
                 fatherName:{
                     first:"Groverty ",
@@ -54,7 +54,7 @@ var saveCustomers = function (client, callback) {
                 centerName:"Center",
                 maritalStatus:"married",
                 localLanguage:"Tamil",
-                branchId:'EXTB123412123',
+                branchId:'EXT002311',
                 gender:'m'
             }            
         )

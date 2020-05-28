@@ -13,7 +13,7 @@ var testUpdateBranch = function () {
         },
         // GET one record
         function (client, callback) {
-            var extBranchId = 'EXTB123412123';
+            var extBranchId = 'EXT002311';
             client
                 .invokeApi(null, `/branches/${extBranchId}`, 'GET')
                 .then(function (result) {

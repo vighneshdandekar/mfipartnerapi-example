@@ -17,7 +17,7 @@ var testGetOneBranch = function () {
 }
 
 var getBranch = function (client, callback) {
-    var extBranchId ='caNwGhfus1';
+    var extBranchId ='EXT002311';
     client
         .invokeApi(null, `/branches/${extBranchId}`, 'GET')
         .then(function (result) {

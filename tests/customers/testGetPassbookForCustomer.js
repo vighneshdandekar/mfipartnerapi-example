@@ -3,19 +3,19 @@ const config = require('../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../cliient/dvaragold');
 
 var test = async function (client, callback) {
-    const extCustomerId = "47054";
-    const additionalParametrs = {}    
-    let client = await DvaraGold.Client(config);
+    const extCustomerId = "vigh-8208934276";
+    const additionalParametrs = {}
+    client = await DvaraGold.Client(config);
     return client.getPassbook(extCustomerId)
 }
 
 test()
-.then(result=>{
-    console.dir(result)
-})
-.catch(err=>{
-    console.error(err)
-})
-.finally(()=>{
-    process.exit(0);
-})
+    .then(result => {
+        console.dir(result)
+    })
+    .catch(err => {
+        console.error(err)
+    })
+    .finally(() => {
+        process.exit(0);
+    })

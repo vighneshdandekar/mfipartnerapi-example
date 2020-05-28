@@ -270,7 +270,7 @@ class Client {
     }
 
     getBullions(extCustomerId) {
-        return get(this._client, `/customers/${extCustomerId}/bullions`, additionalParametrs)
+        return get(this._client, `/customers/${extCustomerId}/bullions`)
     }
     getPassbook(extCustomerId) {
         return get(this._client, `/customers/${extCustomerId}/passbook`)
@@ -359,11 +359,11 @@ class Client {
     getCustomerDocumentUploadURLForConsent(extCustomerId, fileMetadata) {
         return post(this._client, `/customers/${extCustomerId}/uploadconsentdoc`, fileMetadata)
     }
-    getCustomerSips(extCustomerId) {
-        return get(this._client, `/customers/${extCustomerId}/sips`)
-    }
     getCustomerFileBasedOnFilePath(filePath) {
         return get(this._client, `${filePath}`)
+    }
+    getCustomerSips(extCustomerId) {
+        return get(this._client, `/customers/${extCustomerId}/sips`)
     }
     cancelCustomerSip(extCustomerId, sipId) {
         return _delete(this._client, `/customers/${extCustomerId}/sips/${sipId}`)
