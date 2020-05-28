@@ -1,8 +1,8 @@
 let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
 const config = require('../../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../../cliient/dvaragold');
-const extCustomerId = "BMFIBR001CST022";
-const extBranchId = "BMFIBR002";
+const extCustomerId = "ext-vighnesh";
+const extBranchId = "DV12BR";
 const bullion = {
     "id" : "G3",
     "bullionShortName" : "G24K",

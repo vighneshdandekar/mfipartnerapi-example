@@ -281,6 +281,12 @@ class Client {
     createSellOrder(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/sellorders`, order)
     }
+    createCoinOrder(extCustomerId, order) {
+        return post(this._client, `/customers/${extCustomerId}/coinorders`, order)
+    }
+    createJewelerOrder(extCustomerId, order) {
+        return post(this._client, `/customers/${extCustomerId}/jewelerorders`, order)
+    }
     cancelOrder(extCustomerid, orderId, cancellationReason) {
         return post(this._client, `/customers/${extCustomerid}/cancelorder`, {
             id: orderId,
@@ -355,6 +361,12 @@ class Client {
     }
     getCustomerDocumentUploadURL(extCustomerId, fileMetadata) {
         return post(this._client, `/customers/${extCustomerId}/uploaddoc`, fileMetadata)
+    }
+    getCustomerDocumentUploadURLForConsent(extCustomerId, fileMetadata) {
+        return post(this._client, `/customers/${extCustomerId}/uploadconsentdoc`, fileMetadata)
+    }
+    getCustomerFileBasedOnFilePath(filePath) {
+        return get(this._client, `${filePath}`)
     }
     getCustomerSips(extCustomerId) {
         return get(this._client, `/customers/${extCustomerId}/sips`)
