@@ -5,7 +5,7 @@ const DvaraGold = require('../../../cliient/dvaragold');
 //AAA111CST001
 //AAA333CST001
 //pramitcst001
-const extCustomerId = "AAA333CST001";
+const extCustomerId = "ext-vighnesh";
 const bullion = {
     "id" : "G3",
     "bullionShortName" : "G22K",
@@ -24,7 +24,7 @@ const sip = {
     "sipTarget":{"targetType":"FixedWeight","targetQuantityInGm": 4},    
 //    "sipTarget":{"targetType":"FixedAmount","targetAmountInr":6000},        
     "sipInstallmentAmtInr": 3000,
-    "startDate": "2020-05-20T18:30:00.000Z",
+    "startDate": "2020-05-28T18:30:00.000Z",
     "paymentPeriodInMths": 6,
     "frequency": "monthly"
 }
