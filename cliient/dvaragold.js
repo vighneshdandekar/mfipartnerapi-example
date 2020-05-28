@@ -356,6 +356,12 @@ class Client {
     getCustomerDocumentUploadURL(extCustomerId, fileMetadata) {
         return post(this._client, `/customers/${extCustomerId}/uploaddoc`, fileMetadata)
     }
+    getCustomerDocumentUploadURLForConsent(extCustomerId, fileMetadata) {
+        return post(this._client, `/customers/${extCustomerId}/uploadconsentdoc`, fileMetadata)
+    }
+    getCustomerFileBasedOnFilePath(filePath) {
+        return get(this._client, `${filePath}`)
+    }
     getCustomerSips(extCustomerId) {
         return get(this._client, `/customers/${extCustomerId}/sips`)
     }
