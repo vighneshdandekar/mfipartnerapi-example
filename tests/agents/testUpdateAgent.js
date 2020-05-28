@@ -12,7 +12,7 @@ var testUpdateAgent = function () {
 
         // GET one record
         function (client, callback) {
-            var extAgentId = 'hJ47Wd-oX1';
+            var extAgentId = 'jCBWe8Xyl1';
             client
                 .invokeApi(null, `/agents/${extAgentId}`, 'GET')
                 .then(function (result) {
@@ -37,8 +37,9 @@ var testUpdateAgent = function () {
         // UPDATE one record
         function (client, getData, callback) {
             var updateData = {
-                phone: { landline: "", alternateMobile: "", mobile: "2332132234", whatsapp: "2332132234", boardNumber: "", extension: "" }
-            }
+                extAgentId: `${getData.extAgentId}`, extBranchId: 'EXT002311', name: { first: "Ajay", middle: "", last: "Singh" },
+                phone: { mobile: "9100280078" }, email: 'aneel@trader.jo'
+            };
             client
                 .invokeApi(null, `/agents/${getData.extAgentId}`, 'PUT', {}, updateData)
                 .then(function (result) {

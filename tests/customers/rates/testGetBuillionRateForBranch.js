@@ -3,18 +3,18 @@ const config = require('../../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../../cliient/dvaragold');
 
 var testGetRate = async function () {
-    const extBranchId = "BMFIBR002";
+    const extBranchId = "DV12BR";
     let client = await DvaraGold.Client(config);
-    return client.bookBullionRateBranch(extBranchId,'Gold','G3','buy')
+    return client.bookBullionRateBranch(extBranchId, 'Gold', 'G3', 'buy')
 }
 
 testGetRate()
-.then(result=>{
-    console.dir(result)
-})
-.catch(err=>{
-    console.error(err)
-})
-.finally(()=>{
-    process.exit(0);
-})
+    .then(result => {
+        console.dir(result)
+    })
+    .catch(err => {
+        console.error(err)
+    })
+    .finally(() => {
+        process.exit(0);
+    })
