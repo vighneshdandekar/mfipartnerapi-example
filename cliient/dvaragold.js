@@ -281,6 +281,12 @@ class Client {
     createSellOrder(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/sellorders`, order)
     }
+    createCoinOrder(extCustomerId, order) {
+        return post(this._client, `/customers/${extCustomerId}/coinorders`, order)
+    }
+    createJewelerOrder(extCustomerId, order) {
+        return post(this._client, `/customers/${extCustomerId}/jewelerorders`, order)
+    }
     cancelOrder(extCustomerid, orderId, cancellationReason) {
         return post(this._client, `/customers/${extCustomerid}/cancelorder`, {
             id: orderId,

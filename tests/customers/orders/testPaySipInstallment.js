@@ -5,8 +5,8 @@ const DvaraGold = require('../../../cliient/dvaragold');
 //pwa001-branch-02-cst01
 //pramitcst001
 //AAA333CST001
-const extCustomerId = "AAA333CST001";
-const sipId = "30351ed6-9b2e-11ea-957f-23ae84a083f2";
+const extCustomerId = "ext-vighnesh";
+const sipId = "cc265d20-a0c1-11ea-93fd-938c18be38b2";
 const bullion = {
     "id" : "G3",
     "bullionShortName" : "G22K",
@@ -29,7 +29,7 @@ async function test(){
         sipId:sipId, 
         //weightInGm:1,
         //rateInrPerGm:2751,
-        orderTotalValueInr:5000,
+        orderTotalValueInr:3000,
         //buyType:'FixedAmount',        
         //buyType:'FixedWeight',
         //test:"1234",
