@@ -172,6 +172,10 @@ class Client{
     testSetup(){
         return get(this._client,`/test`)        
     }
+    addPaymentDetails(details){
+        return post(this._client,`/orders/addPaymentDetails`,details)
+    }
+
     getCustomerInvoiceUrl(customerId,orderid){
         return get(this._client,`/customers/${customerId}/orderinvoice/${orderid}`)        
     }
