@@ -230,6 +230,11 @@ class Client {
     createEtfBuyOrder(customerId, order) {
         return post(this._client, `/customers/${customerId}/etforders/buy`, order)
     }
+    addPaymentDetailsForETforders(payments) {
+        return post(this._client, `/etforders/addPaymentDetails`, payments)
+    }
+
+
     createEtfSellOrder(customerId, order) {
         return post(this._client, `/customers/${customerId}/etforders/sell`, order)
     }
