@@ -209,20 +209,8 @@ class Client {
     testSetup() {
         return get(this._client, `/test`)
     }
-    createInstantBuyOrder(customerId, order) {
-        return post(this._client, `/customers/${customerId}/etforders/buy`, order)
-    }
-    createInstntSellOrder(customerId, order) {
-        return post(this._client, `/customers/${customerId}/etforders/sell`, order)
-    }
-    cancelInstantOrder(customerId, orderId, cancellationReason) {
-        return post(this._client, `/customers/${customerId}/etforders/cancel`, {
-            id: orderId,
-            cancellationreason: cancellationReason
-        })
-    }
-    getInstantOrder(customerId, orderId) {
-        return get(this._client, `/customers/${customerId}/etforders/${orderId}`)
+    addPaymentDetails(details){
+        return post(this._client,`/orders/addPaymentDetails`,details)
     }
     getCustomerInvoiceUrl(customerId, orderid) {
         return get(this._client, `/customers/${customerId}/orderinvoice/${orderid}`)
@@ -237,15 +225,12 @@ class Client {
         return post(this._client, `/customers/${customerId}/etforders/cancel`, {
             id: orderId,
             cancellationreason: cancellationReason
-        })
+       })
     }
     getEtfOrder(customerId, orderId) {
         return get(this._client, `/customers/${customerId}/etforders/${orderId}`)
     }
     getEtfOrderList(customerId, orderId) {
-        return get(this._client, `/customers/${customerId}/etforders`)
-    }
-    getInstantOrderList(customerId, orderId) {
         return get(this._client, `/customers/${customerId}/etforders`)
     }
     bookBullionRate(extCustomerId, bullionName, bullionId, rateType) {
