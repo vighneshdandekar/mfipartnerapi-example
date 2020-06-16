@@ -5,12 +5,12 @@ const apigClientFactory = require("aws-api-gateway-client").default;
 const AWS = require('aws-sdk');
 global.fetch = require('node-fetch')
 
-function authenticate(config,callback) {
+function authenticate(config, callback) {
     const poolData = {
         UserPoolId: config.userPool,
         ClientId: config.appClient
     };
-    
+
     AWS.config.update({ region: config.region });
     var userPool = new AWSCognito.CognitoUserPool(poolData);
 
@@ -78,9 +78,9 @@ function getCredentials(config, userTokens, callback) {
     });
 }
 
-function authenticateClient (config,callback) {
-    authenticate(config,function (tokens) {
-        getCredentials(config,tokens, function (_tokens) {
+function authenticateClient(config, callback) {
+    authenticate(config, function (tokens) {
+        getCredentials(config, tokens, function (_tokens) {
             var credentials = AWS.config.credentials;
             var apigClient = apigClientFactory.newClient({
                 accessKey: credentials.accessKeyId,
@@ -94,211 +94,285 @@ function authenticateClient (config,callback) {
     })
 }
 
-async function authenticateClientAsync(config){
-    return new Promise((resolve,reject)=>{
-        try{
-            authenticateClient(config,function(err,client){
-                if(err || !client){
+async function authenticateClientAsync(config) {
+    return new Promise((resolve, reject) => {
+        try {
+            authenticateClient(config, function (err, client) {
+                if (err || !client) {
                     reject(err ? err : "Unable to authenticate");
                 }
-                else{
+                else {
                     resolve(client);
                 }
             })
         }
-        catch(e){
+        catch (e) {
             reject(e);
         }
     })
 }
-async function get(client,api,additionalParametrs){
-    return new Promise((resolve,reject)=>{
+async function get(client, api, additionalParametrs) {
+    return new Promise((resolve, reject) => {
         client
-        .invokeApi(null, api, 'GET',additionalParametrs)
-        .then(function (result) {
-            resolve(result.data)
-        })
-        .catch(function (result) {
-            reject(getErrorResponse(result));
-        });
+            .invokeApi(null, api, 'GET', additionalParametrs)
+            .then(function (result) {
+                resolve(result.data)
+            })
+            .catch(function (result) {
+                reject(getErrorResponse(result));
+            });
     })
 
 }
-async function post(client,api,parameters){
-    return new Promise((resolve,reject)=>{
+async function post(client, api, parameters) {
+    return new Promise((resolve, reject) => {
         client
-        .invokeApi(null, api,
-            'POST', {},
-            parameters
-        )
-        .then(function (result) {
-            resolve(result.data)
-        })
-        .catch(function (result) {
-            reject(getErrorResponse(result));
-        });
+            .invokeApi(null, api,
+                'POST', {},
+                parameters
+            )
+            .then(function (result) {
+                resolve(result.data)
+            })
+            .catch(function (result) {
+                reject(getErrorResponse(result));
+            });
 
     })
 
 }
-function getErrorResponse(result){
-    if(result.response){
-        return{
+async function put(client, api, parameters) {
+    return new Promise((resolve, reject) => {
+        client
+            .invokeApi(null, api,
+                'PUT', {},
+                parameters
+            )
+            .then(function (result) {
+                resolve(result.data)
+            })
+            .catch(function (result) {
+                reject(getErrorResponse(result));
+            });
+
+    })
+
+}
+
+
+async function _delete(client, api, parameters) {
+    return new Promise((resolve, reject) => {
+        client
+            .invokeApi(null, api,
+                'DELETE', {},
+                parameters
+            )
+            .then(function (result) {
+                resolve(result.data)
+            })
+            .catch(function (result) {
+                reject(getErrorResponse(result));
+            });
+
+    })
+
+}
+
+function getErrorResponse(result) {
+    if (result.response) {
+        return {
             status: result.response.status,
             statusText: result.response.statusText,
             data: result.response.data
-        } 
+        }
     }
-    else{
+    else {
         return result.message;
     }
 }
 
-class Client{        
-    constructor(config){
+class Client {
+    constructor(config) {
         this._config = config;
-        return new Promise((resolve,reject)=>{
+        return new Promise((resolve, reject) => {
             authenticateClientAsync(this._config)
-                .then(_client=>{
+                .then(_client => {
                     this._client = _client;
                     resolve(this);
                 })
-                .catch(e=>{
+                .catch(e => {
                     reject(e);
                 })
-            
+
         })
     }
-    testSetup(){
-        return get(this._client,`/test`)        
+    testSetup() {
+        return get(this._client, `/test`)
     }
     addPaymentDetails(details){
         return post(this._client,`/orders/addPaymentDetails`,details)
     }
-
-    getCustomerInvoiceUrl(customerId,orderid){
-        return get(this._client,`/customers/${customerId}/orderinvoice/${orderid}`)        
+    getCustomerInvoiceUrl(customerId, orderid) {
+        return get(this._client, `/customers/${customerId}/orderinvoice/${orderid}`)
     }
-    createInstantBuyOrder(customerId,order){
-        return post(this._client,`/customers/${customerId}/instantorders/buy`,order)
-    }    
-    createInstntSellOrder(customerId,order){
-        return post(this._client,`/customers/${customerId}/instantorders/sell`,order)
-    }    
-    cancelInstantOrder(customerId,orderId, cancellationReason){
-        return post(this._client,`/customers/${customerId}/instantorders/cancel`,{
-            id:orderId,
-            cancellationreason:cancellationReason
-        })
-    }    
-    getInstantOrder(customerId,orderId){
-        return get(this._client,`/customers/${customerId}/instantorders/${orderId}`)
+    createEtfBuyOrder(customerId, order) {
+        return post(this._client, `/customers/${customerId}/etforders/buy`, order)
     }
-    getInstantOrderList(customerId,orderId){
-        return get(this._client,`/customers/${customerId}/instantorders`)
+    createEtfSellOrder(customerId, order) {
+        return post(this._client, `/customers/${customerId}/etforders/sell`, order)
     }
-
-    bookBullionRate(extCustomerId, bullionName,bullionId,rateType){
+    cancelEtfOrder(customerId, orderId, cancellationReason) {
+        return post(this._client, `/customers/${customerId}/etforders/cancel`, {
+            id: orderId,
+            cancellationreason: cancellationReason
+       })
+    }
+    getEtfOrder(customerId, orderId) {
+        return get(this._client, `/customers/${customerId}/etforders/${orderId}`)
+    }
+    getEtfOrderList(customerId, orderId) {
+        return get(this._client, `/customers/${customerId}/etforders`)
+    }
+    bookBullionRate(extCustomerId, bullionName, bullionId, rateType) {
         const additionalParametrs = {
-            queryParams:{
-                bullionName:bullionName,
-                bullionId:bullionId,
-                rateType:rateType
+            queryParams: {
+                bullionName: bullionName,
+                bullionId: bullionId,
+                rateType: rateType
             }
-        }    
-        return get(this._client,`/customers/${extCustomerId}/bullionrates`,additionalParametrs)
+        }
+        return get(this._client, `/customers/${extCustomerId}/bullionrates`, additionalParametrs)
     }
-    bookBullionRateBranch(extBranchId, bullionName,bullionId,rateType){
+    bookBullionRateBranch(extBranchId, bullionName, bullionId, rateType) {
         const additionalParametrs = {
-            queryParams:{
-                bullionName:bullionName,
-                bullionId:bullionId,
-                rateType:rateType
+            queryParams: {
+                bullionName: bullionName,
+                bullionId: bullionId,
+                rateType: rateType
             }
-        }    
-        return get(this._client,`/branches/${extBranchId}/bullionrates`,additionalParametrs)
+        }
+        return get(this._client, `/branches/${extBranchId}/bullionrates`, additionalParametrs)
     }
 
-    getBullions(extCustomerId){
-        return get(this._client,`/customers/${extCustomerId}/bullions`,additionalParametrs)
+    getBullions(extCustomerId) {
+        return get(this._client, `/customers/${extCustomerId}/bullions`)
     }
-    getPassbook(extCustomerId){
-        return get(this._client,`/customers/${extCustomerId}/passbook`)
+    getPassbook(extCustomerId) {
+        return get(this._client, `/customers/${extCustomerId}/passbook`)
     }
-    createBuyOrder(extCustomerId,order){
-        return post(this._client,`/customers/${extCustomerId}/buyorders`,order)
+    createBuyOrder(extCustomerId, order) {
+        return post(this._client, `/customers/${extCustomerId}/buyorders`, order)
     }
-    createSellOrder(extCustomerId,order){
-        return post(this._client,`/customers/${extCustomerId}/sellorders`,order)
+    createSellOrder(extCustomerId, order) {
+        return post(this._client, `/customers/${extCustomerId}/sellorders`, order)
     }
-    cancelOrder(extCustomerid,orderId, cancellationReason){
-        return post(this._client,`/customers/${extCustomerid}/cancelorder`,{
-            id:orderId,
-            cancellationreason:cancellationReason
+    createCoinOrder(extCustomerId, order) {
+        return post(this._client, `/customers/${extCustomerId}/coinorders`, order)
+    }
+    createJewelerOrder(extCustomerId, order) {
+        return post(this._client, `/customers/${extCustomerId}/jewelerorders`, order)
+    }
+    cancelOrder(extCustomerid, orderId, cancellationReason) {
+        return post(this._client, `/customers/${extCustomerid}/cancelorder`, {
+            id: orderId,
+            cancellationreason: cancellationReason
         })
-    }    
-    getAgents(){
-        return get(this._client,'/agents')
     }
-    getAgent(extAgentId){
-        return get(this._client,`/agents/${extAgentId}`)
+    getAgents() {
+        return get(this._client, '/agents')
     }
-    saveAgents(agents){
-        return post(this._client,`/agents`,agents)
+    getAgent(extAgentId) {
+        return get(this._client, `/agents/${extAgentId}`)
     }
-    updateAgent(extAgentId,agent){
-        return post(this._client,`/agents/${extAgentId}`,agent)
+    saveAgents(agents) {
+        return post(this._client, `/agents`, agents)
     }
-    getBranches(){
-        return get(this._client,'/branches')
+    updateAgent(extAgentId, agent) {
+        return post(this._client, `/agents/${extAgentId}`, agent)
     }
-    getBranch(extBranchId){
-        return get(this._client,`/branches/${extBranchId}`)
+    getBranches() {
+        return get(this._client, '/branches')
     }
-    saveBranches(branches){
-        return post(this._client,`/branches`,branches)
+    getBranch(extBranchId) {
+        return get(this._client, `/branches/${extBranchId}`)
     }
-    updateBranch(extBranchId,branch){
-        return post(this._client,`/branches/${extBranchId}`,branch)
+    saveBranches(branches) {
+        return post(this._client, `/branches`, branches)
     }
-    getCustomers(){
-        return get(this._client,'/customers')
+    updateBranch(extBranchId, branch) {
+        return post(this._client, `/branches/${extBranchId}`, branch)
     }
-    getCustomer(extCustomerId){
-        return get(this._client,`/customers/${extCustomerId}`)
+    getCustomers() {
+        return get(this._client, '/customers')
     }
-    saveCustomers(customers){
-        return post(this._client,`/customers`,customers)
+    getCustomer(extCustomerId) {
+        return get(this._client, `/customers/${extCustomerId}`)
     }
-    updateCustomer(extCustomerId,customer){
-        return post(this._client,`/customers/${extCustomerId}`,customer)
+    saveCustomers(customers) {
+        return post(this._client, `/customers`, customers)
     }
-    requestOtp(phoneNumber){
-        return post(this._client,`/customers/requestotp`,{'phoneNumber':phoneNumber})
+    updateCustomer(extCustomerId, customer) {
+        return post(this._client, `/customers/${extCustomerId}`, customer)
     }
-    login(session){
-        return post(this._client,`/customers/login`,session)
+    requestOtp(phoneNumber) {
+        return post(this._client, `/customers/requestotp`, { 'phoneNumber': phoneNumber })
     }
-    getGatewayConfig(customerId){
-        return post(this._client,`/payments/${customerId}/gatewayconfig`,{test:'dummy'})
+    login(session) {
+        return post(this._client, `/customers/login`, session)
     }
-    getProduct(id){
-        return get(this._client,`/products/${id}`)
+    updateCustomer(extCustomerId, customer) {
+        return put(this._client, `/customers/${extCustomerId}`, customer)
     }
-    getProductShowcase(queryStringParameters){
+    getGatewayConfig(customerId) {
+        return post(this._client, `/payments/${customerId}/gatewayconfig`, { test: 'dummy' })
+    }
+    getProduct(id) {
+        return get(this._client, `/products/${id}`)
+    }
+    getProductShowcase(queryStringParameters) {
         const additionalParametrs = {
-            queryParams:queryStringParameters
+            queryParams: queryStringParameters
         }
-        return get(this._client,`/productshowcase`,additionalParametrs) 
+        return get(this._client, `/productshowcase`, additionalParametrs)
     }
-    getProducts(queryStringParameters){
+    getProducts(queryStringParameters) {
         const additionalParametrs = {
-            queryParams:queryStringParameters
+            queryParams: queryStringParameters
         }
-        return get(this._client,`/products`,additionalParametrs)   
+        return get(this._client, `/products`, additionalParametrs)
+    }
+    testWebhook(data) {
+        return post(this._client, `/webhooks/dummy`, data)
+    }
+    getCustomerDocumentUploadURL(extCustomerId, fileMetadata) {
+        return post(this._client, `/customers/${extCustomerId}/uploaddoc`, fileMetadata)
+    }
+    getCustomerDocumentUploadURLForConsent(extCustomerId, fileMetadata) {
+        return post(this._client, `/customers/${extCustomerId}/uploadconsentdoc`, fileMetadata)
+    }
+    getCustomerFileBasedOnFilePath(filePath) {
+        return get(this._client, `${filePath}`)
+    }
+    getCustomerSips(extCustomerId) {
+        return get(this._client, `/customers/${extCustomerId}/sips`)
+    }
+    cancelCustomerSip(extCustomerId, sipId) {
+        return _delete(this._client, `/customers/${extCustomerId}/sips/${sipId}`)
+    }
+    createCustomerSip(extCustomerId, sip) {
+        return post(this._client, `/customers/${extCustomerId}/sips`, sip)
+    }
+    payCustomerSipInstallment(extCustomerId, sipOrder) {
+        return post(this._client, `/customers/${extCustomerId}/siporders`, sipOrder)
+    }
+    updateCustomerSip(extCustomerId, sipId, sipOrder) {
+        return put(this._client, `/customers/${extCustomerId}/sips/${sipId}`, sipOrder)
+    }
+    getCustomerSipDetails(extCustomerId, sipId) {
+        return get(this._client, `/customers/${extCustomerId}/sips/${sipId}`)
     }
 }
 
-exports.Client = async function(config){
+exports.Client = async function (config) {
     return new Client(config);
 }

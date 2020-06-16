@@ -6,6 +6,7 @@ const DvaraGold = require('../../../cliient/dvaragold');
 //AAA333CST001
 //pramitcst001
 const extCustomerId = "ext-vighnesh";
+const sipId = "cc265d20-a0c1-11ea-93fd-938c18be38b2";
 const bullion = {
     "id" : "G3",
     "bullionShortName" : "G22K",
@@ -17,21 +18,21 @@ const bullion = {
     "status" : "available"
 }
 
-const sip = {
-    "sipName": "FxWt02",
-    "milestoneName":"Marriage",
+const updated_sip = {
+    "sipName": "FixedWt02_updated",
+    "milestoneName":"Marriage_updated",
     "bullion": bullion,
-    "sipTarget":{"targetType":"FixedWeight","targetQuantityInGm": 4},    
-//    "sipTarget":{"targetType":"FixedAmount","targetAmountInr":6000},        
-    "sipInstallmentAmtInr": 3000,
+//   "sipTarget":{"targetType":"FixedWeight","targetQuantityInGm":16},    
+    "sipTarget":{"targetType":"FixedAmount","targetAmountInr":100000},        
+    "sipInstallmentAmtInr": 5000,
     "startDate": "2020-05-28T18:30:00.000Z",
-    "paymentPeriodInMths": 6,
+    "paymentPeriodInMths": 18,
     "frequency": "monthly"
 }
 
 async function test(){
     let client = await DvaraGold.Client(config)
-    return await client.createCustomerSip(extCustomerId,sip)
+    return await client.updateCustomerSip(extCustomerId, sipId, updated_sip)
 }
 
 test()

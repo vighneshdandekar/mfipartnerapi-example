@@ -1,7 +1,7 @@
 let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
 const config = require('../../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../../cliient/dvaragold');
-const extCustomerId = "BMFIBR001CST022";
+const extCustomerId = "ffa9da6a8375dca831fb3be97291763c";
 const bullion = {
     bullionShortName: 'G24K',
     bullionName: 'Gold',
@@ -21,7 +21,7 @@ const order = {
 
 async function test(){
     let client = await DvaraGold.Client(config);
-    return await client.createInstntSellOrder(extCustomerId,order)
+    return await client.createEtfSellOrder(extCustomerId,order)
 }
 test()
 .then(result=>{
