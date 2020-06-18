@@ -22,7 +22,9 @@ const order = {
         "paymentInstrumentType": "NEFT",
         "paymentTotalValueInr": 100,
 
-    }
+    },
+    // orderdetail: [{ "name": "name1", value: "value1" }, { "name": "name2", value: "value2" }]
+
 }
 async function test() {
     let client = await DvaraGold.Client(config);
