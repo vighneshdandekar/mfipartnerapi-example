@@ -25,11 +25,13 @@ async function test() {
         agent: { extAgentId: 'pwa001-branch-03-ag-01', name: { first: "amit", middle: "", last: "Shaikh" } }, //An Agent that is not known to MyGold.
         bullion: bullion, //need a valid bullion id
         bullionRateId: aBookedRate.id, //bullion rateid got through rate booking.
-        weightInGm: 1.42,
+        weightInGm: 0.2,
         //orderTotalValueInr:50000,
         sellType: "Regular",
         taxRates: aBookedRate.taxRates,
-        payoutMode: "Bank"
+        payoutMode: "Bank",
+        orderdetail: [{ "name": "name1", value: "value1" }, { "name": "name2", value: "value2" }]
+
     }
     return await client.createSellOrder(extCustomerId, _order)
 }

@@ -16,7 +16,9 @@ const order = {
     bullion:bullion,
     sellType:'FixedAmount',
     orderTotalValueInr:500,
-    payoutMode:'Bank'
+    payoutMode:'Bank',
+    orderdetail: [{ "name": "etforder", value: "value1" }, { "name": "name2", value: "value2" }]
+
 }
 
 async function test(){
