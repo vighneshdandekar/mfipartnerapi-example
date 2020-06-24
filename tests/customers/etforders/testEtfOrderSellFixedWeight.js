@@ -17,7 +17,8 @@ const order = {
     sellType: 'FixedWeight',
     weightInGm: 0.1,
     payoutMode: 'Bank',
-    orderdetail: [{ "name": "etforder", value: "value1" }, { "name": "name2", value: "value2" }]
+    orderdetail: { "name": "name2" }
+
 
 }
 

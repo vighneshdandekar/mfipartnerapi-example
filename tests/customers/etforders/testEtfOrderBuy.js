@@ -23,7 +23,7 @@ const order = {
         "paymentTotalValueInr": 100,
 
     },
-    // orderdetail: [{ "name": "name1", value: "value1" }, { "name": "name2", value: "value2" }]
+    orderdetail: {"name": "name1"}
 
 }
 async function test() {
