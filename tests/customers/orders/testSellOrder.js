@@ -30,7 +30,7 @@ async function test() {
         sellType: "Regular",
         taxRates: aBookedRate.taxRates,
         payoutMode: "Bank",
-        orderdetail: [{ "name": "name1", value: "value1" }, { "name": "name2", value: "value2" }]
+        orderdetail: {"name": "name1"}
 
     }
     return await client.createSellOrder(extCustomerId, _order)
