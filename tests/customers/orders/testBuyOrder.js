@@ -31,7 +31,9 @@ async function test() {
         //buyType:'FixedWeight',
         test: "1234",
         taxRates: aBookedRate.taxRates,
-        // orderdetail: {"name": "name1"}
+        orderdetail: { "name": "name1" },
+        BuyCategory: "Adhoc"
+
 
     }
     return await client.createBuyOrder(extCustomerId, _order)
