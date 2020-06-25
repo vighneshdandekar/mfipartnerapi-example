@@ -23,7 +23,9 @@ const order = {
         "paymentTotalValueInr": 100,
 
     },
-    orderdetail: {"name": "name1"}
+    orderdetail: {"name": "name1"},
+    BuyCategory: "ExternalSIP"
+
 
 }
 async function test() {
