@@ -209,8 +209,8 @@ class Client {
     testSetup() {
         return get(this._client, `/test`)
     }
-    addPaymentDetails(details){
-        return post(this._client,`/orders/addPaymentDetails`,details)
+    addPaymentDetails(details) {
+        return post(this._client, `/orders/addPaymentDetails`, details)
     }
     getCustomerInvoiceUrl(customerId, orderid) {
         return get(this._client, `/customers/${customerId}/orderinvoice/${orderid}`)
@@ -218,10 +218,13 @@ class Client {
     createEtfBuyOrder(customerId, order) {
         return post(this._client, `/customers/${customerId}/etforders/buy`, order)
     }
+    createEtfSIPBuyOrder(customerId, order) {
+        return post(this._client, `/customers/${customerId}/etforders/sipbuy`, order)
+    }
     addPaymentDetailsForETforders(payments) {
         return post(this._client, `/etforders/addPaymentDetails`, payments)
     }
-    
+
 
 
     createEtfSellOrder(customerId, order) {
@@ -231,7 +234,7 @@ class Client {
         return post(this._client, `/customers/${customerId}/etforders/cancel`, {
             id: orderId,
             cancellationreason: cancellationReason
-       })
+        })
     }
     getEtfOrder(customerId, orderId) {
         return get(this._client, `/customers/${customerId}/etforders/${orderId}`)
@@ -311,8 +314,11 @@ class Client {
     updateBranch(extBranchId, branch) {
         return post(this._client, `/branches/${extBranchId}`, branch)
     }
-    getCustomers() {
-        return get(this._client, '/customers')
+    getCustomers(queryStringParameters) {
+        const additionalParametrs = {
+            queryParams: queryStringParameters
+        }
+        return get(this._client, `/customers`, additionalParametrs)
     }
     getCustomer(extCustomerId) {
         return get(this._client, `/customers/${extCustomerId}`)
@@ -380,6 +386,7 @@ class Client {
     getCustomerSipDetails(extCustomerId, sipId) {
         return get(this._client, `/customers/${extCustomerId}/sips/${sipId}`)
     }
+
 }
 
 exports.Client = async function (config) {

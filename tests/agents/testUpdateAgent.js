@@ -38,7 +38,10 @@ var testUpdateAgent = function () {
         function (client, getData, callback) {
             var updateData = {
                 extAgentId: `${getData.extAgentId}`, extBranchId: 'EXT002311', name: { first: "Ajay", middle: "", last: "Singh" },
-                phone: { mobile: "9100280078" }, email: 'aneel@trader.jo'
+                phone: { mobile: "9100280078" }, email: 'aneel@trader.jo',
+                address: {
+                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 123, state: "IN-KL", country: "India", stdCode: 0470
+                },
             };
             client
                 .invokeApi(null, `/agents/${getData.extAgentId}`, 'PUT', {}, updateData)

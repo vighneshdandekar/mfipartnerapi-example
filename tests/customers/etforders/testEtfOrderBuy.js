@@ -1,7 +1,7 @@
 let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
 const config = require('../../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../../cliient/dvaragold');
-const extCustomerId = "c9d518c53c9d22333b89f1094f101f14";
+const extCustomerId = "aa7fd74fdaa07f5457937bb1d3d6a536";
 const bullion = {
     bullionShortName: 'G24K',
     bullionName: 'Gold',
@@ -12,7 +12,7 @@ const bullion = {
 }
 
 const order = {
-    agent: { extAgentId: 'EXTAGT007', name: { first: "Koshi", middle: "Venkateshwara", last: "Shaikh" } },
+    agent: { extAgentId: 'DV12AG', name: { first: "default", middle: "", last: "agent" } },
     bullion: bullion,
     orderTotalValueInr: 500,
     "paymentDetails": {
@@ -22,7 +22,11 @@ const order = {
         "paymentInstrumentType": "NEFT",
         "paymentTotalValueInr": 100,
 
-    }
+    },
+    orderdetail: {"name": "name1"},
+    BuyCategory: "ExternalSIP"
+
+
 }
 async function test() {
     let client = await DvaraGold.Client(config);

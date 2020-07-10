@@ -6,7 +6,7 @@ const payment = {
         '8bd6a810-a61b-11ea-ab2a-6ba08ec49f4b',
         'fdb3daf0-a618-11ea-b280-81044c0a5686'
     ],
-    paymentDate: 'dasd',
+    paymentDate: '2020-07-07',
     txnReference: '1234',
     paymentInstrumentType: 'UPI',
     txnDetails: {},
