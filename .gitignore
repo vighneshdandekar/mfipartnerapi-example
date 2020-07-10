@@ -1,3 +1,4 @@
 node_modules
 *.private.json
 config/credentials.json
+config/credentials.js

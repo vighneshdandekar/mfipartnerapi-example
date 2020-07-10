@@ -29,7 +29,9 @@ async function test() {
         //orderTotalValueInr:50000,
         sellType: "Emergency",
         taxRates: aBookedRate.taxRates,
-        payoutMode: "Bank"
+        payoutMode: "Bank",
+        orderdetail: { "name": "name2" },
+
     }
     return await client.createSellOrder(extCustomerId, _order)
 }
