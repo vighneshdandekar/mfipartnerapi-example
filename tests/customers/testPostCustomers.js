@@ -22,7 +22,7 @@ var testPostCustomers = function () {
 var saveCustomers = function (client, callback) {
     var _id = shortid.generate();
     const _customers = []
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 15; i++) {
         var _id = shortid.generate();
         _customers.push(
             {
@@ -31,7 +31,7 @@ var saveCustomers = function (client, callback) {
                     middle: 'Trivia',
                     last: 'Somtune'
                 },
-                extCustomerId: `VGNEW1123411-00${i}`,
+                extCustomerId: `VGNEW1123411-00fifteenpincode${i}`,
                 dob: "1957-09-05",
                 phone: { mobile: `992326993${i}` },
                 idProof: [{
@@ -45,7 +45,7 @@ var saveCustomers = function (client, callback) {
                     validUntil: new Date()
                 }],
                 address: {
-                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 402202, state: "IN-KL", country: "India", stdCode: 0470
+                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 40220202, state: "IN-KL", country: "India", stdCode: 0470
                 },
                 fatherName: {
                     first: "Groverty ",

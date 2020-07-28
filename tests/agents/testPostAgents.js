@@ -26,7 +26,7 @@ var saveAgents = function (client, callback) {
             extAgentId: `${_id}1`, extBranchId: 'EXT002311', name: { first: "Ajay", middle: "", last: "Singh" },
             phone: { mobile: "7276589783" }, email: 'joe@trader.jo',
             address: {
-                houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 402202, state: "IN-KL", country: "India", stdCode: 0470
+                houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 4022021, state: "IN-KL", country: "India", stdCode: 0470
             },
             spouseDetails: {
                 name: { first: "Ajay", middle: "", last: "Singh" },
