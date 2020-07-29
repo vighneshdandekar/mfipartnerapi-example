@@ -48,7 +48,7 @@ var testUpdateCustomer = function () {
                 },
                 branchId: "27",
                 address: {
-                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 402202, state: "IN-KL", country: "India", stdCode: 0470
+                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 40220211, state: "IN-KL", country: "India", stdCode: 0470
                 },
             }
             getData.bankAccount = updateData.bankAccount;

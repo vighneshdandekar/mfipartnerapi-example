@@ -22,7 +22,7 @@ var testPostCustomers = function () {
 var saveCustomers = function (client, callback) {
     var _id = shortid.generate();
     const _customers = []
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 15; i++) {
         var _id = shortid.generate();
         _customers.push(
             {
@@ -31,12 +31,12 @@ var saveCustomers = function (client, callback) {
                     middle: 'Trivia',
                     last: 'Somtune'
                 },
-                extCustomerId: `VGNEW1123411-00${i}`,
+                extCustomerId: `VGNEW1123411-00fifteenpincode${i}`,
                 dob: "1957-09-05",
                 phone: { mobile: `992326993${i}` },
                 idProof: [{
                     documentId: `ABC1234XV${i}`,
-                    documentType: 'passport',
+                    documentType: 'maskedAadhaar',
                     documentImage: {
                         id: '1234',
                         uri: '/customers/uploaded/ce65ad07-a0b1-452b-ba19-7cea4f149360'
@@ -45,7 +45,7 @@ var saveCustomers = function (client, callback) {
                     validUntil: new Date()
                 }],
                 address: {
-                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 222, state: "IN-KL", country: "India", stdCode: 0470
+                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 40220202, state: "IN-KL", country: "India", stdCode: 0470
                 },
                 fatherName: {
                     first: "Groverty ",
