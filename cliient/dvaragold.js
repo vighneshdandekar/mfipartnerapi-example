@@ -386,7 +386,12 @@ class Client {
     getCustomerSipDetails(extCustomerId, sipId) {
         return get(this._client, `/customers/${extCustomerId}/sips/${sipId}`)
     }
-
+    getOrdersMfiWise(queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/orders`,additionalParametrs)
+    }
 }
 
 exports.Client = async function (config) {
