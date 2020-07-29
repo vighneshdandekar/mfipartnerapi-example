@@ -225,7 +225,18 @@ class Client {
         return post(this._client, `/etforders/addPaymentDetails`, payments)
     }
 
-
+    taxRates(customerId, queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/customers/${customerId}/taxrates`, additionalParametrs)
+    }
+    loaninquire(customerId, queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/customers/${customerId}/loaninquiry`, additionalParametrs)
+    }
 
     createEtfSellOrder(customerId, order) {
         return post(this._client, `/customers/${customerId}/etforders/sell`, order)
