@@ -28,6 +28,9 @@ async function test() {
         rateInrPerGm: 2751,
         orderTotalValueInr: 1000,  //can be 0 to skip an installment.                           
         taxRates: aBookedRate.taxRates,
+        orderdetail: { "name": "name2" },
+
+
         coinInventoryIds: [
             {
                 "coinSpecification": {

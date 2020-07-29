@@ -22,41 +22,41 @@ var testPostCustomers = function () {
 var saveCustomers = function (client, callback) {
     var _id = shortid.generate();
     const _customers = []
-    for(var i = 0 ; i < 1; i++){
+    for (var i = 0; i < 15; i++) {
         var _id = shortid.generate();
         _customers.push(
             {
-                name:{
-                    first:`Vighnesh ${_id}`,
-                    middle:'Trivia',
-                    last:'Somtune'
+                name: {
+                    first: `Vighnesh ${_id}`,
+                    middle: 'Trivia',
+                    last: 'Somtune'
                 },
-                extCustomerId:`VGNEW11234-00${i}`,
-                dob:"1957-09-05",
-                phone:{mobile:`992326993${i}`},
-                idProof:[{
-                    documentId:`ABC1234XV${i}`,
-                    documentType: 'passport',
-                    documentImage:{
-                        id:'1234',
-                        uri:'/customers/uploaded/ce65ad07-a0b1-452b-ba19-7cea4f149360'
+                extCustomerId: `VGNEW1123411-00fifteenpincode${i}`,
+                dob: "1957-09-05",
+                phone: { mobile: `992326993${i}` },
+                idProof: [{
+                    documentId: `ABC1234XV${i}`,
+                    documentType: 'maskedAadhaar',
+                    documentImage: {
+                        id: '1234',
+                        uri: '/customers/uploaded/ce65ad07-a0b1-452b-ba19-7cea4f149360'
                     },
                     issueDate: new Date(),
                     validUntil: new Date()
                 }],
-                address:{
-                    houseNumber:"1",streetName:"2",district:"Tvm",pinCode:695101,state:"IN-KL",country:"India",stdCode:0470
+                address: {
+                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 40220202, state: "IN-KL", country: "India", stdCode: 0470
                 },
-                fatherName:{
-                    first:"Groverty ",
-                    last:`${_id}`
+                fatherName: {
+                    first: "Groverty ",
+                    last: `${_id}`
                 },
-                centerName:"Center",
-                maritalStatus:"married",
-                localLanguage:"Tamil",
-                branchId:'EXT002311',
-                gender:'m'
-            }            
+                centerName: "Center",
+                maritalStatus: "married",
+                localLanguage: "Tamil",
+                branchId: 'EXT002311',
+                gender: 'm'
+            }
         )
     }
 

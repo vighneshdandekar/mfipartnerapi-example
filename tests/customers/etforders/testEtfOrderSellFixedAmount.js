@@ -12,24 +12,26 @@ const bullion = {
 }
 
 const order = {
-    agent:{extAgentId:'EXTAGT007',name:{first:"Koshi",middle:"Venkateshwara",last:"Shaikh"}},
-    bullion:bullion,
-    sellType:'FixedAmount',
-    orderTotalValueInr:500,
-    payoutMode:'Bank'
+    agent: { extAgentId: 'EXTAGT007', name: { first: "Koshi", middle: "Venkateshwara", last: "Shaikh" } },
+    bullion: bullion,
+    sellType: 'FixedAmount',
+    orderTotalValueInr: 500,
+    payoutMode: 'Bank',
+    orderdetail: { "name": "name2" }
+
 }
 
-async function test(){
+async function test() {
     let client = await DvaraGold.Client(config);
-    return await client.createEtfSellOrder(extCustomerId,order)
+    return await client.createEtfSellOrder(extCustomerId, order)
 }
 test()
-.then(result=>{
-    console.dir(result)
-})
-.catch(err=>{
-    console.error(err)
-})
-.finally(()=>{
-    process.exit(0);
-})
+    .then(result => {
+        console.dir(result)
+    })
+    .catch(err => {
+        console.error(err)
+    })
+    .finally(() => {
+        process.exit(0);
+    })

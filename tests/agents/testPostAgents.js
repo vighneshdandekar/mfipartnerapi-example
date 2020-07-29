@@ -24,15 +24,33 @@ var saveAgents = function (client, callback) {
     const _agents = [
         {
             extAgentId: `${_id}1`, extBranchId: 'EXT002311', name: { first: "Ajay", middle: "", last: "Singh" },
-            phone: { mobile: "7276589783" }, email: 'joe@trader.jo'
+            phone: { mobile: "7276589783" }, email: 'joe@trader.jo',
+            address: {
+                houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 4022021, state: "IN-KL", country: "India", stdCode: 0470
+            },
+            spouseDetails: {
+                name: { first: "Ajay", middle: "", last: "Singh" },
+                address: {
+                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 402202, state: "IN-KL", country: "India", stdCode: 0470
+                },
+            }
         },
         {
             extAgentId: `${_id}2`, extBranchId: 'EXT002311', name: { first: "ajit", middle: "", last: "Singh" },
-            phone: { mobile: "7276589783" }, email: 'joe@trader.jo'
+            phone: { mobile: "7276589783" }, email: 'joe@trader.jo',
+            address: {
+                houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 402202, state: "IN-KL", country: "India", stdCode: 0470
+            },
         },
         {
             extAgentId: `${_id}3`, extBranchId: 'EXT002311', name: { first: "Ajay", middle: "", last: "kumar" },
-            phone: { mobile: "7276589783" }, email: 'joe@trader.jo'
+            phone: { mobile: "7276589783" }, email: 'joe@trader.jo',
+            spouseDetails: {
+                name: { first: "Ajay", middle: "", last: "Singh" },
+                address: {
+                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 402202, state: "IN-KL", country: "India", stdCode: 0470
+                },
+            },
         }
     ]
     client

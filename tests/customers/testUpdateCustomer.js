@@ -46,9 +46,13 @@ var testUpdateCustomer = function () {
                     bankName: "ICIC",
                     branchName: "Nellore"
                 },
-                branchId:"27"
+                branchId: "27",
+                address: {
+                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 40220211, state: "IN-KL", country: "India", stdCode: 0470
+                },
             }
             getData.bankAccount = updateData.bankAccount;
+            getData.address = updateData.address
             client
                 .invokeApi(null, `/customers/${getData.extCustomerId}`, 'PUT', {}, getData)
                 .then(function (result) {
