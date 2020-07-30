@@ -286,8 +286,21 @@ class Client {
     createBuyOrder(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/buyorders`, order)
     }
+    getBuyOrder(extCustomerId, orderId){
+        return get(this._client, `/customers/${extCustomerId}/buyorders/${orderId}`)
+    }
+    getBuyOrders(extCustomerId){
+        return get(this._client, `/customers/${extCustomerId}/buyorders`)
+    }
+
     createSellOrder(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/sellorders`, order)
+    }
+    getSellOrder(extCustomerId, orderId){
+        return get(this._client, `/customers/${extCustomerId}/sellorders/${orderId}`)
+    }
+    getSellOrders(extCustomerId){
+        return get(this._client, `/customers/${extCustomerId}/sellorders`)
     }
     createCoinOrder(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/coinorders`, order)
