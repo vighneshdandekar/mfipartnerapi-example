@@ -209,20 +209,8 @@ class Client {
     testSetup() {
         return get(this._client, `/test`)
     }
-    createInstantBuyOrder(customerId, order) {
-        return post(this._client, `/customers/${customerId}/etforders/buy`, order)
-    }
-    createInstntSellOrder(customerId, order) {
-        return post(this._client, `/customers/${customerId}/etforders/sell`, order)
-    }
-    cancelInstantOrder(customerId, orderId, cancellationReason) {
-        return post(this._client, `/customers/${customerId}/etforders/cancel`, {
-            id: orderId,
-            cancellationreason: cancellationReason
-        })
-    }
-    getInstantOrder(customerId, orderId) {
-        return get(this._client, `/customers/${customerId}/etforders/${orderId}`)
+    addPaymentDetails(details) {
+        return post(this._client, `/orders/addPaymentDetails`, details)
     }
     getCustomerInvoiceUrl(customerId, orderid) {
         return get(this._client, `/customers/${customerId}/orderinvoice/${orderid}`)
@@ -230,6 +218,26 @@ class Client {
     createEtfBuyOrder(customerId, order) {
         return post(this._client, `/customers/${customerId}/etforders/buy`, order)
     }
+    createEtfSIPBuyOrder(customerId, order) {
+        return post(this._client, `/customers/${customerId}/etforders/sipbuy`, order)
+    }
+    addPaymentDetailsForETforders(payments) {
+        return post(this._client, `/etforders/addPaymentDetails`, payments)
+    }
+
+    taxRates(customerId, queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/customers/${customerId}/taxrates`, additionalParametrs)
+    }
+    loaninquire(customerId, queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/customers/${customerId}/loaninquiry`, additionalParametrs)
+    }
+
     createEtfSellOrder(customerId, order) {
         return post(this._client, `/customers/${customerId}/etforders/sell`, order)
     }
@@ -242,10 +250,10 @@ class Client {
     getEtfOrder(customerId, orderId) {
         return get(this._client, `/customers/${customerId}/etforders/${orderId}`)
     }
-    getEtfOrderList(customerId, orderId) {
-        return get(this._client, `/customers/${customerId}/etforders`)
+    pincode(pincode) {
+        return get(this._client, `/pincode/${pincode}`)
     }
-    getInstantOrderList(customerId, orderId) {
+    getEtfOrderList(customerId, orderId) {
         return get(this._client, `/customers/${customerId}/etforders`)
     }
     bookBullionRate(extCustomerId, bullionName, bullionId, rateType) {
@@ -317,8 +325,11 @@ class Client {
     updateBranch(extBranchId, branch) {
         return post(this._client, `/branches/${extBranchId}`, branch)
     }
-    getCustomers() {
-        return get(this._client, '/customers')
+    getCustomers(queryStringParameters) {
+        const additionalParametrs = {
+            queryParams: queryStringParameters
+        }
+        return get(this._client, `/customers`, additionalParametrs)
     }
     getCustomer(extCustomerId) {
         return get(this._client, `/customers/${extCustomerId}`)
@@ -385,6 +396,12 @@ class Client {
     }
     getCustomerSipDetails(extCustomerId, sipId) {
         return get(this._client, `/customers/${extCustomerId}/sips/${sipId}`)
+    }
+    getOrdersMfiWise(queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/orders`,additionalParametrs)
     }
 }
 

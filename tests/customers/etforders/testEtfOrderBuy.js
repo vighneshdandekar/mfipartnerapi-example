@@ -1,7 +1,7 @@
 let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
 const config = require('../../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../../cliient/dvaragold');
-const extCustomerId = "BMFIBR001CST022";
+const extCustomerId = "aa7fd74fdaa07f5457937bb1d3d6a536";
 const bullion = {
     bullionShortName: 'G24K',
     bullionName: 'Gold',
@@ -12,21 +12,33 @@ const bullion = {
 }
 
 const order = {
-    agent:{extAgentId:'EXTAGT007',name:{first:"Koshi",middle:"Venkateshwara",last:"Shaikh"}},
-    bullion:bullion,
-    orderTotalValueInr:500,
+    agent: { extAgentId: 'DV12AG', name: { first: "default", middle: "", last: "agent" } },
+    bullion: bullion,
+    orderTotalValueInr: 500,
+    "paymentDetails": {
+        "paymentDate": "2020-06-02T12:58:21.280Z",
+        "txnReference": "293738",
+        "txnDetails": {},
+        "paymentInstrumentType": "NEFT",
+        "paymentTotalValueInr": 100,
+
+    },
+    orderdetail: {"name": "name1"},
+    BuyCategory: "ExternalSIP"
+
+
 }
-async function test(){
+async function test() {
     let client = await DvaraGold.Client(config);
-    return await client.createEtfBuyOrder(extCustomerId,order)
+    return await client.createEtfBuyOrder(extCustomerId, order)
 }
 test()
-.then(result=>{
-    console.dir(result)
-})
-.catch(err=>{
-    console.error(err)
-})
-.finally(()=>{
-    process.exit(0);
-})
+    .then(result => {
+        console.dir(result)
+    })
+    .catch(err => {
+        console.error(err)
+    })
+    .finally(() => {
+        process.exit(0);
+    })

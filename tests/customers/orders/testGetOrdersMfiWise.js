@@ -3,7 +3,11 @@ const config = require('../../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../../cliient/dvaragold');
 (async () =>{
     let client = await DvaraGold.Client(config);
-    return await client.getCustomerInvoiceUrl('pwamfi001','bb59efd0-a976-11ea-9d8b-8553c34f29f2')
+    var queryStringParameters={//This are the optional parameters.
+        startDate:new Date("2020/01/9"),
+        endDate:new Date("2020/07/17"),
+    }
+    return await client.getOrdersMfiWise(queryStringParameters)
 })()
 .then(result=>{
     console.dir(result)

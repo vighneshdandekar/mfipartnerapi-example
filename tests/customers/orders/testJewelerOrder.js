@@ -28,7 +28,9 @@ async function test() {
         rateInrPerGm: 2751,
         orderTotalValueInr: 1000,  //can be 0 to skip an installment.      
         jewelerId: '1234',  // TODO: Need a valid Jeweller loopup                     
-        taxRates: aBookedRate.taxRates
+        taxRates: aBookedRate.taxRates,
+        orderdetail: { "name": "name2" },
+
     }
     return await client.createJewelerOrder(extCustomerId, _order)
 }
