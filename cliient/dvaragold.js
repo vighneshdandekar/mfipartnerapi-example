@@ -243,7 +243,13 @@ class Client {
     }
 
     loandetails(loanid) {
+
         return get(this._client, `/loans/${loanid}`)
+    }
+
+
+    addconsentdetails(loanid, data) {
+        return post(this._client, `/loans/${loanid}/addconsentdetails`, data)
     }
 
 
