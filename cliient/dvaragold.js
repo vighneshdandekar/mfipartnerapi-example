@@ -392,6 +392,9 @@ class Client {
         }
         return get(this._client, `/orders`,additionalParametrs)
     }
+    addKycDetails(data,loanId){
+        return post(this._client, `/loans/${loanId}/addkycdetails`, data)
+    }
 }
 
 exports.Client = async function (config) {
