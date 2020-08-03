@@ -437,6 +437,9 @@ class Client {
     getInvoice(orderid) {
         return get(this._client, `/pdfinvoice/customerorder/${orderid}`)
     }
+    addKycDetails(data,loanId){
+        return post(this._client, `/loans/${loanId}/addkycdetails`, data)
+    }
 }
 
 exports.Client = async function (config) {
