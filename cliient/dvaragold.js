@@ -238,6 +238,23 @@ class Client {
         return get(this._client, `/customers/${customerId}/loaninquiry`, additionalParametrs)
     }
 
+    loanrequest(data) {
+        return post(this._client, `/loans`, data)
+    }
+
+    loandetails(loanid) {
+
+        return get(this._client, `/loans/${loanid}`)
+    }
+
+
+    addconsentdetails(loanid, data) {
+        return post(this._client, `/loans/${loanid}/addconsentdetails`, data)
+    }
+
+
+
+
     createEtfSellOrder(customerId, order) {
         return post(this._client, `/customers/${customerId}/etforders/sell`, order)
     }
@@ -286,20 +303,20 @@ class Client {
     createBuyOrder(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/buyorders`, order)
     }
-    getBuyOrder(extCustomerId, orderId){
+    getBuyOrder(extCustomerId, orderId) {
         return get(this._client, `/customers/${extCustomerId}/buyorders/${orderId}`)
     }
-    getBuyOrders(extCustomerId){
+    getBuyOrders(extCustomerId) {
         return get(this._client, `/customers/${extCustomerId}/buyorders`)
     }
 
     createSellOrder(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/sellorders`, order)
     }
-    getSellOrder(extCustomerId, orderId){
+    getSellOrder(extCustomerId, orderId) {
         return get(this._client, `/customers/${extCustomerId}/sellorders/${orderId}`)
     }
-    getSellOrders(extCustomerId){
+    getSellOrders(extCustomerId) {
         return get(this._client, `/customers/${extCustomerId}/sellorders`)
     }
     createCoinOrder(extCustomerId, order) {
@@ -324,7 +341,7 @@ class Client {
         return post(this._client, `/agents`, agents)
     }
     updateAgent(extAgentId, agent) {
-        return post(this._client, `/agents/${extAgentId}`, agent)
+        return put(this._client, `/agents/${extAgentId}`, agent)
     }
     getBranches() {
         return get(this._client, '/branches')
@@ -336,7 +353,7 @@ class Client {
         return post(this._client, `/branches`, branches)
     }
     updateBranch(extBranchId, branch) {
-        return post(this._client, `/branches/${extBranchId}`, branch)
+        return put(this._client, `/branches/${extBranchId}`, branch)
     }
     getCustomers(queryStringParameters) {
         const additionalParametrs = {
@@ -414,7 +431,14 @@ class Client {
         const additionalParametrs = {
             queryParams: queryParams
         }
-        return get(this._client, `/orders`,additionalParametrs)
+        return get(this._client, `/orders`, additionalParametrs)
+    }
+
+    getInvoice(orderid) {
+        return get(this._client, `/pdfinvoice/customerorder/${orderid}`)
+    }
+    addKycDetails(data,loanId){
+        return post(this._client, `/loans/${loanId}/addkycdetails`, data)
     }
 }
 

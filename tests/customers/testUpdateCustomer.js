@@ -1,85 +1,38 @@
-const authenticatiion = require('../../auth/authenticate.js');
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
+const config = require('../../config/credentials.json')[STAGE];
+const DvaraGold = require('../../cliient/dvaragold');
+var extCustomerId = 'EXT0';
 
-const async = require('async');
-
-var testUpdateCustomer = function () {
-    async.waterfall([
-
-        // authetication
-        function (callback) {
-            authenticatiion.authenticateClient(function (err, client) {
-                callback(err, client)
-            })
-        },
-
-        // GET one record
-        function (client, callback) {
-            var extCustomerId = "VGNEW11234-000";
-            client
-                .invokeApi(null, `/customers/${extCustomerId}`, 'GET')
-                .then(function (result) {
-                    if (result.data) {
-                        callback(null, client, result.data);
-                    } else {
-                        callback('NO records')
-                    }
-
-                })
-                .catch(function (error) {
-                    let err = {
-                        status: error.response.status,
-                        statusText: error.response.statusText,
-                        data: error.response.data
-                    }
-                    callback(err, null, null);
-                })
-
-        },
-
-        // UPDATE one record
-        function (client, getData, callback) {
-            var updateData = {
-                bankAccount: {
-                    accountNumber: '1123145462',
-                    ifsc: "ICIC0210024",
-                    accountName: "Aneel",
-                    bankName: "ICIC",
-                    branchName: "Nellore"
-                },
-                branchId: "27",
-                address: {
-                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 40220211, state: "IN-KL", country: "India", stdCode: 0470
-                },
-            }
-            getData.bankAccount = updateData.bankAccount;
-            getData.address = updateData.address
-            client
-                .invokeApi(null, `/customers/${getData.extCustomerId}`, 'PUT', {}, getData)
-                .then(function (result) {
-                    if (result.data) {
-                        callback(null, result.data);
-                    } else {
-                        callback('NO records')
-                    }
-
-                })
-                .catch(function (error) {
-                    let err = {
-                        status: error.response.status,
-                        statusText: error.response.statusText,
-                        data: error.response.data
-                    }
-                    callback(err, null);
-                })
-        }
-    ], function (err, result) {
-        if (err) {
-            console.log('err:', err)
-
-        } else {
-            console.log('', result);
-        }
-    });
+const updateData = {
+    bankAccount: {
+        accountNumber: '1123145462',
+        ifsc: "ICIC0210024",
+        accountName: "Aneel",
+        bankName: "ICIC",
+        branchName: "Nellore"
+    },
+    branchId: "EXT002311",
+    address: {
+        houseNumber: "3029", streetName: "Narayan Ali", district: "Raigad", pinCode: 402202, state: "IN-MH", country: "India", stdCode: 0470
+    },
 }
+async function test() {
+    let client = await DvaraGold.Client(config);
 
-testUpdateCustomer();
+    let getData = await client.getCustomer(extCustomerId);
+
+    getData.bankAccount = updateData.bankAccount;
+    getData.address = updateData.address
+
+    return await client.updateCustomer(extCustomerId, getData);
+}
+test()
+    .then(result => {
+        console.dir(result)
+    })
+    .catch(err => {
+        console.error(err)
+    })
+    .finally(() => {
+        process.exit(0);
+    })
