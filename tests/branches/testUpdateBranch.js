@@ -1,70 +1,23 @@
-const authenticatiion = require('../../auth/authenticate.js');
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
+const config = require('../../config/credentials.json')[STAGE];
+const DvaraGold = require('../../cliient/dvaragold');
+var extBranchId = '000AB';
 
-const async = require('async');
+async function test() {
+    let client = await DvaraGold.Client(config);
 
-var testUpdateBranch = function () {
-    async.waterfall([
+    let getData = await client.getBranch(extBranchId);
 
-        // authetication
-        function (callback) {
-            authenticatiion.authenticateClient(function (err, client) {
-                callback(err, client)
-            })
-        },
-        // GET one record
-        function (client, callback) {
-            var extBranchId = 'EXT002311';
-            client
-                .invokeApi(null, `/branches/${extBranchId}`, 'GET')
-                .then(function (result) {
-                    if (result.data) {
-                        callback(null, client, result.data);
-                    } else {
-                        callback('NO records')
-                    }
-
-                })
-                .catch(function (error) {
-                    let err = {
-                        status: error.response.status,
-                        statusText: error.response.statusText,
-                        data: error.response.data
-                    }
-                    callback(err, null, null);
-                })
-
-        },
-
-        // UPDATE one record
-        function (client, getData, callback) {
-            getData.communicationAddress.cityOrVillage = "Bavdhan"
-            client
-                .invokeApi(null, `/branches/${getData.extBranchId}`, 'PUT', {}, getData)
-                .then(function (result) {
-                    if (result.data) {
-                        callback(null, result.data);
-                    } else {
-                        callback('NO records')
-                    }
-
-                })
-                .catch(function (error) {
-                    let err = {
-                        status: error.response.status,
-                        statusText: error.response.statusText,
-                        data: error.response.data
-                    }
-                    callback(err, null);
-                })
-        }
-    ], function (err, result) {
-        if (err) {
-            console.log('err:', err)
-
-        } else {
-            console.log('', result);
-        }
-    });
+    getData.name = "Aneel branch in madhurai"
+    return await client.updateBranch(extBranchId, getData);
 }
-
-testUpdateBranch();
+test()
+    .then(result => {
+        console.dir(result)
+    })
+    .catch(err => {
+        console.error(err)
+    })
+    .finally(() => {
+        process.exit(0);
+    })
