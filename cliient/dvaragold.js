@@ -238,6 +238,23 @@ class Client {
         return get(this._client, `/customers/${customerId}/loaninquiry`, additionalParametrs)
     }
 
+    loanrequest(data) {
+        return post(this._client, `/loans`, data)
+    }
+
+    loandetails(loanid) {
+
+        return get(this._client, `/loans/${loanid}`)
+    }
+
+
+    addconsentdetails(loanid, data) {
+        return post(this._client, `/loans/${loanid}/addconsentdetails`, data)
+    }
+
+
+
+
     createEtfSellOrder(customerId, order) {
         return post(this._client, `/customers/${customerId}/etforders/sell`, order)
     }
