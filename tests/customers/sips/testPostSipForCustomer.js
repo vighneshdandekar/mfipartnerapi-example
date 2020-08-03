@@ -1,46 +1,45 @@
 let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
 const config = require('../../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../../cliient/dvaragold');
-
-//AAA111CST001
-//AAA333CST001
-//pramitcst001
-const extCustomerId = "ext-vighnesh";
+ 
+const extCustomerId = "EXT0";
 const bullion = {
-    "id" : "G3",
-    "bullionShortName" : "G22K",
-    "bullionName" : "Gold",
-    "purity" : {
-        "displayValue" : "22Kt (91.6)",
-        "value" : "916"
+    "id": "G3",
+    "bullionShortName": "G22K",
+    "bullionName": "Gold",
+    "purity": {
+        "displayValue": "22Kt (91.6)",
+        "value": "916"
     },
-    "status" : "available"
+    "status": "available"
 }
+
 
 const sip = {
-    "sipName": "FxWt02",
-    "milestoneName":"Marriage",
+    "milestoneName": "Diwali-Update",
+    "sipName": "MySIP20-update",
     "bullion": bullion,
-    "sipTarget":{"targetType":"FixedWeight","targetQuantityInGm": 4},    
-//    "sipTarget":{"targetType":"FixedAmount","targetAmountInr":6000},        
-    "sipInstallmentAmtInr": 3000,
-    "startDate": "2020-05-28T18:30:00.000Z",
-    "paymentPeriodInMths": 6,
-    "frequency": "monthly"
+    "sipInstallmentAmtInr": 5000,
+    "startDate": "2020-08-03",
+    "paymentPeriodInMths": 18,
+    "frequency": "monthly",
+    "sipTarget": {
+        "targetType": "FixedAmount",
+        "targetAmountInr": 100000,
+    }
 }
-
-async function test(){
+async function test() {
     let client = await DvaraGold.Client(config)
-    return await client.createCustomerSip(extCustomerId,sip)
+    return await client.createCustomerSip(extCustomerId, sip)
 }
 
 test()
-.then(result=>{
-    console.dir(result)
-})
-.catch(err=>{
-    console.error(err)
-})
-.finally(()=>{
-    process.exit(0);
-})
+    .then(result => {
+        console.dir(result)
+    })
+    .catch(err => {
+        console.error(err)
+    })
+    .finally(() => {
+        process.exit(0);
+    })

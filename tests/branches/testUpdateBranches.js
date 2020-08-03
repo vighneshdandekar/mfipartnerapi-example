@@ -1,79 +1,34 @@
-const authenticatiion = require('../../auth/authenticate.js');
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
+const config = require('../../config/credentials.json')[STAGE];
+const DvaraGold = require('../../cliient/dvaragold');
+var extBranchId = 'EXT002311';
 
-const async = require('async');
+async function test() {
+    let client = await DvaraGold.Client(config);
 
-var update = function () {
-    async.waterfall([
+    let getData = await client.getBranch(extBranchId);
 
-        // authetication
-        function (callback) {
-            authenticatiion.authenticateClient(function (err, client) {
-                callback(err, client)
-            })
-        },
 
-        // GET one record
-        function (client, callback) {
-            client
-                .invokeApi(null, '/branches/000894', 'GET')
-                .then(function (result) {
-                    if (result.data) {
-                        callback(null, client, result.data);
-                    } else {
-                        callback('NO records')
-                    }
+    getData.name = "Zonal Branch 002311";
+    getData.gstNumber = "11AAAAA1111A1Z1";
+    getData.branchType = "zonal";
+    getData.communicationAddress.pinCode = 625020
+    getData.branchManager.address.pinCode = 625011
 
-                })
-                .catch(function (error) {
-                    let err = {
-                        status: error.response.status,
-                        statusText: error.response.statusText,
-                        data: error.response.data
-                    }
-                    callback(err, null, null);
-                })
 
-        },
 
-        // UPDATE one record
-        function (client, getData, callback) {
-            var updateData = {
-                branchType: "zonal",
-                comissionType: "direct",
-                gst: "11AAAAA1111A1Z1",
-                name: "BIG Bc"
-            }
-            client
-                .invokeApi(null, `/branches/${getData.extBranchId}`, 'PUT', {}, updateData)
-                .then(function (result) {
-                    if (result.data) {
-                        callback(null, result.data);
-                    } else {
-                        callback('NO records')
-                    }
-
-                })
-                .catch(function (error) {
-                    let err = {
-                        status: error.response.status,
-                        statusText: error.response.statusText,
-                        data: error.response.data
-                    }
-                    callback(err, null);
-                })
-        }
-    ], function (err, result) {
-        if (err) {
-            console.log('err:', err)
-
-        } else {
-            console.log('', result);
-        }
-    });
+    return await client.updateBranch(extBranchId, getData);
 }
-
-update();
-
+test()
+    .then(result => {
+        console.dir(result)
+    })
+    .catch(err => {
+        console.error(JSON.stringify(err))
+    })
+    .finally(() => {
+        process.exit(0);
+    })
 
 
 

@@ -1,39 +1,19 @@
-const authenticatiion = require('../../auth/authenticate.js');
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
+const config = require('../../config/credentials.json')[STAGE];
+const DvaraGold = require('../../cliient/dvaragold');
+var extAgentId = 'rDtIAWaOY3';
 
-var testGetOneAgent = function () {
-    authenticatiion.authenticateClient(function (err, client) {
-        if (client) {
-            function callback(error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log(JSON.stringify(body));
-                }
-            }
-            getAgent(client, callback);
-        }
-        else {
-            console.error(err);
-        }
+async function test() {
+    let client = await DvaraGold.Client(config);
+    return await client.getAgent(extAgentId);
+}
+test()
+    .then(result => {
+        console.dir(result)
     })
-}
-
-var getAgent = function (client, callback) {
-    var extAgentId ='jCBWe8Xyl1';
-    client
-        .invokeApi(null, `/agents/${extAgentId}`, 'GET')
-        .then(function (result) {
-            console.log(result.data)
-        })
-        .catch(function (result) {
-            if (result.response) {
-                console.dir({
-                    status: result.response.status,
-                    statusText: result.response.statusText,
-                    data: result.response.data
-                });
-            } else {
-                console.log(result.message);
-            }
-        });
-}
-
-testGetOneAgent();
+    .catch(err => {
+        console.error(err)
+    })
+    .finally(() => {
+        process.exit(0);
+    })

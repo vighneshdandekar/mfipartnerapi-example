@@ -1,20 +1,8 @@
-const authenticatiion = require('../../../auth/authenticate.js');
-
-var testUpdateSip = function () {
-    authenticatiion.authenticateClient(function (err, client) {
-        if (client) {
-            function callback(error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log(JSON.stringify(body));
-                }
-            }
-            updateSip(client, callback);
-        }
-        else {
-            console.error(err);
-        }
-    })
-}
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
+const config = require('../../../config/credentials.json')[STAGE];
+const DvaraGold = require('../../../cliient/dvaragold');
+const customerId = 'EXT0';
+const sipId = `154a28b1-d56b-11ea-b5a8-67e5675e49c8`;
 
 const bullion = {
     id: "G3",
@@ -28,39 +16,34 @@ const bullion = {
 }
 
 const sip = {
-    "milestoneName": "Diwali",
-    "sipName": "Aneel",
+    "milestoneName": "Diwali-Update",
+    "sipName": "MySIP20-update",
     "bullion": bullion,
-    "sipInstallmentAmtInr": 4540,
-    "targetQuantityInGm": 12,
-    "startDate": new Date(),
-    "paymentPeriodInMths": 12,
+    "sipInstallmentAmtInr": 5000,
+    "startDate": "2020-08-03",
+    "paymentPeriodInMths": 36,
     "frequency": "monthly",
+    "sipTarget": {
+        "targetType": "FixedAmount",
+        "targetAmountInr": 100000,
+    }
 }
 
-var updateSip = function (client, callback) {
-    const customerId = 'TestCst001';
-    const sipId = 'bc642720-95de-11ea-a3eb-69515d3fa50f';
-    const sipData = {}
-    client
-        .invokeApi(null, `/customers/${customerId}/sips/${sipId}`,
-            'PUT', {},
-            sip
-        )
-        .then(function (result) {
-            console.dir(result.data)
-        })
-        .catch(function (result) {
-            if (result.response) {
-                console.dir({
-                    status: result.response.status,
-                    statusText: result.response.statusText,
-                    data: result.response.data
-                });
-            } else {
-                console.log(result.message);
-            }
-        });
-}
 
-testUpdateSip();
+
+
+async function test() {
+    let client = await DvaraGold.Client(config);
+
+    return await client.updateCustomerSip(customerId, sipId, sip);
+}
+test()
+    .then(result => {
+        console.dir(result)
+    })
+    .catch(err => {
+        console.error(err)
+    })
+    .finally(() => {
+        process.exit(0);
+    })

@@ -1,75 +1,40 @@
-const authenticatiion = require('../../auth/authenticate.js');
-const async = require('async');
 
-var testUpdateAgent = function () {
-    async.waterfall([
-        // authetication
-        function (callback) {
-            authenticatiion.authenticateClient(function (err, client) {
-                callback(err, client)
-            })
-        },
 
-        // GET one record
-        function (client, callback) {
-            var extAgentId = 'jCBWe8Xyl1';
-            client
-                .invokeApi(null, `/agents/${extAgentId}`, 'GET')
-                .then(function (result) {
-                    if (result.data) {
-                        callback(null, client, result.data);
-                    } else {
-                        callback('NO records')
-                    }
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
+const config = require('../../config/credentials.json')[STAGE];
+const DvaraGold = require('../../cliient/dvaragold');
+const extBranchId = '000AB';
+const extAgentId = 'PxhHRpG_-3';
+const updateData = {
+    extBranchId: extBranchId,
+    extAgentId: extAgentId,
+    name: { first: "Ajay", middle: "", last: "Singh" },
+    phone: { mobile: "9100280078" }, email: 'aneel@trader.jo',
+    address: {
+        houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 402202, state: "IN-KL", country: "India", stdCode: 0470
+    },
+};
 
-                })
-                .catch(function (error) {
-                    let err = {
-                        status: error.response.status,
-                        statusText: error.response.statusText,
-                        data: error.response.data
-                    }
-                    callback(err, null, null);
-                })
 
-        },
 
-        // UPDATE one record
-        function (client, getData, callback) {
-            var updateData = {
-                extAgentId: `${getData.extAgentId}`, extBranchId: 'EXT002311', name: { first: "Ajay", middle: "", last: "Singh" },
-                phone: { mobile: "9100280078" }, email: 'aneel@trader.jo',
-                address: {
-                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 123, state: "IN-KL", country: "India", stdCode: 0470
-                },
-            };
-            client
-                .invokeApi(null, `/agents/${getData.extAgentId}`, 'PUT', {}, updateData)
-                .then(function (result) {
-                    if (result.data) {
-                        callback(null, result.data);
-                    } else {
-                        callback('NO records')
-                    }
+async function test() {
+    let client = await DvaraGold.Client(config);
 
-                })
-                .catch(function (error) {
-                    let err = {
-                        status: error.response.status,
-                        statusText: error.response.statusText,
-                        data: error.response.data
-                    }
-                    callback(err, null);
-                })
-        }
-    ], function (err, result) {
-        if (err) {
-            console.log('err:', err)
+    let getData = await client.getAgent(extAgentId);
 
-        } else {
-            console.log('', result);
-        }
-    });
+    getData.name = updateData.name
+    getData.address = updateData.address
+    getData.phone = updateData.phone
+
+    return await client.updateAgent(extAgentId, updateData);
 }
-
-testUpdateAgent();
+test()
+    .then(result => {
+        console.dir(result)
+    })
+    .catch(err => {
+        console.error(JSON.stringify(err))
+    })
+    .finally(() => {
+        process.exit(0);
+    })
