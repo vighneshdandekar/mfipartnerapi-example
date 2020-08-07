@@ -207,7 +207,7 @@ UploadDocRequest.type should be 'AGENT_DOC'
 
 ## Using Dvaragold Client as a Proxy Gateway.
 
-You can find a fully working proxy gateway implementation in the ['proxy-gateway'](/tree/master/proxy-gateway) folder.  It is written in Javascript for Nodejs runtime environments.
+You can find a fully working proxy gateway implementation in the ['proxy-gateway'](tree/master/proxy-gateway) folder.  It is written in Javascript for Nodejs runtime environments.
 
 We reommmend you implementing your own REST api client using the examples provided here.  As a convenience utility we are also providing a working copy of a stand alone HTTP Server that can work as a Gateway for Dvara Gold APIs.  You can then communicate just with this HTTP Server without worrying about the URL Signing and timeout management.  Please note that this is provided as a template and you are expected to extend it to match your security and stability requirements.  We DO NOT recommend using the templated server instance in high load scenarios as a proxy.  This proxy server uses a single connection with the Dvara Gold API server.  In high load scenarios we recommend using a pool of connections to distribute the load for better performance.
 
