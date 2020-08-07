@@ -255,6 +255,39 @@ class Client {
         }
         return get(this._client, `/customers/${extCustomerId}/bullionrates`, additionalParametrs)
     }
+    bullionRateHistoryCustomerSip(extCustomerId, bullionId) {
+        const additionalParametrs = {
+            queryParams: {
+                bullionId: bullionId,
+            }
+        }
+        return get(this._client, `/customers/${extCustomerId}/bullionrates/sipplanning`, additionalParametrs)
+    }
+    bullionRateHistoryCustomer(extCustomerId, bullionId) {
+        const additionalParametrs = {
+            queryParams: {
+                bullionId: bullionId,
+            }
+        }
+        return get(this._client, `/customers/${extCustomerId}/bullionrates/recenthistory`, additionalParametrs)
+    }
+    bullionRateHistoryBranchSip(extBranchId, bullionId) {
+        const additionalParametrs = {
+            queryParams: {
+                bullionId: bullionId,
+            }
+        }
+        return get(this._client, `/branches/${extBranchId}/bullionrates/sipplanning`, additionalParametrs)
+    }
+    bullionRateHistoryBranch(extBranchId, bullionId) {
+        const additionalParametrs = {
+            queryParams: {
+                bullionId: bullionId,
+            }
+        }
+        return get(this._client, `/branches/${extBranchId}/bullionrates/recenthistory`, additionalParametrs)
+    }
+
     bookBullionRateBranch(extBranchId, bullionName, bullionId, rateType) {
         const additionalParametrs = {
             queryParams: {
