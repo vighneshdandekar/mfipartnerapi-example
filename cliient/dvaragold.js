@@ -473,8 +473,8 @@ class Client {
         return get(this._client, `/orders`, additionalParametrs)
     }
 
-    getInvoice(orderid) {
-        return get(this._client, `/pdfinvoice/customerorder/${orderid}`)
+    getInvoice(extCustomerId, orderid) {        
+        return get(this._client, `/customers/${extCustomerId}/orderinvoice/${orderid}`)
     }
     addKycDetails(data,loanId){
         return post(this._client, `/loans/${loanId}/addkycdetails`, data)
