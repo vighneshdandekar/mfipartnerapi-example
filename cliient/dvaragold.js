@@ -32,22 +32,26 @@ function authenticate(config, callback) {
 
     cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
-            callback({
+            callback(null,{
                 idToken: result.getIdToken().getJwtToken(),
                 accessToken: result.getAccessToken().getJwtToken()
             });
         },
         onFailure: function (err) {
             console.log(err.message ? err.message : err);
+            callback(err,null);
         },
         newPasswordRequired: function () {
             console.log("Given user needs to set a new password");
+            callback("Given user needs to set a new password",null);
         },
         mfaRequired: function () {
             console.log("MFA is not currently supported");
+            callback("MFA is not currently supported",null);
         },
         customChallenge: function () {
             console.log("Custom challenge is not currently supported");
+            callback("Custom challenge is not currently supported",null);
         }
     });
 }
@@ -71,16 +75,25 @@ function getCredentials(config, userTokens, callback) {
     AWS.config.credentials.get(function (err) {
         if (err) {
             console.log(err.message ? err.message : err);
+            callback(err,null)
             return;
         }
 
-        callback(userTokens);
+        callback(null,userTokens);
     });
 }
 
 function authenticateClient(config, callback) {
-    authenticate(config, function (tokens) {
-        getCredentials(config, tokens, function (_tokens) {
+    authenticate(config, function (err,tokens) {
+        if(err){
+            callback(err,null);
+            return;
+        }
+        getCredentials(config, tokens, function (err,_tokens) {
+            if(err){
+                callback(err,null);
+                return;
+            }
             var credentials = AWS.config.credentials;
             var apigClient = apigClientFactory.newClient({
                 accessKey: credentials.accessKeyId,
@@ -89,7 +102,7 @@ function authenticateClient(config, callback) {
                 region: config.region,
                 invokeUrl: `${config.basePath}`,
             });
-            callback(null, apigClient);
+            callback(null, apigClient, credentials.expireTime);
         })
     })
 }
@@ -97,12 +110,12 @@ function authenticateClient(config, callback) {
 async function authenticateClientAsync(config) {
     return new Promise((resolve, reject) => {
         try {
-            authenticateClient(config, function (err, client) {
+            authenticateClient(config, function (err, client, expireTime) {
                 if (err || !client) {
                     reject(err ? err : "Unable to authenticate");
                 }
                 else {
-                    resolve(client);
+                    resolve({client:client, expireTime:expireTime});
                 }
             })
         }
@@ -196,14 +209,41 @@ class Client {
         this._config = config;
         return new Promise((resolve, reject) => {
             authenticateClientAsync(this._config)
-                .then(_client => {
-                    this._client = _client;
+                .then(data => {
+                    const {client, expireTime} = data;
+                    this._client = client;
+                    if(expireTime){
+                        const _renew = parseInt((expireTime.getTime() - Date.now()) * 75 / 100)
+                        setTimeout((dg,interval)=>{
+                            dg.renewClientToken(interval)                            
+                        }, _renew, this, _renew)                        
+                        console.log('\x1b[33m%s\x1b[33m', `Will auto renew token in ${parseInt(_renew/1000)} seconds`)
+                    }
                     resolve(this);
                 })
                 .catch(e => {
                     reject(e);
                 })
 
+        })
+    }
+    renewClientToken(_renew){
+        authenticateClientAsync(this._config)
+        .then((data) => {
+            const {client, expireTime} = data;
+            this._client = client;
+            if(expireTime){
+                const _renew = parseInt((expireTime.getTime() - Date.now()) * 75 / 100)
+                setTimeout((dg,interval)=>{
+                    dg.renewClientToken(interval)                            
+                }, _renew, this, _renew)    
+                console.log('\x1b[33m%s\x1b[33m', `Will auto renew token in ${parseInt(_renew/1000)} seconds`)                    
+            }
+            console.log('Client token renewed');
+        })
+        .catch(e => {
+            console.error(e);
+            console.log(`Token renewal failed. Client unusable @ ${new Date()}` );
         })
     }
     testSetup() {
@@ -434,8 +474,8 @@ class Client {
         return get(this._client, `/orders`, additionalParametrs)
     }
 
-    getInvoice(orderid) {
-        return get(this._client, `/pdfinvoice/customerorder/${orderid}`)
+    getInvoice(extCustomerId, orderid) {        
+        return get(this._client, `/customers/${extCustomerId}/orderinvoice/${orderid}`)
     }
     addKycDetails(data,loanId){
         return post(this._client, `/loans/${loanId}/addkycdetails`, data)
