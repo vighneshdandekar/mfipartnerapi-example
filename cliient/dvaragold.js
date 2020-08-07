@@ -207,10 +207,15 @@ function getErrorResponse(result) {
 
 class Client {
     constructor(config) {
-        this._config = config;
-        return this.renewClientToken()
+        this._config = config;        
+        const self = this;
+        return new Promise((resolve,reject)=>{
+            self.renewClientToken(function(err,status){
+                resolve(self)
+            })
+        })        
     }
-    renewClientToken(){        
+    renewClientToken(callback){        
         authenticateClientAsync(this._config)
         .then((data) => {
             const {client, expireTime} = data;
@@ -218,17 +223,18 @@ class Client {
             if(expireTime){
                 const _renew = parseInt((expireTime.getTime() - Date.now()) * 75 / 100)
                 setTimeout((dg)=>{
-                    dg.renewClientToken()                            
+                    dg.renewClientToken(callback)                            
                 }, _renew, this)    
                 console.log('\x1b[33m%s\x1b[33m', `Will auto renew token in ${parseInt(_renew/1000)} seconds`)                    
             }
             console.log('Client token renewed');
+            if(callback) callback(null, true)
         })
         .catch(e => {
             console.error(e);
             console.log(`Token renewal failed. Client unusable @ ${new Date()}` );
             setTimeout((dg)=>{
-                dg.renewClientToken()                            
+                dg.renewClientToken(callback)                            
             }, ON_ERROR_RECONNECT_DELAY , this)
             console.log(`Will try to reconnect in ${ON_ERROR_RECONNECT_DELAY}` );
         })
