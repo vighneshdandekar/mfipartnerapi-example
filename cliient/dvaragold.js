@@ -2,6 +2,7 @@ const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const AWSCognito = require("amazon-cognito-identity-js");
 const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
 const apigClientFactory = require("aws-api-gateway-client").default;
+const ON_ERROR_RECONNECT_DELAY = 60 * 1000;
 const AWS = require('aws-sdk');
 global.fetch = require('node-fetch')
 
@@ -10,7 +11,7 @@ function authenticate(config, callback) {
         UserPoolId: config.userPool,
         ClientId: config.appClient
     };
-
+    
     AWS.config.update({ region: config.region });
     var userPool = new AWSCognito.CognitoUserPool(poolData);
 
@@ -206,45 +207,49 @@ function getErrorResponse(result) {
 
 class Client {
     constructor(config) {
-        this._config = config;
-        return new Promise((resolve, reject) => {
-            authenticateClientAsync(this._config)
-                .then(data => {
-                    const { client, expireTime } = data;
-                    this._client = client;
-                    if (expireTime) {
-                        const _renew = parseInt((expireTime.getTime() - Date.now()) * 75 / 100)
-                        setTimeout((dg, interval) => {
-                            dg.renewClientToken(interval)
-                        }, _renew, this, _renew)
-                        console.log('\x1b[33m%s\x1b[33m', `Will auto renew token in ${parseInt(_renew / 1000)} seconds`)
-                    }
-                    resolve(this);
-                })
-                .catch(e => {
-                    reject(e);
-                })
-
+        this._config = config;        
+        const self = this;
+        return new Promise((resolve,reject)=>{
+            self.renewClientToken(function(err,status){
+                resolve(self)
+            })
+        })        
+    }
+    renewClientToken(callback){        
+        authenticateClientAsync(this._config)
+        .then((data) => {
+            const {client, expireTime} = data;
+            this._client = client;
+            if(expireTime){
+                const _renew = parseInt((expireTime.getTime() - Date.now()) * 75 / 100)
+                setTimeout((dg)=>{
+                    dg.renewClientToken(callback)                            
+                }, _renew, this)    
+                console.log('\x1b[33m%s\x1b[33m', `Will auto renew token in ${parseInt(_renew/1000)} seconds`)                    
+            }
+            console.log('Client token renewed');
+            if(callback) callback(null, true)
+        })
+        .catch(e => {
+            console.error(e);
+            console.log(`Token renewal failed. Client unusable @ ${new Date()}` );
+            setTimeout((dg)=>{
+                dg.renewClientToken(callback)                            
+            }, ON_ERROR_RECONNECT_DELAY , this)
+            console.log(`Will try to reconnect in ${ON_ERROR_RECONNECT_DELAY}` );
         })
     }
-    renewClientToken(_renew) {
-        authenticateClientAsync(this._config)
-            .then((data) => {
-                const { client, expireTime } = data;
-                this._client = client;
-                if (expireTime) {
-                    const _renew = parseInt((expireTime.getTime() - Date.now()) * 75 / 100)
-                    setTimeout((dg, interval) => {
-                        dg.renewClientToken(interval)
-                    }, _renew, this, _renew)
-                    console.log('\x1b[33m%s\x1b[33m', `Will auto renew token in ${parseInt(_renew / 1000)} seconds`)
-                }
-                console.log('Client token renewed');
-            })
-            .catch(e => {
-                console.error(e);
-                console.log(`Token renewal failed. Client unusable @ ${new Date()}`);
-            })
+    _GET(api, queryParameters){
+        return get(this._client, api, queryParameters)
+    }
+    _POST(api, parameters){
+        return post(this._client, api, parameters)
+    }
+    _DELETE(api, parameters){
+        return _delete(this._client, api, parameters)
+    }
+    _PUT(api, parameters){
+        return put(this._client, api, parameters)
     }
     testSetup() {
         return get(this._client, `/test`)
