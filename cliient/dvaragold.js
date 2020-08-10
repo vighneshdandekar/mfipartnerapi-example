@@ -32,26 +32,26 @@ function authenticate(config, callback) {
 
     cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
-            callback(null,{
+            callback(null, {
                 idToken: result.getIdToken().getJwtToken(),
                 accessToken: result.getAccessToken().getJwtToken()
             });
         },
         onFailure: function (err) {
             console.log(err.message ? err.message : err);
-            callback(err,null);
+            callback(err, null);
         },
         newPasswordRequired: function () {
             console.log("Given user needs to set a new password");
-            callback("Given user needs to set a new password",null);
+            callback("Given user needs to set a new password", null);
         },
         mfaRequired: function () {
             console.log("MFA is not currently supported");
-            callback("MFA is not currently supported",null);
+            callback("MFA is not currently supported", null);
         },
         customChallenge: function () {
             console.log("Custom challenge is not currently supported");
-            callback("Custom challenge is not currently supported",null);
+            callback("Custom challenge is not currently supported", null);
         }
     });
 }
@@ -75,23 +75,23 @@ function getCredentials(config, userTokens, callback) {
     AWS.config.credentials.get(function (err) {
         if (err) {
             console.log(err.message ? err.message : err);
-            callback(err,null)
+            callback(err, null)
             return;
         }
 
-        callback(null,userTokens);
+        callback(null, userTokens);
     });
 }
 
 function authenticateClient(config, callback) {
-    authenticate(config, function (err,tokens) {
-        if(err){
-            callback(err,null);
+    authenticate(config, function (err, tokens) {
+        if (err) {
+            callback(err, null);
             return;
         }
-        getCredentials(config, tokens, function (err,_tokens) {
-            if(err){
-                callback(err,null);
+        getCredentials(config, tokens, function (err, _tokens) {
+            if (err) {
+                callback(err, null);
                 return;
             }
             var credentials = AWS.config.credentials;
@@ -115,7 +115,7 @@ async function authenticateClientAsync(config) {
                     reject(err ? err : "Unable to authenticate");
                 }
                 else {
-                    resolve({client:client, expireTime:expireTime});
+                    resolve({ client: client, expireTime: expireTime });
                 }
             })
         }
@@ -210,14 +210,14 @@ class Client {
         return new Promise((resolve, reject) => {
             authenticateClientAsync(this._config)
                 .then(data => {
-                    const {client, expireTime} = data;
+                    const { client, expireTime } = data;
                     this._client = client;
-                    if(expireTime){
+                    if (expireTime) {
                         const _renew = parseInt((expireTime.getTime() - Date.now()) * 75 / 100)
-                        setTimeout((dg,interval)=>{
-                            dg.renewClientToken(interval)                            
-                        }, _renew, this, _renew)                        
-                        console.log('\x1b[33m%s\x1b[33m', `Will auto renew token in ${parseInt(_renew/1000)} seconds`)
+                        setTimeout((dg, interval) => {
+                            dg.renewClientToken(interval)
+                        }, _renew, this, _renew)
+                        console.log('\x1b[33m%s\x1b[33m', `Will auto renew token in ${parseInt(_renew / 1000)} seconds`)
                     }
                     resolve(this);
                 })
@@ -227,24 +227,24 @@ class Client {
 
         })
     }
-    renewClientToken(_renew){
+    renewClientToken(_renew) {
         authenticateClientAsync(this._config)
-        .then((data) => {
-            const {client, expireTime} = data;
-            this._client = client;
-            if(expireTime){
-                const _renew = parseInt((expireTime.getTime() - Date.now()) * 75 / 100)
-                setTimeout((dg,interval)=>{
-                    dg.renewClientToken(interval)                            
-                }, _renew, this, _renew)    
-                console.log('\x1b[33m%s\x1b[33m', `Will auto renew token in ${parseInt(_renew/1000)} seconds`)                    
-            }
-            console.log('Client token renewed');
-        })
-        .catch(e => {
-            console.error(e);
-            console.log(`Token renewal failed. Client unusable @ ${new Date()}` );
-        })
+            .then((data) => {
+                const { client, expireTime } = data;
+                this._client = client;
+                if (expireTime) {
+                    const _renew = parseInt((expireTime.getTime() - Date.now()) * 75 / 100)
+                    setTimeout((dg, interval) => {
+                        dg.renewClientToken(interval)
+                    }, _renew, this, _renew)
+                    console.log('\x1b[33m%s\x1b[33m', `Will auto renew token in ${parseInt(_renew / 1000)} seconds`)
+                }
+                console.log('Client token renewed');
+            })
+            .catch(e => {
+                console.error(e);
+                console.log(`Token renewal failed. Client unusable @ ${new Date()}`);
+            })
     }
     testSetup() {
         return get(this._client, `/test`)
@@ -474,11 +474,14 @@ class Client {
         return get(this._client, `/orders`, additionalParametrs)
     }
 
-    getInvoice(extCustomerId, orderid) {        
+    getInvoice(extCustomerId, orderid) {
         return get(this._client, `/customers/${extCustomerId}/orderinvoice/${orderid}`)
     }
-    addKycDetails(data,loanId){
+    addKycDetails(data, loanId) {
         return post(this._client, `/loans/${loanId}/addkycdetails`, data)
+    }
+    verifyBankDetails(data) {
+        return post(this._client, `/verification/cstmrbankdetails`, data)
     }
 }
 
