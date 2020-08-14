@@ -317,11 +317,12 @@ class Client {
     createJewelerOrder(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/jewelerorders`, order)
     }
-    cancelPayment(extCustomerid, orderId,total, cancellationReason) {
+    cancelPayment(extCustomerid, orderId,total, cancellationReason,type) {
         return post(this._client, `/customers/${extCustomerid}/cancelpayment`, {
             orderid: orderId,
             total:total,
-            cancellationreason: cancellationReason
+            cancellationreason: cancellationReason,
+            type:type
         })
     }
 
