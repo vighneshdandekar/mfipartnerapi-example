@@ -349,7 +349,7 @@ class Client {
         return get(this._client, `/customers/${extCustomerId}/bullions`)
     }
     getBullionsBranch(extBranchId) {
-        return get(this._client, `/branches/${extBranchId}/bullions`)
+        return get(this._client, `/bullions`)
     }
     getPassbook(extCustomerId) {
         return get(this._client, `/customers/${extCustomerId}/passbook`)
