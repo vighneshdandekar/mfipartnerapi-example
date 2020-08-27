@@ -276,6 +276,12 @@ class Client {
         }
         return get(this._client, `/customers/${customerId}/taxrates`, additionalParametrs)
     }
+    taxRatesBranch(extBranchId, queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/branches/${extBranchId}/taxrates`, additionalParametrs)
+    }
     loaninquire(customerId, queryParams) {
         const additionalParametrs = {
             queryParams: queryParams
@@ -341,6 +347,9 @@ class Client {
 
     getBullions(extCustomerId) {
         return get(this._client, `/customers/${extCustomerId}/bullions`)
+    }
+    getBullionsBranch(extBranchId) {
+        return get(this._client, `/branches/${extBranchId}/bullions`)
     }
     getPassbook(extCustomerId) {
         return get(this._client, `/customers/${extCustomerId}/passbook`)
