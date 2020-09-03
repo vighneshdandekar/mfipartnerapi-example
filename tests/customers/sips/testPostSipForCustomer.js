@@ -1,7 +1,7 @@
 let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
 const config = require('../../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../../cliient/dvaragold');
- 
+
 const extCustomerId = "EXT0";
 const bullion = {
     "id": "G3",
@@ -20,13 +20,15 @@ const sip = {
     "sipName": "MySIP20-update",
     "bullion": bullion,
     "sipInstallmentAmtInr": 5000,
-    "startDate": "2020-08-03",
-    "paymentPeriodInMths": 18,
+    "startDate": "2020-09-07",
     "frequency": "monthly",
     "sipTarget": {
         "targetType": "FixedAmount",
         "targetAmountInr": 100000,
-    }
+    },
+    preferredSipDay: 1,
+    numberofInstallments: 3,
+    "firstSipInstallmentDate": "2020-09-07",
 }
 async function test() {
     let client = await DvaraGold.Client(config)
