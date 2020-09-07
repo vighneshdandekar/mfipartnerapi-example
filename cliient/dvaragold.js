@@ -11,7 +11,7 @@ function authenticate(config, callback) {
         UserPoolId: config.userPool,
         ClientId: config.appClient
     };
-    
+
     AWS.config.update({ region: config.region });
     var userPool = new AWSCognito.CognitoUserPool(poolData);
 
@@ -207,48 +207,48 @@ function getErrorResponse(result) {
 
 class Client {
     constructor(config) {
-        this._config = config;        
+        this._config = config;
         const self = this;
-        return new Promise((resolve,reject)=>{
-            self.renewClientToken(function(err,status){
+        return new Promise((resolve, reject) => {
+            self.renewClientToken(function (err, status) {
                 resolve(self)
             })
-        })        
+        })
     }
-    renewClientToken(callback){        
+    renewClientToken(callback) {
         authenticateClientAsync(this._config)
-        .then((data) => {
-            const {client, expireTime} = data;
-            this._client = client;
-            if(expireTime){
-                const _renew = parseInt((expireTime.getTime() - Date.now()) * 75 / 100)
-                setTimeout((dg)=>{
-                    dg.renewClientToken(callback)                            
-                }, _renew, this)    
-                console.log('\x1b[33m%s\x1b[33m', `Will auto renew token in ${parseInt(_renew/1000)} seconds`)                    
-            }
-            console.log('Client token renewed');
-            if(callback) callback(null, true)
-        })
-        .catch(e => {
-            console.error(e);
-            console.log(`Token renewal failed. Client unusable @ ${new Date()}` );
-            setTimeout((dg)=>{
-                dg.renewClientToken(callback)                            
-            }, ON_ERROR_RECONNECT_DELAY , this)
-            console.log(`Will try to reconnect in ${ON_ERROR_RECONNECT_DELAY}` );
-        })
+            .then((data) => {
+                const { client, expireTime } = data;
+                this._client = client;
+                if (expireTime) {
+                    const _renew = parseInt((expireTime.getTime() - Date.now()) * 75 / 100)
+                    setTimeout((dg) => {
+                        dg.renewClientToken(callback)
+                    }, _renew, this)
+                    console.log('\x1b[33m%s\x1b[33m', `Will auto renew token in ${parseInt(_renew / 1000)} seconds`)
+                }
+                console.log('Client token renewed');
+                if (callback) callback(null, true)
+            })
+            .catch(e => {
+                console.error(e);
+                console.log(`Token renewal failed. Client unusable @ ${new Date()}`);
+                setTimeout((dg) => {
+                    dg.renewClientToken(callback)
+                }, ON_ERROR_RECONNECT_DELAY, this)
+                console.log(`Will try to reconnect in ${ON_ERROR_RECONNECT_DELAY}`);
+            })
     }
-    _GET(api, queryParameters){
+    _GET(api, queryParameters) {
         return get(this._client, api, queryParameters)
     }
-    _POST(api, parameters){
+    _POST(api, parameters) {
         return post(this._client, api, parameters)
     }
-    _DELETE(api, parameters){
+    _DELETE(api, parameters) {
         return _delete(this._client, api, parameters)
     }
-    _PUT(api, parameters){
+    _PUT(api, parameters) {
         return put(this._client, api, parameters)
     }
     testSetup() {
@@ -481,6 +481,30 @@ class Client {
     getCustomerSipDetails(extCustomerId, sipId) {
         return get(this._client, `/customers/${extCustomerId}/sips/${sipId}`)
     }
+
+
+    getCustomerflexiSips(extCustomerId) {
+        return get(this._client, `/customers/${extCustomerId}/flexisips`)
+    }
+    cancelCustomerflexiSip(extCustomerId, sipId) {
+        return _delete(this._client, `/customers/${extCustomerId}/flexisips/${sipId}`)
+    }
+    createCustomerflexiSip(extCustomerId, sip) {
+        return post(this._client, `/customers/${extCustomerId}/flexisips`, sip)
+    }
+    updateCustomerflexiSip(extCustomerId, sipId, sipOrder) {
+        return put(this._client, `/customers/${extCustomerId}/flexisips/${sipId}`, sipOrder)
+    }
+    getCustomerSipflexiDetails(extCustomerId, sipId) {
+        return get(this._client, `/customers/${extCustomerId}/flexisips/${sipId}`)
+    }
+
+
+
+
+
+
+
     getOrdersMfiWise(queryParams) {
         const additionalParametrs = {
             queryParams: queryParams
