@@ -21,7 +21,6 @@ const order = {
     bullion: bullion,
     orderTotalValueInr: 1000,
     orderdetail: { "name": "name1" },
-    BuyCategory: "ExternalSIP",
     sipId: sipId
 
 

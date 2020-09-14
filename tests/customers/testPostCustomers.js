@@ -8,16 +8,16 @@ async function test() {
 
     var _id = shortid.generate();
     const _customers = []
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 1; i++) {
         var _id = shortid.generate();
         _customers.push(
             {
                 name: {
-                    first: `Vighnesh ${_id}`,
+                    first: `John ${_id}`,
                     middle: 'Trivia',
                     last: 'Somtune'
                 },
-                extCustomerId: `EXT${i}`,
+                extCustomerId: `0001_verify_account${i}`,
                 dob: "1957-09-05",
                 phone: { mobile: `860036367${i}` },
                 idProof: [{
@@ -41,7 +41,15 @@ async function test() {
                 maritalStatus: "married",
                 localLanguage: "Tamil",
                 branchId: 'EXT002311',
-                gender: 'm'
+                gender: 'm',
+                "bankAccount": {
+                    "accountNumber": "",
+                    "ifsc": "",
+                    "accountName": "",
+                    "bankName": "",
+                    "branchName": ""
+                },
+                upiVpa: ""
             }
         )
     }
