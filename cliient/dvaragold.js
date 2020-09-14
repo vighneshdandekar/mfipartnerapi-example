@@ -11,7 +11,7 @@ function authenticate(config, callback) {
         UserPoolId: config.userPool,
         ClientId: config.appClient
     };
-    
+
     AWS.config.update({ region: config.region });
     var userPool = new AWSCognito.CognitoUserPool(poolData);
 
@@ -33,26 +33,26 @@ function authenticate(config, callback) {
 
     cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
-            callback(null,{
+            callback(null, {
                 idToken: result.getIdToken().getJwtToken(),
                 accessToken: result.getAccessToken().getJwtToken()
             });
         },
         onFailure: function (err) {
             console.log(err.message ? err.message : err);
-            callback(err,null);
+            callback(err, null);
         },
         newPasswordRequired: function () {
             console.log("Given user needs to set a new password");
-            callback("Given user needs to set a new password",null);
+            callback("Given user needs to set a new password", null);
         },
         mfaRequired: function () {
             console.log("MFA is not currently supported");
-            callback("MFA is not currently supported",null);
+            callback("MFA is not currently supported", null);
         },
         customChallenge: function () {
             console.log("Custom challenge is not currently supported");
-            callback("Custom challenge is not currently supported",null);
+            callback("Custom challenge is not currently supported", null);
         }
     });
 }
@@ -76,23 +76,23 @@ function getCredentials(config, userTokens, callback) {
     AWS.config.credentials.get(function (err) {
         if (err) {
             console.log(err.message ? err.message : err);
-            callback(err,null)
+            callback(err, null)
             return;
         }
 
-        callback(null,userTokens);
+        callback(null, userTokens);
     });
 }
 
 function authenticateClient(config, callback) {
-    authenticate(config, function (err,tokens) {
-        if(err){
-            callback(err,null);
+    authenticate(config, function (err, tokens) {
+        if (err) {
+            callback(err, null);
             return;
         }
-        getCredentials(config, tokens, function (err,_tokens) {
-            if(err){
-                callback(err,null);
+        getCredentials(config, tokens, function (err, _tokens) {
+            if (err) {
+                callback(err, null);
                 return;
             }
             var credentials = AWS.config.credentials;
@@ -116,7 +116,7 @@ async function authenticateClientAsync(config) {
                     reject(err ? err : "Unable to authenticate");
                 }
                 else {
-                    resolve({client:client, expireTime:expireTime});
+                    resolve({ client: client, expireTime: expireTime });
                 }
             })
         }
@@ -207,48 +207,48 @@ function getErrorResponse(result) {
 
 class Client {
     constructor(config) {
-        this._config = config;        
+        this._config = config;
         const self = this;
-        return new Promise((resolve,reject)=>{
-            self.renewClientToken(function(err,status){
+        return new Promise((resolve, reject) => {
+            self.renewClientToken(function (err, status) {
                 resolve(self)
             })
-        })        
+        })
     }
-    renewClientToken(callback){        
+    renewClientToken(callback) {
         authenticateClientAsync(this._config)
-        .then((data) => {
-            const {client, expireTime} = data;
-            this._client = client;
-            if(expireTime){
-                const _renew = parseInt((expireTime.getTime() - Date.now()) * 75 / 100)
-                setTimeout((dg)=>{
-                    dg.renewClientToken(callback)                            
-                }, _renew, this)    
-                console.log('\x1b[33m%s\x1b[33m', `Will auto renew token in ${parseInt(_renew/1000)} seconds`)                    
-            }
-            console.log('Client token renewed');
-            if(callback) callback(null, true)
-        })
-        .catch(e => {
-            console.error(e);
-            console.log(`Token renewal failed. Client unusable @ ${new Date()}` );
-            setTimeout((dg)=>{
-                dg.renewClientToken(callback)                            
-            }, ON_ERROR_RECONNECT_DELAY , this)
-            console.log(`Will try to reconnect in ${ON_ERROR_RECONNECT_DELAY}` );
-        })
+            .then((data) => {
+                const { client, expireTime } = data;
+                this._client = client;
+                if (expireTime) {
+                    const _renew = parseInt((expireTime.getTime() - Date.now()) * 75 / 100)
+                    setTimeout((dg) => {
+                        dg.renewClientToken(callback)
+                    }, _renew, this)
+                    console.log('\x1b[33m%s\x1b[33m', `Will auto renew token in ${parseInt(_renew / 1000)} seconds`)
+                }
+                console.log('Client token renewed');
+                if (callback) callback(null, true)
+            })
+            .catch(e => {
+                console.error(e);
+                console.log(`Token renewal failed. Client unusable @ ${new Date()}`);
+                setTimeout((dg) => {
+                    dg.renewClientToken(callback)
+                }, ON_ERROR_RECONNECT_DELAY, this)
+                console.log(`Will try to reconnect in ${ON_ERROR_RECONNECT_DELAY}`);
+            })
     }
-    _GET(api, queryParameters){
+    _GET(api, queryParameters) {
         return get(this._client, api, queryParameters)
     }
-    _POST(api, parameters){
+    _POST(api, parameters) {
         return post(this._client, api, parameters)
     }
-    _DELETE(api, parameters){
+    _DELETE(api, parameters) {
         return _delete(this._client, api, parameters)
     }
-    _PUT(api, parameters){
+    _PUT(api, parameters) {
         return put(this._client, api, parameters)
     }
     testSetup() {
@@ -275,6 +275,12 @@ class Client {
             queryParams: queryParams
         }
         return get(this._client, `/customers/${customerId}/taxrates`, additionalParametrs)
+    }
+    taxRatesBranch(extBranchId, queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/branches/${extBranchId}/taxrates`, additionalParametrs)
     }
     loaninquire(customerId, queryParams) {
         const additionalParametrs = {
@@ -328,6 +334,39 @@ class Client {
         }
         return get(this._client, `/customers/${extCustomerId}/bullionrates`, additionalParametrs)
     }
+    bullionRateHistoryCustomerSip(extCustomerId, bullionId) {
+        const additionalParametrs = {
+            queryParams: {
+                bullionId: bullionId,
+            }
+        }
+        return get(this._client, `/customers/${extCustomerId}/bullionrates/sipplanning`, additionalParametrs)
+    }
+    bullionRateHistoryCustomer(extCustomerId, bullionId) {
+        const additionalParametrs = {
+            queryParams: {
+                bullionId: bullionId,
+            }
+        }
+        return get(this._client, `/customers/${extCustomerId}/bullionrates/recenthistory`, additionalParametrs)
+    }
+    bullionRateHistoryBranchSip(extBranchId, bullionId) {
+        const additionalParametrs = {
+            queryParams: {
+                bullionId: bullionId,
+            }
+        }
+        return get(this._client, `/branches/${extBranchId}/bullionrates/sipplanning`, additionalParametrs)
+    }
+    bullionRateHistoryBranch(extBranchId, bullionId) {
+        const additionalParametrs = {
+            queryParams: {
+                bullionId: bullionId,
+            }
+        }
+        return get(this._client, `/branches/${extBranchId}/bullionrates/recenthistory`, additionalParametrs)
+    }
+
     bookBullionRateBranch(extBranchId, bullionName, bullionId, rateType) {
         const additionalParametrs = {
             queryParams: {
@@ -341,6 +380,9 @@ class Client {
 
     getBullions(extCustomerId) {
         return get(this._client, `/customers/${extCustomerId}/bullions`)
+    }
+    getBullionsBranch(extBranchId) {
+        return get(this._client, `/bullions`)
     }
     getPassbook(extCustomerId) {
         return get(this._client, `/customers/${extCustomerId}/passbook`)
@@ -370,6 +412,15 @@ class Client {
     createJewelerOrder(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/jewelerorders`, order)
     }
+    cancelPayment(extCustomerid, orderId,total, cancellationReason,type) {
+        return post(this._client, `/customers/${extCustomerid}/cancelpayment`, {
+            orderid: orderId,
+            total:total,
+            cancellationreason: cancellationReason,
+            type:type
+        })
+    }
+
     cancelOrder(extCustomerid, orderId, cancellationReason) {
         return post(this._client, `/customers/${extCustomerid}/cancelorder`, {
             id: orderId,
@@ -472,6 +523,30 @@ class Client {
     getCustomerSipDetails(extCustomerId, sipId) {
         return get(this._client, `/customers/${extCustomerId}/sips/${sipId}`)
     }
+
+
+    getCustomerflexiSips(extCustomerId) {
+        return get(this._client, `/customers/${extCustomerId}/flexisips`)
+    }
+    cancelCustomerflexiSip(extCustomerId, sipId) {
+        return _delete(this._client, `/customers/${extCustomerId}/flexisips/${sipId}`)
+    }
+    createCustomerflexiSip(extCustomerId, sip) {
+        return post(this._client, `/customers/${extCustomerId}/flexisips`, sip)
+    }
+    updateCustomerflexiSip(extCustomerId, sipId, sipOrder) {
+        return put(this._client, `/customers/${extCustomerId}/flexisips/${sipId}`, sipOrder)
+    }
+    getCustomerSipflexiDetails(extCustomerId, sipId) {
+        return get(this._client, `/customers/${extCustomerId}/flexisips/${sipId}`)
+    }
+
+
+
+
+
+
+
     getOrdersMfiWise(queryParams) {
         const additionalParametrs = {
             queryParams: queryParams
@@ -479,11 +554,14 @@ class Client {
         return get(this._client, `/orders`, additionalParametrs)
     }
 
-    getInvoice(extCustomerId, orderid) {        
+    getInvoice(extCustomerId, orderid) {
         return get(this._client, `/customers/${extCustomerId}/orderinvoice/${orderid}`)
     }
-    addKycDetails(data,loanId){
+    addKycDetails(data, loanId) {
         return post(this._client, `/loans/${loanId}/addkycdetails`, data)
+    }
+    verifyBankDetails(data) {
+        return post(this._client, `/verification/cstmrbankdetails`, data)
     }
 }
 
