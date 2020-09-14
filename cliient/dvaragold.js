@@ -2,6 +2,7 @@ const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const AWSCognito = require("amazon-cognito-identity-js");
 const CognitoUserPool = AmazonCognitoIdentity.CognitoUserPool;
 const apigClientFactory = require("aws-api-gateway-client").default;
+const ON_ERROR_RECONNECT_DELAY = 60 * 1000;
 const AWS = require('aws-sdk');
 global.fetch = require('node-fetch')
 
@@ -32,22 +33,26 @@ function authenticate(config, callback) {
 
     cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
-            callback({
+            callback(null, {
                 idToken: result.getIdToken().getJwtToken(),
                 accessToken: result.getAccessToken().getJwtToken()
             });
         },
         onFailure: function (err) {
             console.log(err.message ? err.message : err);
+            callback(err, null);
         },
         newPasswordRequired: function () {
             console.log("Given user needs to set a new password");
+            callback("Given user needs to set a new password", null);
         },
         mfaRequired: function () {
             console.log("MFA is not currently supported");
+            callback("MFA is not currently supported", null);
         },
         customChallenge: function () {
             console.log("Custom challenge is not currently supported");
+            callback("Custom challenge is not currently supported", null);
         }
     });
 }
@@ -71,16 +76,25 @@ function getCredentials(config, userTokens, callback) {
     AWS.config.credentials.get(function (err) {
         if (err) {
             console.log(err.message ? err.message : err);
+            callback(err, null)
             return;
         }
 
-        callback(userTokens);
+        callback(null, userTokens);
     });
 }
 
 function authenticateClient(config, callback) {
-    authenticate(config, function (tokens) {
-        getCredentials(config, tokens, function (_tokens) {
+    authenticate(config, function (err, tokens) {
+        if (err) {
+            callback(err, null);
+            return;
+        }
+        getCredentials(config, tokens, function (err, _tokens) {
+            if (err) {
+                callback(err, null);
+                return;
+            }
             var credentials = AWS.config.credentials;
             var apigClient = apigClientFactory.newClient({
                 accessKey: credentials.accessKeyId,
@@ -89,7 +103,7 @@ function authenticateClient(config, callback) {
                 region: config.region,
                 invokeUrl: `${config.basePath}`,
             });
-            callback(null, apigClient);
+            callback(null, apigClient, credentials.expireTime);
         })
     })
 }
@@ -97,12 +111,12 @@ function authenticateClient(config, callback) {
 async function authenticateClientAsync(config) {
     return new Promise((resolve, reject) => {
         try {
-            authenticateClient(config, function (err, client) {
+            authenticateClient(config, function (err, client, expireTime) {
                 if (err || !client) {
                     reject(err ? err : "Unable to authenticate");
                 }
                 else {
-                    resolve(client);
+                    resolve({ client: client, expireTime: expireTime });
                 }
             })
         }
@@ -194,17 +208,48 @@ function getErrorResponse(result) {
 class Client {
     constructor(config) {
         this._config = config;
+        const self = this;
         return new Promise((resolve, reject) => {
-            authenticateClientAsync(this._config)
-                .then(_client => {
-                    this._client = _client;
-                    resolve(this);
-                })
-                .catch(e => {
-                    reject(e);
-                })
-
+            self.renewClientToken(function (err, status) {
+                resolve(self)
+            })
         })
+    }
+    renewClientToken(callback) {
+        authenticateClientAsync(this._config)
+            .then((data) => {
+                const { client, expireTime } = data;
+                this._client = client;
+                if (expireTime) {
+                    const _renew = parseInt((expireTime.getTime() - Date.now()) * 75 / 100)
+                    setTimeout((dg) => {
+                        dg.renewClientToken(callback)
+                    }, _renew, this)
+                    console.log('\x1b[33m%s\x1b[33m', `Will auto renew token in ${parseInt(_renew / 1000)} seconds`)
+                }
+                console.log('Client token renewed');
+                if (callback) callback(null, true)
+            })
+            .catch(e => {
+                console.error(e);
+                console.log(`Token renewal failed. Client unusable @ ${new Date()}`);
+                setTimeout((dg) => {
+                    dg.renewClientToken(callback)
+                }, ON_ERROR_RECONNECT_DELAY, this)
+                console.log(`Will try to reconnect in ${ON_ERROR_RECONNECT_DELAY}`);
+            })
+    }
+    _GET(api, queryParameters) {
+        return get(this._client, api, queryParameters)
+    }
+    _POST(api, parameters) {
+        return post(this._client, api, parameters)
+    }
+    _DELETE(api, parameters) {
+        return _delete(this._client, api, parameters)
+    }
+    _PUT(api, parameters) {
+        return put(this._client, api, parameters)
     }
     testSetup() {
         return get(this._client, `/test`)
@@ -224,6 +269,40 @@ class Client {
     addPaymentDetailsForETforders(payments) {
         return post(this._client, `/etforders/addPaymentDetails`, payments)
     }
+
+    taxRates(customerId, queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/customers/${customerId}/taxrates`, additionalParametrs)
+    }
+    taxRatesBranch(extBranchId, queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/branches/${extBranchId}/taxrates`, additionalParametrs)
+    }
+    loaninquire(customerId, queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/customers/${customerId}/loaninquiry`, additionalParametrs)
+    }
+
+    loanrequest(data) {
+        return post(this._client, `/loans`, data)
+    }
+
+    loandetails(loanid) {
+
+        return get(this._client, `/loans/${loanid}`)
+    }
+
+
+    addconsentdetails(loanid, data) {
+        return post(this._client, `/loans/${loanid}/addconsentdetails`, data)
+    }
+
 
 
 
@@ -302,14 +381,30 @@ class Client {
     getBullions(extCustomerId) {
         return get(this._client, `/customers/${extCustomerId}/bullions`)
     }
+    getBullionsBranch(extBranchId) {
+        return get(this._client, `/bullions`)
+    }
     getPassbook(extCustomerId) {
         return get(this._client, `/customers/${extCustomerId}/passbook`)
     }
     createBuyOrder(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/buyorders`, order)
     }
+    getBuyOrder(extCustomerId, orderId) {
+        return get(this._client, `/customers/${extCustomerId}/buyorders/${orderId}`)
+    }
+    getBuyOrders(extCustomerId) {
+        return get(this._client, `/customers/${extCustomerId}/buyorders`)
+    }
+
     createSellOrder(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/sellorders`, order)
+    }
+    getSellOrder(extCustomerId, orderId) {
+        return get(this._client, `/customers/${extCustomerId}/sellorders/${orderId}`)
+    }
+    getSellOrders(extCustomerId) {
+        return get(this._client, `/customers/${extCustomerId}/sellorders`)
     }
     createCoinOrder(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/coinorders`, order)
@@ -342,7 +437,7 @@ class Client {
         return post(this._client, `/agents`, agents)
     }
     updateAgent(extAgentId, agent) {
-        return post(this._client, `/agents/${extAgentId}`, agent)
+        return put(this._client, `/agents/${extAgentId}`, agent)
     }
     getBranches() {
         return get(this._client, '/branches')
@@ -354,7 +449,7 @@ class Client {
         return post(this._client, `/branches`, branches)
     }
     updateBranch(extBranchId, branch) {
-        return post(this._client, `/branches/${extBranchId}`, branch)
+        return put(this._client, `/branches/${extBranchId}`, branch)
     }
     getCustomers(queryStringParameters) {
         const additionalParametrs = {
@@ -428,15 +523,36 @@ class Client {
     getCustomerSipDetails(extCustomerId, sipId) {
         return get(this._client, `/customers/${extCustomerId}/sips/${sipId}`)
     }
+    getCustomerflexiSips(extCustomerId) {
+        return get(this._client, `/customers/${extCustomerId}/flexisips`)
+    }
+    cancelCustomerflexiSip(extCustomerId, sipId) {
+        return _delete(this._client, `/customers/${extCustomerId}/flexisips/${sipId}`)
+    }
+    createCustomerflexiSip(extCustomerId, sip) {
+        return post(this._client, `/customers/${extCustomerId}/flexisips`, sip)
+    }
+    updateCustomerflexiSip(extCustomerId, sipId, sipOrder) {
+        return put(this._client, `/customers/${extCustomerId}/flexisips/${sipId}`, sipOrder)
+    }
+    getCustomerSipflexiDetails(extCustomerId, sipId) {
+        return get(this._client, `/customers/${extCustomerId}/flexisips/${sipId}`)
+    }
+
     getOrdersMfiWise(queryParams) {
         const additionalParametrs = {
             queryParams: queryParams
         }
-        return get(this._client, `/orders`,additionalParametrs)
+        return get(this._client, `/orders`, additionalParametrs)
     }
-    addKycDetails(data,loanId){
+
+    getInvoice(extCustomerId, orderid) {
+        return get(this._client, `/customers/${extCustomerId}/orderinvoice/${orderid}`)
+    }
+    addKycDetails(data, loanId) {
         return post(this._client, `/loans/${loanId}/addkycdetails`, data)
     }
+
     createPaymentLinkRegular(data) {
         return post(this._client, `/orders/paymentlinks`, data)
     }
@@ -461,7 +577,9 @@ class Client {
     resendPaymentLinkRegular(id) {
         return post(this._client, `/etforders/paymentlinks/${id}/notify`, )
     }
-
+    verifyBankDetails(data) {
+        return post(this._client, `/verification/cstmrbankdetails`, data)
+    }
 }
 
 exports.Client = async function (config) {

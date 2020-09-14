@@ -1,46 +1,20 @@
-process.env.mygold_stage='admin'
-const authenticatiion = require('../../auth/authenticate.js');
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
+const config = require('../../config/credentials.json')[STAGE];
+const DvaraGold = require('../../cliient/dvaragold');
+const orderid = 'ac9499b0-9f3e-11ea-a5c6-2dfc7482fb83';
+const extCustomerId = "b309204509e42514bd328e764f97d4a1";
 
-var testGetAgents = function () {
-    authenticatiion.authenticateClient(function (err, client) {
-        if (client) {
-            function callback(error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    console.log(JSON.stringify(body));
-                }
-            }
-            getInvoice(client,'b04eaa70-ec13-11e9-bfb9-571f571fcbcd', callback);
-        }
-        else {
-            console.error(err);
-        }
+async function test() {
+    let client = await DvaraGold.Client(config);
+    return await client.getInvoice(extCustomerId, orderid);
+}
+test()
+    .then(result => {
+        console.dir(result)
     })
-}
-var getInvoice = function (client, orderid, callback) {
-    client
-        .invokeApi(null, `/pdfinvoice/customerorder/${orderid}`, 'GET')
-        .then(function (result) {
-            // let pdfdata = result.data;
-            // let fs = require('fs');
-            // let results = fs.writeFileSync('/tmp/outputfile.pdf',new Buffer(pdfdata,'base64'))
-            // console.log('Output @ /tmp/outputfile.pdf ')
-            console.log(result.data);
-        })
-        .catch(function (result) {
-            if (result.response) {
-                console.dir({
-                    status: result.response.status,
-                    statusText: result.response.statusText,
-                    data: result.response.data
-                });
-            } else {
-                console.log(result.message);
-            }
-        })
-        .finally(()=>{
-            process.exit(0);
-        })
-        
-}
-
-testGetAgents();
+    .catch(err => {
+        console.error(err)
+    })
+    .finally(() => {
+        process.exit(0);
+    })

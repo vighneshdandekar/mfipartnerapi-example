@@ -39,22 +39,28 @@ function authenticate(callback) {
 
     cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
-            callback({
+            const _accesstoken = result.getAccessToken();
+            callback(null,{
                 idToken: result.getIdToken().getJwtToken(),
-                accessToken: result.getAccessToken().getJwtToken()
+                accessToken: _accesstoken ? _accesstoken.getJwtToken() : null,
+                validity_seconds: _accesstoken.getExpiration() - _accesstoken.getIssuedAt()
             });
         },
         onFailure: function (err) {
             console.log(err.message ? err.message : err);
+            callback(err,null);
         },
         newPasswordRequired: function () {
             console.log("Given user needs to set a new password");
+            callback("Given user needs to set a new password",null);
         },
         mfaRequired: function () {
             console.log("MFA is not currently supported");
+            callback("MFA is not currently supported",null);
         },
         customChallenge: function () {
             console.log("Custom challenge is not currently supported");
+            callback("Custom challenge is not currently supported",null);
         }
     });
 }
@@ -78,16 +84,24 @@ function getCredentials(userTokens, callback) {
     AWS.config.credentials.get(function (err) {
         if (err) {
             console.log(err.message ? err.message : err);
+            callback(err,null)
             return;
         }
-
-        callback(userTokens);
+        callback(null,userTokens);
     });
 }
 
 exports.authenticateClient = function (callback) {
-    authenticate(function (tokens) {
-        getCredentials(tokens, function (_tokens) {
+    authenticate(function (err,tokens) {
+        if(err){
+            callback(err,null);
+            return;
+        }
+        getCredentials(tokens, function (err,_tokens) {
+            if(err){
+                callback(err,null);
+                return;
+            }
             var credentials = AWS.config.credentials;
             var apigClient = apigClientFactory.newClient({
                 accessKey: credentials.accessKeyId,
@@ -96,7 +110,7 @@ exports.authenticateClient = function (callback) {
                 region: config.region,
                 invokeUrl: `${config.basePath}`,
             });
-            callback(null, apigClient);
+            callback(null, apigClient, credentials.expireTime);
         })
     })
 }

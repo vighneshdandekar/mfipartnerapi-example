@@ -1,39 +1,25 @@
-const authenticatiion = require('../../auth/authenticate.js');
 const shortid = require('shortid')
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
+const config = require('../../config/credentials.json')[STAGE];
+const DvaraGold = require('../../cliient/dvaragold');
 
-var testPostCustomers = function () {
-    authenticatiion.authenticateClient(function (err, client) {
-        if (client) {
-            function callback(error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    var info = JSON.parse(body);
-                    console.log(info);
+async function test() {
+    let client = await DvaraGold.Client(config);
 
-                }
-            }
-            saveCustomers(client, callback);
-        }
-        else {
-            console.error(err);
-        }
-    })
-}
-
-var saveCustomers = function (client, callback) {
     var _id = shortid.generate();
     const _customers = []
-    for (var i = 0; i < 15; i++) {
+    for (var i = 0; i < 1; i++) {
         var _id = shortid.generate();
         _customers.push(
             {
                 name: {
-                    first: `Vighnesh ${_id}`,
+                    first: `John ${_id}`,
                     middle: 'Trivia',
                     last: 'Somtune'
                 },
-                extCustomerId: `VGNEW1123411-00fifteenpincode${i}`,
+                extCustomerId: `0001_verify_account${i}`,
                 dob: "1957-09-05",
-                phone: { mobile: `992326993${i}` },
+                phone: { mobile: `860036367${i}` },
                 idProof: [{
                     documentId: `ABC1234XV${i}`,
                     documentType: 'maskedAadhaar',
@@ -45,7 +31,7 @@ var saveCustomers = function (client, callback) {
                     validUntil: new Date()
                 }],
                 address: {
-                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 40220202, state: "IN-KL", country: "India", stdCode: 0470
+                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 402202, state: "IN-KL", country: "India", stdCode: 0470
                 },
                 fatherName: {
                     first: "Groverty ",
@@ -55,27 +41,28 @@ var saveCustomers = function (client, callback) {
                 maritalStatus: "married",
                 localLanguage: "Tamil",
                 branchId: 'EXT002311',
-                gender: 'm'
+                gender: 'm',
+                "bankAccount": {
+                    "accountNumber": "",
+                    "ifsc": "",
+                    "accountName": "",
+                    "bankName": "",
+                    "branchName": ""
+                },
+                upiVpa: ""
             }
         )
     }
 
-    client
-        .invokeApi(null, '/customers', 'POST', {}, _customers)
-        .then(function (result) {
-            console.log(result.data)
-        })
-        .catch(function (result) {
-            if (result.response) {
-                console.dir({
-                    status: result.response.status,
-                    statusText: result.response.statusText,
-                    data: result.response.data
-                });
-            } else {
-                console.error(result.message);
-            }
-        });
+    return await client.saveCustomers(_customers);
 }
-
-testPostCustomers();
+test()
+    .then(result => {
+        console.dir(result)
+    })
+    .catch(err => {
+        console.error(err)
+    })
+    .finally(() => {
+        process.exit(0);
+    })

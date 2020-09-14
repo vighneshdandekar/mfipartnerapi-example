@@ -1,11 +1,15 @@
 let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
 const config = require('../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../cliient/dvaragold');
-var extAgentId = 'rDtIAWaOY3';
+const extBranchId = "000AB";
+const queryParams = {
+    bullionId: 'G3',
+    rateType: 'buy'
+}
 
 async function test() {
     let client = await DvaraGold.Client(config);
-    return await client.getAgent(extAgentId);
+    return await client.taxRatesBranch(extBranchId, queryParams)
 }
 test()
     .then(result => {
