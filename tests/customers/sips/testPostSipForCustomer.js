@@ -20,7 +20,7 @@ const sip = {
     "sipName": "MySIP20-update",
     "bullion": bullion,
     "sipInstallmentAmtInr": 5000,
-    "startDate": "2020-09-10",
+    "startDate": "2020-09-17",
     "frequency": "monthly",
     "paymentPeriodInMths": 4,
     "sipTarget": {
