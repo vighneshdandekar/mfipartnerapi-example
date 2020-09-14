@@ -523,8 +523,6 @@ class Client {
     getCustomerSipDetails(extCustomerId, sipId) {
         return get(this._client, `/customers/${extCustomerId}/sips/${sipId}`)
     }
-
-
     getCustomerflexiSips(extCustomerId) {
         return get(this._client, `/customers/${extCustomerId}/flexisips`)
     }
@@ -541,12 +539,6 @@ class Client {
         return get(this._client, `/customers/${extCustomerId}/flexisips/${sipId}`)
     }
 
-
-
-
-
-
-
     getOrdersMfiWise(queryParams) {
         const additionalParametrs = {
             queryParams: queryParams
@@ -559,6 +551,31 @@ class Client {
     }
     addKycDetails(data, loanId) {
         return post(this._client, `/loans/${loanId}/addkycdetails`, data)
+    }
+
+    createPaymentLinkRegular(data) {
+        return post(this._client, `/orders/paymentlinks`, data)
+    }
+    createPaymentLinkEtf(data) {
+        return post(this._client, `/etforders/paymentlinks`, data)
+    }
+    getPaymentLinkEtf(id) {
+        return get(this._client, `/etforders/paymentlinks/${id}`, )
+    }
+    getPaymentLinkRegular(id) {
+        return get(this._client, `/orders/paymentlinks/${id}`, )
+    }
+    cancelPaymentLinkEtf(id) {
+        return _delete(this._client, `/etforders/paymentlinks/${id}`, )
+    }
+    cancelPaymentLinkRegular(id) {
+        return _delete(this._client, `/orders/paymentlinks/${id}`, )
+    }
+    resendPaymentLinkEtf(id) {
+        return post(this._client, `/etforders/paymentlinks/${id}/notify`, )
+    }
+    resendPaymentLinkRegular(id) {
+        return post(this._client, `/etforders/paymentlinks/${id}/notify`, )
     }
     verifyBankDetails(data) {
         return post(this._client, `/verification/cstmrbankdetails`, data)
