@@ -15,14 +15,14 @@ const order = {
     agent: { extAgentId: 'DV12AG', name: { first: "default", middle: "", last: "agent" } },
     bullion: bullion,
     orderTotalValueInr: 500,
-    "paymentDetails": {
-        "paymentDate": "2020-06-02T12:58:21.280Z",
-        "txnReference": "293738",
-        "txnDetails": {},
-        "paymentInstrumentType": "NEFT",
-        "paymentTotalValueInr": 100,
+    // "paymentDetails": {
+    //     "paymentDate": "2020-06-02T12:58:21.280Z",
+    //     "txnReference": "293738",
+    //     "txnDetails": {},
+    //     "paymentInstrumentType": "NEFT",
+    //     "paymentTotalValueInr": 100,
 
-    },
+    // },
     orderdetail: {"name": "name1"},
     BuyCategory: "ExternalSIP"
 

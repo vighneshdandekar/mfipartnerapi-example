@@ -437,6 +437,31 @@ class Client {
     addKycDetails(data,loanId){
         return post(this._client, `/loans/${loanId}/addkycdetails`, data)
     }
+    createPaymentLinkRegular(data) {
+        return post(this._client, `/orders/paymentlinks`, data)
+    }
+    createPaymentLinkEtf(data) {
+        return post(this._client, `/etforders/paymentlinks`, data)
+    }
+    getPaymentLinkEtf(id) {
+        return get(this._client, `/etforders/paymentlinks/${id}`, )
+    }
+    getPaymentLinkRegular(id) {
+        return get(this._client, `/orders/paymentlinks/${id}`, )
+    }
+    cancelPaymentLinkEtf(id) {
+        return _delete(this._client, `/etforders/paymentlinks/${id}`, )
+    }
+    cancelPaymentLinkRegular(id) {
+        return _delete(this._client, `/orders/paymentlinks/${id}`, )
+    }
+    resendPaymentLinkEtf(id) {
+        return post(this._client, `/etforders/paymentlinks/${id}/notify`, )
+    }
+    resendPaymentLinkRegular(id) {
+        return post(this._client, `/etforders/paymentlinks/${id}/notify`, )
+    }
+
 }
 
 exports.Client = async function (config) {
