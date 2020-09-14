@@ -334,6 +334,39 @@ class Client {
         }
         return get(this._client, `/customers/${extCustomerId}/bullionrates`, additionalParametrs)
     }
+    bullionRateHistoryCustomerSip(extCustomerId, bullionId) {
+        const additionalParametrs = {
+            queryParams: {
+                bullionId: bullionId,
+            }
+        }
+        return get(this._client, `/customers/${extCustomerId}/bullionrates/sipplanning`, additionalParametrs)
+    }
+    bullionRateHistoryCustomer(extCustomerId, bullionId) {
+        const additionalParametrs = {
+            queryParams: {
+                bullionId: bullionId,
+            }
+        }
+        return get(this._client, `/customers/${extCustomerId}/bullionrates/recenthistory`, additionalParametrs)
+    }
+    bullionRateHistoryBranchSip(extBranchId, bullionId) {
+        const additionalParametrs = {
+            queryParams: {
+                bullionId: bullionId,
+            }
+        }
+        return get(this._client, `/branches/${extBranchId}/bullionrates/sipplanning`, additionalParametrs)
+    }
+    bullionRateHistoryBranch(extBranchId, bullionId) {
+        const additionalParametrs = {
+            queryParams: {
+                bullionId: bullionId,
+            }
+        }
+        return get(this._client, `/branches/${extBranchId}/bullionrates/recenthistory`, additionalParametrs)
+    }
+
     bookBullionRateBranch(extBranchId, bullionName, bullionId, rateType) {
         const additionalParametrs = {
             queryParams: {
@@ -379,6 +412,15 @@ class Client {
     createJewelerOrder(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/jewelerorders`, order)
     }
+    cancelPayment(extCustomerid, orderId,total, cancellationReason,type) {
+        return post(this._client, `/customers/${extCustomerid}/cancelpayment`, {
+            orderid: orderId,
+            total:total,
+            cancellationreason: cancellationReason,
+            type:type
+        })
+    }
+
     cancelOrder(extCustomerid, orderId, cancellationReason) {
         return post(this._client, `/customers/${extCustomerid}/cancelorder`, {
             id: orderId,
