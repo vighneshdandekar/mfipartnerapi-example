@@ -10,7 +10,7 @@
         "aws-sdk": "^2.504.0",
         "jsonwebtoken": "^8.5.1",
         "jwk-to-pem": "^2.0.1",
-        "node-fetch": "^2.6.0",
+        "node-fetch": "^2.6.1",
         "request": "^2.88.0",
         "shortid": "^2.2.14",
         "window-mock": "^0.1.0"
