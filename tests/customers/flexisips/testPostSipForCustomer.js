@@ -16,19 +16,19 @@ const bullion = {
 
 
 const sip = {
-    "milestoneName": "Diwali-Update",
-    "sipName": "MySIP20-update",
+    "milestoneName": "Diwali-newLast1",
+    "sipName": "MySIP20newLast1",
     "bullion": bullion,
-    "sipInstallmentAmtInr": 5000,
-    "startDate": "2020-09-07",
+    "sipInstallmentAmtInr": 1000,
+    "startDate": "2020-09-15",
     "frequency": "monthly",
     "sipTarget": {
         "targetType": "FixedAmount",
-        "targetAmountInr": 100000,
+        "targetAmountInr": 12000,
     },
-    preferredSipDay: 1,
-    numberofInstallments: 3,
-    "firstSipInstallmentDate": "2020-09-07",
+    preferredSipDay: 2,
+    numberofInstallments: 5,
+    "firstSipInstallmentDate": "2020-09-16",
 }
 async function test() {
     let client = await DvaraGold.Client(config)
@@ -37,6 +37,9 @@ async function test() {
 
 test()
     .then(result => {
+        if (result.sipInstallments) {
+            console.table(result.sipInstallments)
+        }
         console.dir(result)
     })
     .catch(err => {
