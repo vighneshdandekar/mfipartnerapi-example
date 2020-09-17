@@ -5,8 +5,9 @@ const DvaraGold = require('../../../cliient/dvaragold');
 //AAA111CST001
 //AAA333CST001
 //pramitcst001
-const extCustomerId = "ext-vighnesh";
-const sipId = "cc265d20-a0c1-11ea-93fd-938c18be38b2";
+ 
+const extCustomerId = 'EXT0';
+const sipId = `154a28b1-d56b-11ea-b5a8-67e5675e49c8`;
 
 async function test(){
     let client = await DvaraGold.Client(config)
