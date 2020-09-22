@@ -580,6 +580,18 @@ class Client {
     verifyBankDetails(data) {
         return post(this._client, `/verification/cstmrbankdetails`, data)
     }
+    createEmandateLink(data,extCustomerId) {
+        return post(this._client, `/customers/${extCustomerId}/emandatelinks`, data)
+    }
+    cancelEmandateLink(id,extCustomerId) {
+        return _delete(this._client, `/customers/${extCustomerId}/emandatelinks/${id}`)
+    }
+    getEmandateLink(id,extCustomerId) {
+        return get(this._client, `/customers/${extCustomerId}/emandatelinks/${id}`)
+    }
+    resendEmandateLink(id,extCustomerId) {
+        return post(this._client, `/customers/${extCustomerId}/emandatelinks/${id}/notify`)
+    }
 }
 
 exports.Client = async function (config) {
