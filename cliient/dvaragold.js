@@ -412,12 +412,12 @@ class Client {
     createJewelerOrder(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/jewelerorders`, order)
     }
-    cancelPayment(extCustomerid, orderId,total, cancellationReason,type) {
+    cancelPayment(extCustomerid, orderId, total, cancellationReason, type) {
         return post(this._client, `/customers/${extCustomerid}/cancelpayment`, {
             orderid: orderId,
-            total:total,
+            total: total,
             cancellationreason: cancellationReason,
-            type:type
+            type: type
         })
     }
 
@@ -591,6 +591,21 @@ class Client {
     }
     resendEmandateLink(id,extCustomerId) {
         return post(this._client, `/customers/${extCustomerId}/emandatelinks/${id}/notify`)
+    }
+      // emergency sell
+    emergencySellCreate(extCustomerId, order) {
+        return post(this._client, `/customers/${extCustomerId}/emergencysellorders`, order)
+
+    }
+    emergencySellGet(extCustomerId, orderid) {
+        return get(this._client, `/customers/${extCustomerId}/emergencysellorders/${orderid}`)
+
+    }
+    emergencySellList(extCustomerId, queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/customers/${extCustomerId}/emergencysellorders`, additionalParametrs)
     }
 }
 

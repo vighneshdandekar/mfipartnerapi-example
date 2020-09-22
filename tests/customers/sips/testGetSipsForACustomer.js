@@ -5,7 +5,7 @@ const DvaraGold = require('../../../cliient/dvaragold');
 //AAA111CST001
 //AAA333CST001
 //pramitcst001
-const extCustomerId = "ext-vighnesh";
+const extCustomerId = "EXT0";
 
 async function test(){
     let client = await DvaraGold.Client(config)
