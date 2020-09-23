@@ -580,7 +580,19 @@ class Client {
     verifyBankDetails(data) {
         return post(this._client, `/verification/cstmrbankdetails`, data)
     }
-    // emergency sell
+    createEmandateLink(data,extCustomerId) {
+        return post(this._client, `/customers/${extCustomerId}/emandatelinks`, data)
+    }
+    cancelEmandateLink(id,extCustomerId) {
+        return _delete(this._client, `/customers/${extCustomerId}/emandatelinks/${id}`)
+    }
+    getEmandateLink(id,extCustomerId) {
+        return get(this._client, `/customers/${extCustomerId}/emandatelinks/${id}`)
+    }
+    resendEmandateLink(id,extCustomerId) {
+        return post(this._client, `/customers/${extCustomerId}/emandatelinks/${id}/notify`)
+    }
+      // emergency sell
     emergencySellCreate(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/emergencysellorders`, order)
 
@@ -594,7 +606,6 @@ class Client {
             queryParams: queryParams
         }
         return get(this._client, `/customers/${extCustomerId}/emergencysellorders`, additionalParametrs)
-
     }
 }
 
