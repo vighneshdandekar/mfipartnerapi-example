@@ -49,7 +49,7 @@ async function test() {
                     "bankName": "",
                     "branchName": ""
                 },
-                upiVpa: ""
+                upiAccount: { address: "" }
             }
         )
     }
