@@ -560,39 +560,42 @@ class Client {
         return post(this._client, `/etforders/paymentlinks`, data)
     }
     getPaymentLinkEtf(id) {
-        return get(this._client, `/etforders/paymentlinks/${id}`, )
+        return get(this._client, `/etforders/paymentlinks/${id}`,)
     }
     getPaymentLinkRegular(id) {
-        return get(this._client, `/orders/paymentlinks/${id}`, )
+        return get(this._client, `/orders/paymentlinks/${id}`,)
     }
     cancelPaymentLinkEtf(id) {
-        return _delete(this._client, `/etforders/paymentlinks/${id}`, )
+        return _delete(this._client, `/etforders/paymentlinks/${id}`,)
     }
     cancelPaymentLinkRegular(id) {
-        return _delete(this._client, `/orders/paymentlinks/${id}`, )
+        return _delete(this._client, `/orders/paymentlinks/${id}`,)
     }
     resendPaymentLinkEtf(id) {
-        return post(this._client, `/etforders/paymentlinks/${id}/notify`, )
+        return post(this._client, `/etforders/paymentlinks/${id}/notify`,)
     }
     resendPaymentLinkRegular(id) {
-        return post(this._client, `/etforders/paymentlinks/${id}/notify`, )
+        return post(this._client, `/etforders/paymentlinks/${id}/notify`,)
     }
     verifyBankDetails(data) {
         return post(this._client, `/verification/cstmrbankdetails`, data)
     }
-    createEmandateLink(data,extCustomerId) {
-        return post(this._client, `/customers/${extCustomerId}/emandatelinks`, data)
+    createEmandateLink(data, extCustomerId) {
+        return post(this._client, `/customers/${extCustomerId}/emandate/createlink`, data)
     }
-    cancelEmandateLink(id,extCustomerId) {
-        return _delete(this._client, `/customers/${extCustomerId}/emandatelinks/${id}`)
+    cancelEmandateLink(id, extCustomerId) {
+        return _delete(this._client, `/customers/${extCustomerId}/emandate/${id}`)
     }
-    getEmandateLink(id,extCustomerId) {
-        return get(this._client, `/customers/${extCustomerId}/emandatelinks/${id}`)
+    cancelEmandateLinkUsingSIPId(id, extCustomerId) {
+        return _delete(this._client, `/customers/${extCustomerId}/flexisips/${id}/emandate`)
     }
-    resendEmandateLink(id,extCustomerId) {
+    getEmandateLink(id, extCustomerId) {
+        return get(this._client, `/customers/${extCustomerId}/emandate/${id}`)
+    }
+    resendEmandateLink(id, extCustomerId) {
         return post(this._client, `/customers/${extCustomerId}/emandatelinks/${id}/notify`)
     }
-      // emergency sell
+    // emergency sell
     emergencySellCreate(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/emergencysellorders`, order)
 

@@ -2,7 +2,7 @@ let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
 const config = require('../../../config/credentials.json')[STAGE];
 const DvaraGold = require('../../../cliient/dvaragold');
 const customerId = 'EXT0';
-const sipId = `497ce680-f645-11ea-82d4-cd425d501a08`;
+const sipId = `155d75b0-0322-11eb-a7bc-59ad9a155dd7`;
 
 const bullion = {
     id: "G3",
@@ -19,8 +19,8 @@ const sip = {
     "milestoneName": "Diwali-newLast1",
     "sipName": "MySIP20newLast1",
     "bullion": bullion,
-    "sipInstallmentAmtInr": 1000,
-    "startDate": "2020-09-19",
+    "sipInstallmentAmtInr": 12000,
+    "startDate": "2020-10-19",
     "frequency": "monthly",
     "sipTarget": {
         "targetType": "FixedAmount",
@@ -28,7 +28,7 @@ const sip = {
     },
     preferredSipDay: 2,
     numberofInstallments: 5,
-    "firstSipInstallmentDate": "2020-09-29",
+    "firstSipInstallmentDate": "2020-10-29",
 }
 
 

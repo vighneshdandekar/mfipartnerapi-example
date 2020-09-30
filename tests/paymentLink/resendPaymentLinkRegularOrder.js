@@ -4,7 +4,7 @@ const DvaraGold = require('../../cliient/dvaragold');
 
 async function test(){
     let client = await DvaraGold.Client(config);
-    var paymentLinkId='4e11fad0-f64c-11ea-bfe6-d721cf959c95'
+    var paymentLinkId='80d34110-031f-11eb-b558-f1678a7781ee'
     return await client.resendPaymentLinkRegular(paymentLinkId);
 }
 test()
