@@ -478,20 +478,20 @@ class Client {
     getGatewayConfig(customerId) {
         return post(this._client, `/payments/${customerId}/gatewayconfig`, { test: 'dummy' })
     }
-    getProduct(id) {
-        return get(this._client, `/products/${id}`)
+    getProduct(id,extCustomerId) {
+        return get(this._client, `/customers/${extCustomerId}/products/${id}`)
     }
-    getProductShowcase(queryStringParameters) {
+    getProductShowcase(queryStringParameters,extCustomerId) {
         const additionalParametrs = {
             queryParams: queryStringParameters
         }
-        return get(this._client, `/productshowcase`, additionalParametrs)
+        return get(this._client, `/customers/${extCustomerId}/productshowcase`, additionalParametrs)
     }
-    getProducts(queryStringParameters) {
+    getProducts(queryStringParameters,extCustomerId) {
         const additionalParametrs = {
             queryParams: queryStringParameters
         }
-        return get(this._client, `/products`, additionalParametrs)
+        return get(this._client, `/customers/${extCustomerId}/products`, additionalParametrs)
     }
     testWebhook(data) {
         return post(this._client, `/webhooks/dummy`, data)

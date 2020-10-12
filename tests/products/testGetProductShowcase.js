@@ -9,7 +9,8 @@ async function test(){
         // bullionName:'Silver',
         // bullionId:'S1'
      }
-    return await client.getProductShowcase(queryStringParameters);
+     var extCustomerId='EXT0'
+    return await client.getProductShowcase(queryStringParameters,extCustomerId);
 }
 test()
 .then(result=>{
