@@ -478,20 +478,20 @@ class Client {
     getGatewayConfig(customerId) {
         return post(this._client, `/payments/${customerId}/gatewayconfig`, { test: 'dummy' })
     }
-    getProduct(id) {
-        return get(this._client, `/products/${id}`)
+    getProduct(id,extCustomerId) {
+        return get(this._client, `/customers/${extCustomerId}/products/${id}`)
     }
-    getProductShowcase(queryStringParameters) {
+    getProductShowcase(queryStringParameters,extCustomerId) {
         const additionalParametrs = {
             queryParams: queryStringParameters
         }
-        return get(this._client, `/productshowcase`, additionalParametrs)
+        return get(this._client, `/customers/${extCustomerId}/productshowcase`, additionalParametrs)
     }
-    getProducts(queryStringParameters) {
+    getProducts(queryStringParameters,extCustomerId) {
         const additionalParametrs = {
             queryParams: queryStringParameters
         }
-        return get(this._client, `/products`, additionalParametrs)
+        return get(this._client, `/customers/${extCustomerId}/products`, additionalParametrs)
     }
     testWebhook(data) {
         return post(this._client, `/webhooks/dummy`, data)
@@ -581,16 +581,16 @@ class Client {
         return post(this._client, `/verification/cstmrbankdetails`, data)
     }
     createEmandateLink(data,extCustomerId) {
-        return post(this._client, `/customers/${extCustomerId}/emandatelinks`, data)
+        return post(this._client, `/customers/${extCustomerId}/emandate/createlink`, data)
     }
     cancelEmandateLink(id,extCustomerId) {
-        return _delete(this._client, `/customers/${extCustomerId}/emandatelinks/${id}`)
+        return _delete(this._client, `/customers/${extCustomerId}/emandate/${id}`)
     }
     getEmandateLink(id,extCustomerId) {
-        return get(this._client, `/customers/${extCustomerId}/emandatelinks/${id}`)
+        return get(this._client, `/customers/${extCustomerId}/emandate/${id}`)
     }
     resendEmandateLink(id,extCustomerId) {
-        return post(this._client, `/customers/${extCustomerId}/emandatelinks/${id}/notify`)
+        return post(this._client, `/customers/${extCustomerId}/emandate/${id}/notify`)
     }
       // emergency sell
     emergencySellCreate(extCustomerId, order) {
@@ -607,6 +607,11 @@ class Client {
         }
         return get(this._client, `/customers/${extCustomerId}/emergencysellorders`, additionalParametrs)
     }
+    inquiryJewellery(customerId, data) {
+        return post(this._client, `/customers/${customerId}/goldtojewellery`, data)
+
+    }
+
 }
 
 exports.Client = async function (config) {
