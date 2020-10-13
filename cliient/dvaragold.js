@@ -610,6 +610,24 @@ class Client {
         }
         return get(this._client, `/customers/${extCustomerId}/emergencysellorders`, additionalParametrs)
     }
+
+    
+
+    // jewellery sell
+    jewelleryCreate(extCustomerId, order) {
+        return post(this._client, `/customers/${extCustomerId}/jewelleryorders`, order)
+
+    }
+    jewelleryGet(extCustomerId, orderid) {
+        return get(this._client, `/customers/${extCustomerId}/jewelleryorders/${orderid}`)
+
+    }
+    jewelleryList(extCustomerId, queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/customers/${extCustomerId}/jewelleryorders`, additionalParametrs)
+    }
 }
 
 exports.Client = async function (config) {
