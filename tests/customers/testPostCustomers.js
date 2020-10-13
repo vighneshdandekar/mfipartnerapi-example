@@ -17,7 +17,7 @@ async function test() {
                     middle: 'Trivia',
                     last: 'Somtune'
                 },
-                extCustomerId: `0001_verify_account${i}`,
+                extCustomerId: `upiAccountChnages01${i}`,
                 dob: "1957-09-05",
                 phone: { mobile: `860036367${i}` },
                 idProof: [{
@@ -43,13 +43,13 @@ async function test() {
                 branchId: 'EXT002311',
                 gender: 'm',
                 "bankAccount": {
-                    "accountNumber": "",
-                    "ifsc": "",
-                    "accountName": "",
-                    "bankName": "",
-                    "branchName": ""
+                    "accountNumber": "account",
+                    "ifsc": "idh",
+                    "accountName": "28373",
+                    "bankName": "1od8d",
+                    "branchName": "banrch anme"
                 },
-                upiVpa: ""
+                upiAccount: { address: "okvighnesh@icici" }
             }
         )
     }

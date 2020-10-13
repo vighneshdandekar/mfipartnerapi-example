@@ -15,7 +15,7 @@ const updateData = {
     address: {
         houseNumber: "3029", streetName: "Narayan Ali", district: "Raigad", pinCode: 402202, state: "IN-MH", country: "India", stdCode: 0470
     },
-    upiVpa: '222@okaxis'
+    upiAccount: { address: '222@okaxis' }
 }
 async function test() {
     let client = await DvaraGold.Client(config);
@@ -24,7 +24,7 @@ async function test() {
     if (getData) {
         getData.bankAccount = updateData.bankAccount;
         getData.address = updateData.address,
-            getData.upiVpa = updateData.upiVpa
+            getData.upiAccount = updateData.upiAccount
         return await client.updateCustomer(extCustomerId, getData);
     } else {
         return 'enable to get record'
