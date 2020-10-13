@@ -607,6 +607,11 @@ class Client {
         }
         return get(this._client, `/customers/${extCustomerId}/emergencysellorders`, additionalParametrs)
     }
+    inquiryJewellery(customerId, data) {
+        return post(this._client, `/customers/${customerId}/goldtojewellery`, data)
+
+    }
+
 }
 
 exports.Client = async function (config) {
