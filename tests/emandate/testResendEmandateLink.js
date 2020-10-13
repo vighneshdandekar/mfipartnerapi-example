@@ -4,9 +4,9 @@ const DvaraGold = require('../../cliient/dvaragold');
 
 async function test(){
     let client = await DvaraGold.Client(config);
-    var emandateLinkId='652ba040-f971-11ea-8976-23244329e1f9'
+    var emandateId='652ba040-f971-11ea-8976-23244329e1f9'
     var extCustomerId='aa7fd74fdaa07f5457937bb1d3d6a536'
-    return await client.resendEmandateLink(emandateLinkId,extCustomerId);
+    return await client.resendEmandateLink(emandateId,extCustomerId);
 }
 test()
 .then(result=>{
