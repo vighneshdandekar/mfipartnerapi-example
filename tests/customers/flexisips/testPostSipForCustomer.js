@@ -20,7 +20,7 @@ const sip = {
     "sipName": "MySIP20newLast1",
     "bullion": bullion,
     "sipInstallmentAmtInr": 1000,
-    "startDate": "2020-09-15",
+    "startDate": "2020-10-20",
     "frequency": "monthly",
     "sipTarget": {
         "targetType": "FixedAmount",
@@ -28,7 +28,7 @@ const sip = {
     },
     preferredSipDay: 2,
     numberofInstallments: 5,
-    "firstSipInstallmentDate": "2020-09-16",
+    "firstSipInstallmentDate": "2020-10-21",
 }
 async function test() {
     let client = await DvaraGold.Client(config)

@@ -5,11 +5,11 @@ const DvaraGold = require('../../cliient/dvaragold');
 async function test(){
     let client = await DvaraGold.Client(config);
     var obj={
-        sipId:'84784150-fbd9-11ea-8383-e39739448e04',
+        sipId:'2c925443-0326-11eb-8daa-85d3ea2ad559',
         sendLinkToCustomer:true,
         paymentInstrumentType:'debitCard'
     }
-    var extCustomerId='aa7fd74fdaa07f5457937bb1d3d6a536'
+    var extCustomerId='EXT0'
     return await client.createEmandateLink(obj,extCustomerId);
 }
 test()

@@ -26,7 +26,7 @@ async function test() {
         bullionRateId: aBookedRate.id, //bullion rateid got through rate booking.
         //weightInGm:1,
         //rateInrPerGm:2751,
-        orderTotalValueInr: 5000,
+        orderTotalValueInr: 756,
         buyType: 'FixedAmount',
         //buyType:'FixedWeight',
         test: "1234",

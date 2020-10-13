@@ -560,22 +560,22 @@ class Client {
         return post(this._client, `/etforders/paymentlinks`, data)
     }
     getPaymentLinkEtf(id) {
-        return get(this._client, `/etforders/paymentlinks/${id}`, )
+        return get(this._client, `/etforders/paymentlinks/${id}`,)
     }
     getPaymentLinkRegular(id) {
-        return get(this._client, `/orders/paymentlinks/${id}`, )
+        return get(this._client, `/orders/paymentlinks/${id}`,)
     }
     cancelPaymentLinkEtf(id) {
-        return _delete(this._client, `/etforders/paymentlinks/${id}`, )
+        return _delete(this._client, `/etforders/paymentlinks/${id}`,)
     }
     cancelPaymentLinkRegular(id) {
-        return _delete(this._client, `/orders/paymentlinks/${id}`, )
+        return _delete(this._client, `/orders/paymentlinks/${id}`,)
     }
     resendPaymentLinkEtf(id) {
-        return post(this._client, `/etforders/paymentlinks/${id}/notify`, )
+        return post(this._client, `/etforders/paymentlinks/${id}/notify`,)
     }
     resendPaymentLinkRegular(id) {
-        return post(this._client, `/etforders/paymentlinks/${id}/notify`, )
+        return post(this._client, `/etforders/paymentlinks/${id}/notify`,)
     }
     verifyBankDetails(data) {
         return post(this._client, `/verification/cstmrbankdetails`, data)
@@ -592,7 +592,7 @@ class Client {
     resendEmandateLink(id,extCustomerId) {
         return post(this._client, `/customers/${extCustomerId}/emandate/${id}/notify`)
     }
-      // emergency sell
+    // emergency sell
     emergencySellCreate(extCustomerId, order) {
         return post(this._client, `/customers/${extCustomerId}/emergencysellorders`, order)
 
@@ -606,6 +606,24 @@ class Client {
             queryParams: queryParams
         }
         return get(this._client, `/customers/${extCustomerId}/emergencysellorders`, additionalParametrs)
+    }
+
+    
+
+    // jewellery sell
+    jewelleryCreate(extCustomerId, order) {
+        return post(this._client, `/customers/${extCustomerId}/jewelleryorders`, order)
+
+    }
+    jewelleryGet(extCustomerId, orderid) {
+        return get(this._client, `/customers/${extCustomerId}/jewelleryorders/${orderid}`)
+
+    }
+    jewelleryList(extCustomerId, queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/customers/${extCustomerId}/jewelleryorders`, additionalParametrs)
     }
     inquiryJewellery(customerId, data) {
         return post(this._client, `/customers/${customerId}/goldtojewellery`, data)
