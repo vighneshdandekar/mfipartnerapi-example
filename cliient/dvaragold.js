@@ -629,6 +629,14 @@ class Client {
         return post(this._client, `/customers/${customerId}/goldtojewellery`, data)
 
     }
+    applyLein(data){
+        return post(this._client, `/liens`, data)
+
+    }
+    getLein(id){
+        return get(this._client, `/liens/${id}`,)
+
+    }
 
 }
 
