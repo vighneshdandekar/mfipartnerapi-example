@@ -13,24 +13,24 @@ const bullion = {
 
 const order = {
     agent: { extAgentId: 'EXTAGT02', name: { first: "Koshi", middle: "Venkateshwara", last: "Shaikh" } },
-    "orderTotalValueInr": 10,
+    // "orderTotalValueInr": 10,
     "jewelleryItems": [
         {
             "jewelleryId": "e0066110-dd2e-11ea-88f6-8bd81abcab40",
-            "quantity": 1,
+            "quantity": 2,
             "bullionRateId": "string",
-            "totalPriceInr": 0,
-            "chargesAmountInr": 0,
-            "taxAmountInr": 0
+            // "totalPriceInr": 0,
+            // "chargesAmountInr": 0,
+            // "taxAmountInr": 0
         }
     ],
     "paymentPlan": {
-        // "useBullionBalance": [
-        //     {
-        //         "bullion": bullion,
-        //         "maxBullionWtGm": 1
-        //     }
-        // ],
+        "useBullionBalance": [
+            {
+                "bullion": bullion,
+                "maxBullionWtGm": 1
+            }
+        ],
         "alternatePaymentMode": "partnercollect"
     },
     "jewelleryPaymentDetails": [
@@ -45,36 +45,36 @@ const order = {
         }
     ],
 
-    "shipment": {
-        "shippingAddress": {
-            "houseNumber": "string",
-            "streetName": "string",
-            "area": "string",
-            "cityOrVillage": "string",
-            "postOffice": "string",
-            "district": "string",
-            "pinCode": 0,
-            "state": "IN-AN",
-            "stdCode": 0,
-            "landmark": "string",
-            "country": "string"
-        },
-        "shippingCharges": [
-            {
-                "type": "making",
-                "chargesInr": 0,
-                "taxTotalInr": 0,
-                "taxes": [
-                    {
-                        "taxName": "gst, cess etc",
-                        "taxCode": "igst, sgst, cgst, utst etc",
-                        "taxRatePercent": 0,
-                        "taxAmountInr": 0
-                    }
-                ]
-            }
-        ]
-    },
+    // "shipment": {
+    //     "shippingAddress": {
+    //         "houseNumber": "string",
+    //         "streetName": "string",
+    //         "area": "string",
+    //         "cityOrVillage": "string",
+    //         "postOffice": "string",
+    //         "district": "string",
+    //         "pinCode": 0,
+    //         "state": "IN-AN",
+    //         "stdCode": 0,
+    //         "landmark": "string",
+    //         "country": "string"
+    //     },
+    //     "shippingCharges": [
+    //         {
+    //             "type": "making",
+    //             "chargesInr": 0,
+    //             "taxTotalInr": 0,
+    //             "taxes": [
+    //                 {
+    //                     "taxName": "gst, cess etc",
+    //                     "taxCode": "igst, sgst, cgst, utst etc",
+    //                     "taxRatePercent": 0,
+    //                     "taxAmountInr": 0
+    //                 }
+    //             ]
+    //         }
+    //     ]
+    // },
 
     "extReferenceId": "string",
     "orderdetail": {
@@ -88,7 +88,7 @@ const order = {
 
 async function test() {
     let client = await DvaraGold.Client(config);
-    let rates = await client.bookBullionRate(extCustomerId, bullion.bullionName, bullion.id, 'jeweller')
+    let rates = await client.bookBullionRate(extCustomerId, bullion.bullionName, bullion.id, 'jewellery')
     const aBookedRate = rates[0];
     order.jewelleryItems[0].bullionRateId = aBookedRate.id
     return await client.jewelleryCreate(extCustomerId, order)
