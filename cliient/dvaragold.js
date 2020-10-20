@@ -619,6 +619,7 @@ class Client {
         return get(this._client, `/customers/${extCustomerId}/jewelleryorders/${orderid}`)
 
     }
+
     jewelleryList(extCustomerId, queryParams) {
         const additionalParametrs = {
             queryParams: queryParams
@@ -627,6 +628,10 @@ class Client {
     }
     inquiryJewellery(customerId, data) {
         return post(this._client, `/customers/${customerId}/goldtojewellery`, data)
+
+    }
+    jewelleryPurityCertificate(extCustomerId, id) {
+        return get(this._client, `/puritycertificate/${id}`)
 
     }
 
