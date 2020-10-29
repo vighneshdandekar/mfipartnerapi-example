@@ -96,6 +96,12 @@ function authenticateClient(config, callback) {
                 return;
             }
             var credentials = AWS.config.credentials;
+            // console.dir({
+            //     accessKey: credentials.accessKeyId,
+            //     secretKey: credentials.secretAccessKey,
+            //     sessionToken: credentials.sessionToken,
+            //     region: config.region                
+            // });
             var apigClient = apigClientFactory.newClient({
                 accessKey: credentials.accessKeyId,
                 secretKey: credentials.secretAccessKey,
