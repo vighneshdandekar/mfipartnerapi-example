@@ -641,8 +641,12 @@ class Client {
     }
     getLein(id){
         return get(this._client, `/liens/${id}`,)
+    }
+    addServiceChargePaymentDetail(id,data){
+        return post(this._client, `/liens/${id}/addservicechargepayment`, data)
 
     }
+
 
 }
 
