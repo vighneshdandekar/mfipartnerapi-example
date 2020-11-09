@@ -11,11 +11,6 @@ const bullion = {
   id: "G3",
 };
 
-const suggestedJewlleryRequestData = {
-  bullion: bullion,
-  weightInGm: 4,
-};
-
 const order = {
   agent: {
     extAgentId: "EXTAGT02",
@@ -57,10 +52,10 @@ const order = {
 
 async function test() {
   let client = await DvaraGold.Client(config);
-  let suggestedJewellery = await client.inquiryJewellery(extCustomerId, suggestedJewlleryRequestData);
-  order.jewelleryItems[0].jewelleryId = suggestedJewellery.suggestedJewelleryItems[0].jewellery.id;
-  order.jewelleryItems[0].bullionRateId = suggestedJewellery.suggestedJewelleryItems[0].jewellery.bullionRateId;
-  order.paymentPlan.useBullionBalance[0].maxBullionWtGm = suggestedJewellery.suggestedJewelleryItems[0].jewellery.weightInGm;
+  let jewellery = await client.getProducts({}, extCustomerId);
+  order.jewelleryItems[0].jewelleryId = jewellery[0].id;
+  order.jewelleryItems[0].bullionRateId = jewellery[0].bullionRateId;
+  order.paymentPlan.useBullionBalance[0].maxBullionWtGm = jewellery[0].weightInGm;
   return await client.jewelleryCreate(extCustomerId, order);
 }
 test()
