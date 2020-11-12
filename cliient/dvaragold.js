@@ -652,10 +652,14 @@ class Client {
 
     }
     shippment_list(extCustomerId, queryParams) {
-        return get(this._client, `/customers/${extCustomerId}/shipments`, queryParams)
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        
+        return get(this._client, `/customers/${extCustomerId}/shipments`, additionalParametrs)
     }
-    shippment_get(extCustomerId, queryParams) {
-        return get(this._client, `/customers/${extCustomerId}/shipments/${id}`, queryParams)
+    shippment_get(extCustomerId, id) {
+        return get(this._client, `/customers/${extCustomerId}/shipments/${id}`)
     }
 
 }
