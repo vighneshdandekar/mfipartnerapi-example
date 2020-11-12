@@ -636,10 +636,18 @@ class Client {
         return post(this._client, `/customers/${customerId}/goldtojewellery`, data)
 
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 763cbdc616539c82b9209a33cc864f9ee1701ca5
     jewelleryPurityCertificate(extCustomerId, id) {
         return get(this._client, `/puritycertificate/${id}`)
 
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 763cbdc616539c82b9209a33cc864f9ee1701ca5
     applyLein(data){
         return post(this._client, `/liens`, data)
 
@@ -652,6 +660,10 @@ class Client {
 
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 763cbdc616539c82b9209a33cc864f9ee1701ca5
 
 }
 

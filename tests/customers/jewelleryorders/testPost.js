@@ -12,44 +12,72 @@ const bullion = {
 };
 
 const order = {
-  agent: { extAgentId: 'EXTAGT02', name: { first: "Koshi", middle: "Venkateshwara", last: "Shaikh" } },
-  // "orderTotalValueInr": 10,
-  "jewelleryItems": [
-    {
-      "jewelleryId": "e0066110-dd2e-11ea-88f6-8bd81abcab40",
-      "quantity": 2,
-      "bullionRateId": "string",
-      // "totalPriceInr": 0,
-      // "chargesAmountInr": 0,
-      // "taxAmountInr": 0
-    }
-  ],
-  "paymentPlan": {
-    "useBullionBalance": [
-      {
-        "bullion": bullion,
-        "maxBullionWtGm": 1
-      }
+ 
+    agent: { extAgentId: 'EXTAGT02', name: { first: "Koshi", middle: "Venkateshwara", last: "Shaikh" } },
+    // "orderTotalValueInr": 10,
+    "jewelleryItems": [
+        {
+            "jewelleryId": "e0066110-dd2e-11ea-88f6-8bd81abcab40",
+            "quantity": 2,
+            "bullionRateId": "string",
+            // "totalPriceInr": 0,
+            // "chargesAmountInr": 0,
+            // "taxAmountInr": 0
+        }
     ],
-    "alternatePaymentMode": "partnercollect"
-  },
+    "paymentPlan": {
+        "useBullionBalance": [
+            {
+                "bullion": bullion,
+                "maxBullionWtGm": 1
+            }
+        ],
+        "alternatePaymentMode": "partnercollect",
 
-  jewelleryPaymentDetails: [
-    {
-      paymentTotalValueInr: 0,
-      paymentDate: "2020-10-09T07:01:36.801Z",
-      txnReference: "string",
-      txnDetails: {
-        neft_reference: "OC45rt456",
-      },
-      paymentInstrumentType: "NEFT",
-    },
-  ],
-  extReferenceId: "EXTOrderID000010101",
-  orderdetail: {
-    scheme: "Diwali",
-    discountcode: "dw0101"
-  },
+
+    // "shipment": {
+    //     "shippingAddress": {
+    //         "houseNumber": "string",
+    //         "streetName": "string",
+    //         "area": "string",
+    //         "cityOrVillage": "string",
+    //         "postOffice": "string",
+    //         "district": "string",
+    //         "pinCode": 0,
+    //         "state": "IN-AN",
+    //         "stdCode": 0,
+    //         "landmark": "string",
+    //         "country": "string"
+    //     },
+    //     "shippingCharges": [
+    //         {
+    //             "type": "making",
+    //             "chargesInr": 0,
+    //             "taxTotalInr": 0,
+    //             "taxes": [
+    //                 {
+    //                     "taxName": "gst, cess etc",
+    //                     "taxCode": "igst, sgst, cgst, utst etc",
+    //                     "taxRatePercent": 0,
+    //                     "taxAmountInr": 0
+    //                 }
+    //             ]
+    //         }
+    //     ]
+    // },
+
+    "extReferenceId": "string",
+    "orderdetail": {
+        "additionalProp1": "string",
+        "additionalProp2": "string",
+        "additionalProp3": "string"
+    }
+    
+
+
+}
+
+ 
 };
 
 async function test() {
@@ -59,6 +87,7 @@ async function test() {
   order.jewelleryItems[0].bullionRateId = jewellery[0].bullionRateId;
   order.paymentPlan.useBullionBalance[0].maxBullionWtGm = jewellery[0].weightInGm;
   return await client.jewelleryCreate(extCustomerId, order);
+ 
 }
 test()
   .then((result) => {
