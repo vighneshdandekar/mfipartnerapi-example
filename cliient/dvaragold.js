@@ -96,6 +96,12 @@ function authenticateClient(config, callback) {
                 return;
             }
             var credentials = AWS.config.credentials;
+            // console.dir({
+            //     accessKey: credentials.accessKeyId,
+            //     secretKey: credentials.secretAccessKey,
+            //     sessionToken: credentials.sessionToken,
+            //     region: config.region                
+            // });
             var apigClient = apigClientFactory.newClient({
                 accessKey: credentials.accessKeyId,
                 secretKey: credentials.secretAccessKey,
@@ -630,10 +636,25 @@ class Client {
         return post(this._client, `/customers/${customerId}/goldtojewellery`, data)
 
     }
+
     jewelleryPurityCertificate(extCustomerId, id) {
         return get(this._client, `/puritycertificate/${id}`)
 
     }
+
+    applyLein(data){
+        return post(this._client, `/liens`, data)
+
+    }
+    getLein(id){
+        return get(this._client, `/liens/${id}`,)
+    }
+    addServiceChargePaymentDetail(id,data){
+        return post(this._client, `/liens/${id}/addservicechargepayment`, data)
+
+    }
+
+
 
 }
 

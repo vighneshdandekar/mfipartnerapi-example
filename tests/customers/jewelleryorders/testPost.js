@@ -1,17 +1,18 @@
-let STAGE = process.env.mygold_stage ? process.env.mygold_stage : 'dev';
-const config = require('../../../config/credentials.json')[STAGE];
-const DvaraGold = require('../../../cliient/dvaragold');
-const extCustomerId = "ffa9da6a8375dca831fb3be97291763c";
+let STAGE = process.env.mygold_stage ? process.env.mygold_stage : "dev";
+const config = require("../../../config/credentials.json")[STAGE];
+const DvaraGold = require("../../../cliient/dvaragold");
+const extCustomerId = "AMITCST001";
 const bullion = {
-    bullionShortName: 'G24K',
-    bullionName: 'Gold',
-    purity: { displayValue: '24Kt - (99.9%)', value: '999' },
-    status: 'available',
-    isBaseBullion: false,
-    id: 'G3'
-}
+  bullionShortName: "G22K",
+  bullionName: "Gold",
+  purity: { displayValue: "22Kt - (91.6%)", value: "916" },
+  status: "available",
+  isBaseBullion: false,
+  id: "G3",
+};
 
 const order = {
+ 
     agent: { extAgentId: 'EXTAGT02', name: { first: "Koshi", middle: "Venkateshwara", last: "Shaikh" } },
     // "orderTotalValueInr": 10,
     "jewelleryItems": [
@@ -31,19 +32,8 @@ const order = {
                 "maxBullionWtGm": 1
             }
         ],
-        "alternatePaymentMode": "partnercollect"
-    },
-    "jewelleryPaymentDetails": [
-        {
-            "paymentTotalValueInr": 0,
-            "paymentDate": "2020-10-09T07:01:36.801Z",
-            "txnReference": "string",
-            "txnDetails": {
-                "neft_reference": "OC45rt456"
-            },
-            "paymentInstrumentType": "NEFT"
-        }
-    ],
+        "alternatePaymentMode": "partnercollect",
+
 
     // "shipment": {
     //     "shippingAddress": {
@@ -86,20 +76,25 @@ const order = {
 
 }
 
+ 
+};
+
 async function test() {
-    let client = await DvaraGold.Client(config);
-    let rates = await client.bookBullionRate(extCustomerId, bullion.bullionName, bullion.id, 'jewellery')
-    const aBookedRate = rates[0];
-    order.jewelleryItems[0].bullionRateId = aBookedRate.id
-    return await client.jewelleryCreate(extCustomerId, order)
+  let client = await DvaraGold.Client(config);
+  let jewellery = await client.getProducts({}, extCustomerId);
+  order.jewelleryItems[0].jewelleryId = jewellery[0].id;
+  order.jewelleryItems[0].bullionRateId = jewellery[0].bullionRateId;
+  order.paymentPlan.useBullionBalance[0].maxBullionWtGm = jewellery[0].weightInGm;
+  return await client.jewelleryCreate(extCustomerId, order);
+ 
 }
 test()
-    .then(result => {
-        console.dir(result)
-    })
-    .catch(err => {
-        console.error(JSON.stringify(err))
-    })
-    .finally(() => {
-        process.exit(0);
-    })
+  .then((result) => {
+    console.dir(result);
+  })
+  .catch((err) => {
+    console.error(JSON.stringify(err));
+  })
+  .finally(() => {
+    process.exit(0);
+  });
