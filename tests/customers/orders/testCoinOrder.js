@@ -18,7 +18,7 @@ const order = {
     "jewelleryItems": [
         {
             "coinId": "e0066110-dd2e-11ea-88f6-8bd81abcab40",
-            "quantity": 2,
+            "quantity": 233,
             "bullionRateId": "string",
             // "totalPriceInr": 0,
             // "chargesAmountInr": 0,
@@ -29,10 +29,10 @@ const order = {
         "useBullionBalance": [
             {
                 "bullion": bullion,
-                "maxBullionWtGm": 1
+                "maxBullionWtGm": 900
             }
         ],
-        "alternatePaymentMode": "partnercollect",
+        // "alternatePaymentMode": "partnercollect",
     },
     "shipment": {
         "shippingAddress": {

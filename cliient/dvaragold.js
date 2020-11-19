@@ -655,11 +655,20 @@ class Client {
         const additionalParametrs = {
             queryParams: queryParams
         }
-        
+
         return get(this._client, `/customers/${extCustomerId}/shipments`, additionalParametrs)
     }
     shippment_get(extCustomerId, id) {
         return get(this._client, `/customers/${extCustomerId}/shipments/${id}`)
+    }
+    listCoinOrder(extCustomerId, queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/customers/${extCustomerId}/coinorders`, additionalParametrs)
+    }
+    getCoinOrder(extCustomerId, orderId) {
+        return get(this._client, `/customers/${extCustomerId}/coinorders/${orderId}`)
     }
 
 }
