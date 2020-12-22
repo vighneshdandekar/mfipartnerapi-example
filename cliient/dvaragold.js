@@ -671,6 +671,10 @@ class Client {
         return get(this._client, `/customers/${extCustomerId}/coinorders/${orderId}`)
     }
 
+    getLtvRate(extBranchId) {
+        return get(this._client, `/branches/${extBranchId}/bullionrates/ltvcalculation`)
+    }
+
 }
 
 exports.Client = async function (config) {
