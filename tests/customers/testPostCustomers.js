@@ -8,48 +8,198 @@ async function test() {
 
     var _id = shortid.generate();
     const _customers = []
-    for (var i = 0; i < 1; i++) {
+    for (var i = 0; i < 60; i++) {
         var _id = shortid.generate();
         _customers.push(
             {
-                name: {
-                    first: `John ${_id}`,
-                    middle: 'Trivia',
-                    last: 'Somtune'
-                },
-                extCustomerId: `upiAccountChnages01${i}`,
-                dob: "1957-09-05",
-                phone: { mobile: `860036367${i}` },
-                idProof: [{
-                    documentId: `ABC1234XV${i}`,
-                    documentType: 'maskedAadhaar',
-                    documentImage: {
-                        id: '1234',
-                        uri: '/customers/uploaded/ce65ad07-a0b1-452b-ba19-7cea4f149360'
+                "extCustomerId": `${_id}`,
+                "kycReference": [
+                    {
+                        "refType": "aadhaar",
+                        "refId": "adhar based kyc"
                     },
-                    issueDate: new Date(),
-                    validUntil: new Date()
-                }],
-                address: {
-                    houseNumber: "1", streetName: "2", district: "Tvm", pinCode: 402202, state: "IN-KL", country: "India", stdCode: 0470
+                    {
+                        "refType": "ckyc",
+                        "refId": "cental kyc"
+                    },
+                    {
+                        "refType": "partnerkyc",
+                        "refId": "partner kyc"
+                    }
+                ],
+                "branchId": "AAA111",
+                "agentId": "AAA111AGNT002",
+                "dob": "2019-10-02T00:00:00.000Z",
+                "gender": "m",
+                "maritalStatus": "single",
+                "centerName": "adasdfas",
+                "localName": "asdfadf",
+                "localLanguage": "en",
+                "email": `${_id}@adssa.com`,
+                "name": {
+                    "first": "Amit",
+                    "middle": "Test",
+                    "last": "S"
                 },
-                fatherName: {
-                    first: "Groverty ",
-                    last: `${_id}`
+                "phone": {
+                    "landline": "9461044004",
+                    "alternateMobile": "9461044004",
+                    "mobile": "9900990094",
+                    "whatsapp": "9461044004"
                 },
-                centerName: "Center",
-                maritalStatus: "married",
-                localLanguage: "Tamil",
-                branchId: 'EXT002311',
-                gender: 'm',
+                "address": {
+                    "houseNumber": "sfsd",
+                    "streetName": "sdsd",
+                    "area": "area",
+                    "cityOrVillage": "cityOrVillage",
+                    "postOffice": "postOffice",
+                    "district": "sdfds",
+                    "pinCode": 411027,
+                    "state": "IN-AN",
+                    "stdCode": 0,
+                    "landmark": "landmark",
+                    "country": "India"
+                },
+                "spouseName": {
+                    "first": "spouse name",
+                    "middle": "middle name l",
+                    "last": "last name"
+                },
+                "fatherName": {
+                    "first": "father name",
+                    "middle": "middle name ",
+                    "last": "last name"
+                },
+                "idProof": [
+                    {
+                        "documentType": "passport",
+                        "documentId": "8",
+                        "documentImage": {
+                            "id": "",
+                            "uri": ""
+                        },
+                        "issueDate": "2019-10-09T12:03:47.000Z",
+                        "validUntil": "2019-10-30T12:03:47.000Z"
+                    },
+                    {
+                        "documentType": "pan",
+                        "documentId": "8",
+                        "documentImage": {
+                            "id": "2b21f476-72c2-4427-83a0-8e47448b1529",
+                            "uri": "/customers/uploaded/2b21f476-72c2-4427-83a0-8e47448b1529"
+                        },
+                        "issueDate": "2019-10-09T12:03:47.000Z",
+                        "validUntil": "2019-10-30T12:03:47.000Z"
+                    }
+                ],
                 "bankAccount": {
-                    "accountNumber": "account",
-                    "ifsc": "idh",
-                    "accountName": "28373",
-                    "bankName": "1od8d",
-                    "branchName": "banrch anme"
+                    "accountNumber": "adfsafsafAFSAF",
+                    "ifsc": "AAAA0111111",
+                    "accountName": "SFafFf",
+                    "bankName": "ASDFSAadswd",
+                    "branchName": "ASFf"
                 },
-                upiAccount: { address: "okvighnesh@icici" }
+                "nominee": {
+                    "gender": "m",
+                    "relation": "Other",
+                    "email": "nominee@gmail.com",
+                    "name": {
+                        "first": "nominee name",
+                        "middle": "middle name",
+                        "last": "last namr"
+                    },
+                    "phone": {
+                        "landline": "8379990099",
+                        "alternateMobile": "8379990099",
+                        "mobile": "8379990099",
+                        "whatsapp": "8379990099"
+                    },
+                    "address": {
+                        "houseNumber": "cvczv",
+                        "streetName": "zcvfdsf",
+                        "area": "ars",
+                        "cityOrVillage": "city",
+                        "postOffice": "postoffice",
+                        "district": "czvzv",
+                        "pinCode": 411027,
+                        "state": "IN-AN",
+                        "stdCode": 404,
+                        "landmark": "landmark",
+                        "country": "India"
+                    }
+                },
+                "userActive": false,
+                "username": "username",
+                "consentDocUri": "/customers/uploaded/consent/39fd588b-bde0-451d-8bce-a956f679ae61",
+                "isNewCustomer": true,
+                "remarks": "safsaf",
+                "isBankAccountVerified": true,
+                "upiAccount": {
+                    "address": "dafda@okicici"
+                },
+                "isUpiAccountVerified": true,
+                "familyMembers": [
+                    {
+                        "gender": "m",
+                        "relation": "Child",
+                        "email": "ancb@gmail.com",
+                        "name": {
+                            "first": "family memeber",
+                            "middle": "middle name",
+                            "last": "last name"
+                        },
+                        "phone": {
+                            "landline": "9383737889",
+                            "alternateMobile": "9383737889",
+                            "mobile": "9383737889",
+                            "whatsapp": "9383737889"
+                        },
+                        "address": {
+                            "houseNumber": "jo833",
+                            "streetName": "stree name",
+                            "area": "area",
+                            "cityOrVillage": "city",
+                            "postOffice": "post office ",
+                            "district": "district",
+                            "pinCode": 402202,
+                            "state": "IN-AN",
+                            "stdCode": 23,
+                            "landmark": "landmark",
+                            "country": "India"
+                        }
+                    }
+                ],
+                "giftContacts": [
+                    {
+                        "gender": "m",
+                        "relation": "Other",
+                        "email": "anc@gmail.com",
+                        "name": {
+                            "first": "gift contatcs",
+                            "middle": "middle namr",
+                            "last": "last name"
+                        },
+                        "phone": {
+                            "landline": "8273399737",
+                            "alternateMobile": "8273399737",
+                            "mobile": "8273399737",
+                            "whatsapp": "8273399737"
+                        },
+                        "address": {
+                            "houseNumber": "house nam",
+                            "streetName": "stree name",
+                            "area": "area",
+                            "cityOrVillage": "city",
+                            "postOffice": "post office",
+                            "district": "district",
+                            "pinCode": 402202,
+                            "state": "IN-AN",
+                            "stdCode": 3938,
+                            "landmark": "landmark",
+                            "country": "India"
+                        }
+                    }
+                ]
             }
         )
     }

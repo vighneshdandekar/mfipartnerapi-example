@@ -4,45 +4,81 @@ const DvaraGold = require('../../cliient/dvaragold');
 const shortid = require('shortid')
 
 var saveBranches = async function (client, callback) {
+    let _branches = []
     client = await DvaraGold.Client(config);
     var _id = shortid.generate();
-    const _branches = [
-        {
-            extBranchId:'EXT002311',
-            branchType:'district',
-            name:'District Branch 1234',
-            communicationAddress: {
-                unitNumber: "01", streetName: "Thennali", district: "Madurai", pinCode: 695678, state: "IN-TN", stdCode: 20, country: "IN"
-            },
-            gstNumber:"ABDCR123456",
-            phone:"4701234567",
-            branchManager:{
-                "extId": "BM12456",
-                "name": {
-                  "first": "SRATH",
-                  "middle": "SHAIL",
-                  "last": "SHUKH"
+    for (let i = 1; i <= 400; i++) {
+        _branches.push(
+            {
+                "quarterlyVaultChargesInINR": 0,
+                "extBranchId": `${_id}_${i}`,
+                "branchType": "district",
+                "name": "AAA111",
+                "gstNumber": "11AAAAA1111A1Z1",
+                "phone": "5656565656",
+                "totalCustomers": 10,
+                "activeCustomers": 2,
+                "numberOfAgents": 10,
+                "activationDate": "2019-11-04T05:21:11.000Z",
+                "remarks": "",
+                "communicationAddress": {
+                    "nearByPoliceStation": "",
+                    "unitNumber": "1",
+                    "streetName": "Radio mirchi road, pralhad nagar",
+                    "area": "",
+                    "cityOrVillage": "Ahemdabad",
+                    "postOffice": "",
+                    "district": "Ahemdabad",
+                    "pinCode": 380015,
+                    "state": "IN-RJ",
+                    "stdCode": 111,
+                    "landmark": "",
+                    "country": "India"
                 },
-                "dob": "2019-08-26",
-                "gender": "m",
-                "email": "user@example.com",
-                "phone": {
-                  "mobile": "9988776655",
-                  "landline": "9988776655"
+                "bankAccount": {
+                    "accountNumber": "ICIC0000012",
+                    "ifsc": "ICIC0000012",
+                    "accountName": "acs",
+                    "bankName": "bank name",
+                    "branchName": "branch name"
                 },
-                "address": {
-                    unitNumber: "01", streetName: "Thennali", district: "Madurai", pinCode: 695678, state: "IN-TN", stdCode: 20, country: "IN"
-                }
-            },
-            bankAccount:{
-                "accountNumber": '1234567890',
-                "ifsc": "ABV123455",
-                "accountName": "Test Acoount",
-                "bankName": "ICICI Bank",
-                "branchName": "Madurai"
-              }
-        }
-    ]
+                "branchManager": {
+                    "externalId": "",
+                    "email": "vighnesh@fg.com",
+                    "dob": "1968-04-03T00:00:00.000Z",
+                    "gender": "m",
+                    "name": {
+                        "first": "Nilkathelegence",
+                        "middle": "",
+                        "last": "test"
+                    },
+                    "phone": {
+                        "landline": "",
+                        "alternateMobile": "",
+                        "mobile": "1773672887",
+                        "whatsapp": "",
+                        "boardNumber": "",
+                        "extension": ""
+                    },
+                    "address": {
+                        "unitNumber": "wqdwqd",
+                        "streetName": "Radio mirchi road, pralhad nagar",
+                        "area": "",
+                        "cityOrVillage": "Ahemdabad",
+                        "postOffice": "",
+                        "district": "dwdwd",
+                        "pinCode": 402202,
+                        "state": "IN-RJ",
+                        "stdCode": 11,
+                        "landmark": "",
+                        "country": "India"
+                    }
+                },
+            }
+        )
+
+
+    }
     return client.saveBranches(_branches)
 }
 
