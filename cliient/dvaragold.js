@@ -671,8 +671,11 @@ class Client {
         return get(this._client, `/customers/${extCustomerId}/coinorders/${orderId}`)
     }
 
-    getLtvRate(extBranchId) {
-        return get(this._client, `/branches/${extBranchId}/bullionrates/ltvcalculation`)
+    getLtvRate(extBranchId, queryParams) {
+        const additionalParametrs = {
+            queryParams: queryParams
+        }
+        return get(this._client, `/benchmarkrate`, additionalParametrs)
     }
 
 }
